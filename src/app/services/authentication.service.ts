@@ -256,12 +256,12 @@ import { BrowserStorage } from './browser-storage.service';
     /**
      * Checks if user is signed in.
      */
-    public isSignedIn(): Observable<boolean> {
-        return this.signinStatus.asObservable();
+    public isSignedIn(): BehaviorSubject<boolean> {
+        return this.signinStatus;
     }
 
-    public userChanged(): Observable<User> {
-        return this.user.asObservable();
+    public userChanged(): BehaviorSubject<User> {
+        return this.user;
     }
 
     /**
@@ -277,7 +277,7 @@ import { BrowserStorage } from './browser-storage.service';
      * Checks for presence of token and that token hasn't expired.
      */
     private tokenNotExpired(): boolean {
-        const token: string = this.browserStorage.get('id_token');
+        const token: string = this.browserStorage.get('access_token');
         return token != null && (this.getExpiry() > new Date().valueOf());
     }
 

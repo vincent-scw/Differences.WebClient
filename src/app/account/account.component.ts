@@ -4,6 +4,7 @@ import { MdDialog,
   MD_DIALOG_DATA,
   MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthenticationService } from '../services/authentication.service';
 import { ApiClientService } from '../services/api-client.service';
@@ -16,7 +17,7 @@ import { User } from '../models/user';
 })
 
 export class AccountComponent implements OnInit {
-  isSignedIn: Observable<boolean>;
+  isSignedIn: BehaviorSubject<boolean>;
   currentUser: User;
   isAdmin: boolean;
 
@@ -25,7 +26,7 @@ export class AccountComponent implements OnInit {
 
     this.authenticationService.userChanged().subscribe(
         (user: User) => {
-          if (user.id !== undefined) {
+          if (this.isSignedIn.getValue()) {
             this.currentUser = user;
             this.isAdmin = this.authenticationService.isInRole('administrator');
 
