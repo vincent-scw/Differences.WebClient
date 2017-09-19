@@ -175,3 +175,11 @@ app-search-box.search-container {
   text-transform: uppercase;
   padding: 21px 0;
 }
+
+.account-button {
+  display: flex;
+
+  ngx-avatar {
+    padding-right: 5px
+  }
+}

@@ -1,6 +1,9 @@
 <div *ngIf='(isSignedIn | async)'>
   <button md-button [mdMenuTriggerFor]="menu" *ngIf="!!currentUser.nickName">
-    {{ currentUser.nickName }}
+    <div class="account-button">
+      <ngx-avatar [name]="currentUser.nickName" size="30"></ngx-avatar>
+      {{ currentUser.nickName }}
+    </div>
   </button>
   <md-menu #menu="mdMenu">
       <button md-menu-item (click)='onAccountClicked()'>账户</button>
