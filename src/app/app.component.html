@@ -1,0 +1,20 @@
+<div id="top-of-page"></div>
+
+<div *ngIf="isFetching" class="progress-bar-container">
+  <md-progress-bar mode="indeterminate" color="warn"></md-progress-bar>
+</div>
+
+<app-top-bar (onSideNavToggled)="sidenav.toggle()"></app-top-bar>
+
+<md-sidenav-container class="sidenav-container">
+  <md-sidenav class="sidenav" #sidenav mode="side" opened="true">Drawer content</md-sidenav>
+  <router-outlet></router-outlet>
+</md-sidenav-container>
+
+<div class="toc-container" [style.max-height.px]="tocMaxHeight">
+  <app-toc></app-toc>
+</div>
+
+<footer>
+  
+</footer>

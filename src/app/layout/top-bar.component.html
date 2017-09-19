@@ -1,0 +1,18 @@
+<md-toolbar color="primary" class="app-toolbar main-toolbar">
+    <button class="hamburger" [class.starting]="isStarting" md-button 
+      (click)="sideNavToggle()" title="Menu">
+      <md-icon [ngClass]="{'sidenav-open': !isSideBySide}" svgicon="menu">
+        <svg xmlns="http://www.w3.org/2000/svg" focusable="false" viewBox="0 0 24 24">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+        </svg>
+      </md-icon>
+    </button>
+    <a class="nav-link home" href="/">
+      <img alt="主页" title="主页" src="">
+    </a>
+    <app-top-menu *ngIf="isSideBySide" [nodes]="topMenuNodes">
+    </app-top-menu>
+    <app-search-box class="search-container" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)">
+    </app-search-box>
+    <app-account></app-account>
+</md-toolbar>

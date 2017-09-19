@@ -1,0 +1,43 @@
+﻿<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && signin()" novalidate>
+  <md-toolbar color="primary">
+    <div class="md-toolbar-tools">
+      <h2>用户登录</h2>
+    </div>
+  </md-toolbar>
+      
+  <div>
+    <br />
+    <md-form-field class="full-width">
+      <input type="text" mdInput [(ngModel)]="model.username" name="username" #username="ngModel"
+        placeholder="邮箱" (keyup)="clearMessages()" type="email"
+        md-autofocus required>
+      <md-error *ngIf="emailFormControl.hasError('pattern')">
+        请输入邮箱地址
+      </md-error>
+      <md-error>
+        邮箱是必填项
+      </md-error>  
+    </md-form-field>
+    <br />
+    <md-form-field class="full-width">
+      <input type="password" mdInput [(ngModel)]="model.password" name="password" #password="ngModel"
+        placeholder="密码" (keyup)="clearMessages()" required>
+      <md-error>
+        密码是必填项
+      </md-error>  
+    </md-form-field>
+    <br />
+    <div *ngIf="errorMessages.length > 0" color="warn">
+      <div *ngFor="let errorMessage of errorMessages">
+          <small>{{ errorMessage.description }}</small>
+      </div>
+    </div>
+    <br />
+  </div>
+  <div class="full-width" md-dialog-actions>
+    <a href="" class="primary">忘记密码？</a>
+    <span flex></span>
+    <button md-raised-button color="accent" type="submit" >登录</button>
+    <button md-button md-dialog-close>取消</button>
+  </div>
+</form>

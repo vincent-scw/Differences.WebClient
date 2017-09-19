@@ -1,0 +1,13 @@
+<div *ngIf='(isSignedIn | async)'>
+  <button md-button [mdMenuTriggerFor]="menu" *ngIf="!!currentUser.nickName">
+    {{ currentUser.nickName }}
+  </button>
+  <md-menu #menu="mdMenu">
+      <button md-menu-item (click)='onAccountClicked()'>账户</button>
+      <button md-menu-item (click)='onSignoutClicked()'>登出</button>
+  </md-menu>
+</div>
+<div *ngIf='(isSignedIn | async) === false'>
+  <button md-button (click)='onSignInClicked()'>登录</button>|
+  <button md-button (click)='onSignUpClicked()'>注册</button>
+</div>

@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let user of data | async | select: 'mvp_users'">
+    <ngx-avatar [name]="user.nickName"></ngx-avatar>
+    {{user.nickName}}
+  </li>
+</ul>
