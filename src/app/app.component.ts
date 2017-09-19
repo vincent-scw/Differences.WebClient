@@ -7,5 +7,5 @@ import { NavigationNode } from './models/navigation.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  isOpened: boolean;
 }
