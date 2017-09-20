@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 @Injectable()
 export class SubmitQuestionService {
   mutation = gql`
-    mutation submitQuestion($title: String!, $content: String!) {
-      submitQuestion(title: $title, content: $content) {
+    mutation differencesMutation($question: QuestionInput!) {
+      submitQuestion(question: $question) {
         id
         title
         content
@@ -21,8 +21,10 @@ export class SubmitQuestionService {
     return this.apollo.mutate({
       mutation: this.mutation,
       variables: {
-        title: title,
-        content: content
+        question: {
+          title: title,
+          content: content
+        }
       }
     });
   }
