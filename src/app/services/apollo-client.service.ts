@@ -7,9 +7,9 @@ ni.use([{
     if (!req.options.headers) {
       req.options.headers = {};
     }
-
-    req.options.headers.authorization =
-      'Bearer ' + localStorage.getItem('access_token') || null;
+    const token = localStorage.getItem('access_token');
+    req.options.headers.authorization = token == null ?
+      'Bearer ' + token : null;
     next();
   }
 }]);

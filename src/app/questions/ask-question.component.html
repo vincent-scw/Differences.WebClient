@@ -1,7 +1,8 @@
 <form name="form" (ngSubmit)="onSubmit()">
   <div>
-    <md-form-field class="full-width form-control">
+    <md-form-field class="full-width form-control question-title">
       <input mdInput #title maxlength="200" 
+        [formControl]="titleCtrl"
         placeholder="输入标题（用大括号来标记比对项）">
       <span mdSuffix>有什么不同？</span>
       <md-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}我{{ '}' }}之间有什么不同？</md-hint>
