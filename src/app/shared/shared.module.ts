@@ -3,7 +3,7 @@ import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
-import { QuillModule } from 'ngx-quill';
+import { QuillEditorModule } from 'ngx-quill-editor';
 import { ApolloModule } from 'apollo-angular';
 import { AvatarModule } from 'ngx-avatar';
 
@@ -16,7 +16,7 @@ import { provideClient } from '../services/apollo-client.service';
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        QuillModule,
+        QuillEditorModule,
         AvatarModule,
         ApolloModule.forRoot(provideClient)
     ],
@@ -26,7 +26,7 @@ import { provideClient } from '../services/apollo-client.service';
         FormsModule,
         ReactiveFormsModule,
         MaterialModule,
-        QuillModule,
+        QuillEditorModule,
         AvatarModule,
         ApolloModule,
     ]
