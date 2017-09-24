@@ -10,8 +10,7 @@ import { QuestionsModule } from './questions/questions.module';
 import { ArticlesModule } from './articles/articles.module';
 import { UsersModule } from './users/users.module';
 
-import { AuthGuard } from './services/auth.guard';
-import { AuthenticationService } from './services/authentication.service';
+import { AuthService } from './services/auth.service';
 import { IdentityService } from './services/identity.service';
 import { BrowserStorage } from './services/browser-storage.service';
 import { ApiClientService } from './services/api-client.service';
@@ -46,8 +45,7 @@ export function getAuthHttp(http: Http) {
   ],
   providers: [
     Title,
-    AuthGuard,
-    AuthenticationService,
+    AuthService,
     IdentityService,
     ApiClientService,
     BrowserStorage,

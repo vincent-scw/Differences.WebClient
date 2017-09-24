@@ -6,9 +6,8 @@ import { MdDialog,
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthService } from '../services/auth.service';
 import { ApiClientService } from '../services/api-client.service';
-import { SigninComponent } from './signin/signin.component';
 import { User } from '../models/user';
 
 @Component({
@@ -22,41 +21,41 @@ export class AccountComponent implements OnInit {
   isAdmin: boolean;
 
   ngOnInit() {
-    this.isSignedIn = this.authenticationService.isSignedIn();
+    this.isSignedIn = this.authService.isSignedIn();
 
-    this.authenticationService.userChanged().subscribe(
-        (user: User) => {
-          if (this.isSignedIn.getValue()) {
-            this.currentUser = user;
-            this.isAdmin = this.authenticationService.isInRole('administrator');
+    // this.authenticationService.userChanged().subscribe(
+    //     (user: User) => {
+    //       if (this.isSignedIn.getValue()) {
+    //         this.currentUser = user;
+    //         this.isAdmin = this.authenticationService.isInRole('administrator');
 
-            this.snackBar.open('你好，' + user.nickName + '!', null, {
-              duration: 2000,
-            });
-          }
-        });
+    //         this.snackBar.open('你好，' + user.nickName + '!', null, {
+    //           duration: 2000,
+    //         });
+    //       }
+    //     });
 
-    // Optional strategy for refresh token through a scheduler.
-    this.authenticationService.startupTokenRefresh();
-}
+    // // Optional strategy for refresh token through a scheduler.
+    // this.authenticationService.startupTokenRefresh();
+  }
 
   constructor(public dialog: MdDialog,
     public snackBar: MdSnackBar,
-    protected authenticationService: AuthenticationService,
+    protected authService: AuthService,
     protected apiclientService: ApiClientService) {}
 
   onSignInClicked(): void {
-    const dialogRef = this.dialog.open(SigninComponent, {
-      width: '400px'
-    });
+    // const dialogRef = this.dialog.open(SigninComponent, {
+    //   width: '400px'
+    // });
+    this.authService.login();
   }
 
   onSignUpClicked() {
-
   }
 
   onSignoutClicked() {
-    this.authenticationService.signout();
+    this.authService.logout();
     this.snackBar.open('您已登出!', null, {
       duration: 2000,
     });
