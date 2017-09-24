@@ -23,17 +23,17 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.isSignedIn = this.authService.isSignedIn();
 
-    // this.authenticationService.userChanged().subscribe(
-    //     (user: User) => {
-    //       if (this.isSignedIn.getValue()) {
-    //         this.currentUser = user;
-    //         this.isAdmin = this.authenticationService.isInRole('administrator');
+    this.authService.userChanged().subscribe(
+      (user: User) => {
+        if (this.isSignedIn.getValue()) {
+          this.currentUser = user;
+          // this.isAdmin = this.authenticationService.isInRole('administrator');
 
-    //         this.snackBar.open('你好，' + user.nickName + '!', null, {
-    //           duration: 2000,
-    //         });
-    //       }
-    //     });
+          this.snackBar.open('你好，' + user.name + '!', null, {
+            duration: 2000,
+          });
+        }
+      });
 
     // // Optional strategy for refresh token through a scheduler.
     // this.authenticationService.startupTokenRefresh();
@@ -44,14 +44,8 @@ export class AccountComponent implements OnInit {
     protected authService: AuthService,
     protected apiclientService: ApiClientService) {}
 
-  onSignInClicked(): void {
-    // const dialogRef = this.dialog.open(SigninComponent, {
-    //   width: '400px'
-    // });
+  onSignClicked(): void {
     this.authService.login();
-  }
-
-  onSignUpClicked() {
   }
 
   onSignoutClicked() {

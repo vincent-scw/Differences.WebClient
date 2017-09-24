@@ -1,8 +1,8 @@
 <div *ngIf='(isSignedIn | async)'>
-  <button md-button [mdMenuTriggerFor]="menu" *ngIf="!!currentUser.nickName">
+  <button md-button [mdMenuTriggerFor]="menu" *ngIf="!!currentUser.name">
     <div class="account-button">
-      <ngx-avatar [name]="currentUser.nickName" size="30"></ngx-avatar>
-      {{ currentUser.nickName }}
+      <ngx-avatar [name]="currentUser.name" size="30"></ngx-avatar>
+      {{ currentUser.name }}
     </div>
   </button>
   <md-menu #menu="mdMenu">
@@ -11,6 +11,5 @@
   </md-menu>
 </div>
 <div *ngIf='(isSignedIn | async) === false'>
-  <button md-button (click)='onSignInClicked()'>登录</button>|
-  <button md-button (click)='onSignUpClicked()'>注册</button>
+  <button md-button (click)='onSignClicked()'>登录 / 注册</button>
 </div>

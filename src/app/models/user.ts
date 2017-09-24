@@ -1,6 +1,5 @@
 export class User {
   public id: string;
-  public userName: string;
-  public nickName: string;
+  public name: string;
   public roles?: string[];
 }
