@@ -1,6 +1,7 @@
 ///<reference path="../../../node_modules/msal/out/msal.d.ts" />
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { JwtHelper } from 'angular2-jwt';
 
 import { Config } from '../config';
 import { User } from '../models/user';
@@ -10,6 +11,12 @@ import { BrowserStorage } from './browser-storage.service';
 export class AuthService {
   signinStatus = new BehaviorSubject<boolean>(this.tokenNotExpired());
   user = new BehaviorSubject<User>(this.getUser());
+
+  /**
+   * Token info.
+   */
+  private expiresIn: number;
+  private authTime: number;
 
   isAuthenticated = false;
   access_token: string;
@@ -29,7 +36,8 @@ export class AuthService {
     }
   );
 
-  constructor(private browserStorage: BrowserStorage) {
+  constructor(private browserStorage: BrowserStorage,
+    private jwtHelper: JwtHelper) {
 
   }
 
@@ -37,10 +45,18 @@ export class AuthService {
     const _this = this;
     this.clientApplication.loginPopup(this.authSettings.scopes)
       .then(function (idToken: any) {
-        const info = _this.clientApplication.getUser();
+        const fromToken = _this.jwtHelper.decodeToken(idToken);
+
         const user = new User();
-        user.id = '';
-        user.name = info.name;
+        user.id = fromToken.oid;
+        user.name = fromToken.name;
+        user.jobTitle = fromToken.jobTitle;
+        user.emails = fromToken.emails;
+
+        _this.authTime = fromToken.auth_time;
+        // Calculates token expiration.
+        _this.expiresIn = fromToken.exp as number * 1000; // To milliseconds.
+        _this.storeExpiry(_this.authTime + _this.expiresIn);
 
         _this.signinStatus.next(true);
         _this.user.next(user);
@@ -104,22 +120,17 @@ export class AuthService {
    * Checks for presence of token and that token hasn't expired.
    */
   private tokenNotExpired(): boolean {
-    return this.getUser().name !== undefined;
-      // const token: string = this.browserStorage.get('access_token');
-      // return token != null && (this.getExpiry() > new Date().valueOf());
+    // const token: string = this.browserStorage.get('access_token');
+    return /*token != null && */(this.getExpiry() > new Date().valueOf());
   }
 
   /**
    * Stores access token & refresh token.
    */
-  private store(body: any): void {
+  private storeToken(body: any): void {
       // this.browserStorage.set('access_token', body.access_token);
       // this.browserStorage.set('refresh_token', body.refresh_token);
       // this.browserStorage.set('token_type', body.token_type);
-
-      // // Calculates token expiration.
-      // this.expiresIn = body.expires_in as number * 1000; // To milliseconds.
-      // this.storeExpiry(this.authTime + this.expiresIn);
   }
 
   /**

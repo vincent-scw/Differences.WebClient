@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule, Http } from '@angular/http';
 
+import { JwtHelper } from 'angular2-jwt';
+
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
@@ -45,6 +47,7 @@ export function getAuthHttp(http: Http) {
   ],
   providers: [
     Title,
+    JwtHelper,
     AuthService,
     IdentityService,
     ApiClientService,
