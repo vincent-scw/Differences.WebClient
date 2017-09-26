@@ -61,21 +61,8 @@ export class AuthService {
         _this.signinStatus.next(true);
         _this.user.next(user);
         _this.storeUser(user);
-        // _this.clientApplication.acquireTokenSilent(_this.authSettings.scopes).then(
-        //     function (accessToken: any) {
-        //         _this.access_token = accessToken;
-        //         alert(accessToken);
-        //         _this.signinStatus.next(true);
-        //     }, function (error: any) {
-        //         _this.clientApplication.acquireTokenPopup(_this.authSettings.scopes).then(
-        //             function (accessToken: any) {
-        //                 _this.access_token = accessToken;
-        //                 alert(accessToken);
-        //                 _this.signinStatus.next(true);
-        //             }, function (ex: any) {
-        //                 console.log('Error acquiring the popup:\n' + ex);
-        //             });
-        //     });
+
+        // _this.schedualRefresh();
       }, function (error: any) {
         console.log('Error during login:\n' + error);
     });
@@ -92,6 +79,26 @@ export class AuthService {
 //         // Revokes tokens.
 //         this.revokeToken();
 //         this.revokeRefreshToken();
+  }
+
+  private schedualRefresh(): void {
+    const _this = this;
+    this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
+        function (accessToken: any) {
+            _this.access_token = accessToken;
+            alert(accessToken);
+            _this.signinStatus.next(true);
+        }, function (error: any) {
+          console.log(error);
+          _this.clientApplication.acquireTokenPopup(_this.authSettings.scopes).then(
+            function (accessToken: any) {
+                _this.access_token = accessToken;
+                alert(accessToken);
+                _this.signinStatus.next(true);
+            }, function (ex: any) {
+                console.log('Error acquiring the popup:\n' + ex);
+            });
+        });
   }
 
   /**
@@ -120,8 +127,9 @@ export class AuthService {
    * Checks for presence of token and that token hasn't expired.
    */
   private tokenNotExpired(): boolean {
+    const user = this.getUser();
     // const token: string = this.browserStorage.get('access_token');
-    return /*token != null && */(this.getExpiry() > new Date().valueOf());
+    return /*token != null && */user !== undefined && (this.getExpiry() > new Date().valueOf());
   }
 
   /**
@@ -145,7 +153,7 @@ export class AuthService {
   }
 
   private getUser(): User {
-      return this.browserStorage.get('user_info') ? JSON.parse(this.browserStorage.get('user_info')) : new User();
+      return this.browserStorage.get('user_info') ? JSON.parse(this.browserStorage.get('user_info')) : undefined;
   }
 
   private storeUser(user: User): void {

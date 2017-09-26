@@ -34,9 +34,6 @@ export class AccountComponent implements OnInit {
           });
         }
       });
-
-    // // Optional strategy for refresh token through a scheduler.
-    // this.authenticationService.startupTokenRefresh();
   }
 
   constructor(public dialog: MdDialog,
