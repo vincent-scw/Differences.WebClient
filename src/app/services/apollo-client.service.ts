@@ -9,7 +9,7 @@ ni.use([{
     }
     const token = localStorage.getItem('access_token');
     req.options.headers.authorization = token == null ?
-      'Bearer ' + token : null;
+      null : 'Bearer ' + token;
     next();
   }
 }]);

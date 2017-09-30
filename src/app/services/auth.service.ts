@@ -19,7 +19,6 @@ export class AuthService {
   private authTime: number;
 
   isAuthenticated = false;
-  access_token: string;
   authSettings = Config.AUTH_SETTINGS;
 
   authority: string = 'https://login.microsoftonline.com/tfp/'
@@ -62,7 +61,7 @@ export class AuthService {
         _this.user.next(user);
         _this.storeUser(user);
 
-        // _this.schedualRefresh();
+        _this.schedualRefresh();
       }, function (error: any) {
         console.log('Error during login:\n' + error);
     });
@@ -81,20 +80,18 @@ export class AuthService {
 //         this.revokeRefreshToken();
   }
 
-  private schedualRefresh(): void {
+  public schedualRefresh(): void {
     const _this = this;
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
         function (accessToken: any) {
-            _this.access_token = accessToken;
-            alert(accessToken);
+            _this.storeToken(accessToken);
             _this.signinStatus.next(true);
         }, function (error: any) {
           console.log(error);
           _this.clientApplication.acquireTokenPopup(_this.authSettings.scopes).then(
             function (accessToken: any) {
-                _this.access_token = accessToken;
-                alert(accessToken);
-                _this.signinStatus.next(true);
+              _this.storeToken(accessToken);
+              _this.signinStatus.next(true);
             }, function (ex: any) {
                 console.log('Error acquiring the popup:\n' + ex);
             });
@@ -135,8 +132,9 @@ export class AuthService {
   /**
    * Stores access token & refresh token.
    */
-  private storeToken(body: any): void {
-      // this.browserStorage.set('access_token', body.access_token);
+  private storeToken(accessToken: string): void {
+    console.log(accessToken);
+    this.browserStorage.set('access_token', accessToken);
       // this.browserStorage.set('refresh_token', body.refresh_token);
       // this.browserStorage.set('token_type', body.token_type);
   }

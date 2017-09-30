@@ -9,7 +9,7 @@ const UserQuery = gql`
   query user {
     mvp_users {
       id
-      nickName
+      displayName
     }
   }
   `;
