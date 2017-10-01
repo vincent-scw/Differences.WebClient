@@ -34,7 +34,7 @@ export class AskQuestionComponent implements OnInit {
 
   onSubmit(): void {
     this.submitQuestionService.submitQuestion(
-      this.titleCtrl.value,
+      this.titleCtrl.value + '有什么区别？',
       this.editorContent.value
     )
     .subscribe(({ data }) => {

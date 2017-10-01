@@ -2,10 +2,20 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { JwtHelper } from 'angular2-jwt';
+import { Apollo, ApolloQueryObservable } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 import { Config } from '../config';
 import { User } from '../models/user';
 import { BrowserStorage } from './browser-storage.service';
+
+const UserQuery = gql`
+  query user {
+    checkUserInDb {
+      id
+    }
+  }
+  `;
 
 @Injectable()
 export class AuthService {
@@ -36,7 +46,8 @@ export class AuthService {
   );
 
   constructor(private browserStorage: BrowserStorage,
-    private jwtHelper: JwtHelper) {
+    private jwtHelper: JwtHelper,
+    private apollo: Apollo) {
 
   }
 
@@ -47,10 +58,17 @@ export class AuthService {
         const fromToken = _this.jwtHelper.decodeToken(idToken);
 
         const user = new User();
-        user.id = fromToken.oid;
+        user.guid = fromToken.oid;
         user.name = fromToken.name;
         user.jobTitle = fromToken.jobTitle;
         user.emails = fromToken.emails;
+
+        // Fetch user id from api
+        _this.apollo.watchQuery({ query: UserQuery })
+          .subscribe((data: any) => { user.id = data.checkUserInDb.id; },
+          (error) => {
+            console.log(error);
+          });
 
         _this.authTime = fromToken.auth_time;
         // Calculates token expiration.
@@ -61,7 +79,7 @@ export class AuthService {
         _this.user.next(user);
         _this.storeUser(user);
 
-        _this.schedualRefresh();
+        _this.scheduleRefresh();
       }, function (error: any) {
         console.log('Error during login:\n' + error);
     });
@@ -80,7 +98,7 @@ export class AuthService {
 //         this.revokeRefreshToken();
   }
 
-  public schedualRefresh(): void {
+  public scheduleRefresh(): void {
     const _this = this;
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
         function (accessToken: any) {

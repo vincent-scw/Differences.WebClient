@@ -1,5 +1,5 @@
 <md-list>
-  <md-list-item *ngFor="let user of data | async | select: 'mvp_users'">
+  <md-list-item *ngFor="let user of data | async | select: 'topUsers'">
     <md-card>
       <ngx-avatar [name]="user.displayName"></ngx-avatar>
       {{user.displayName}}

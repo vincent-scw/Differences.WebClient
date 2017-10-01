@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 
 const UserQuery = gql`
   query user {
-    mvp_users {
+    topUsers {
       id
       displayName
     }
