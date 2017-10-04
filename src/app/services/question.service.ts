@@ -24,6 +24,16 @@ const QueryQuestionDetail = gql`
   }
 `;
 
+const QueryQuestions = gql`
+  query questions($criteria:CriteriaInput!) {
+    questions(criteria: $criteria){
+      id
+      title
+      content
+    }
+  }
+`;
+
 export interface QuestionQueryResponse {
   question;
   loading;
@@ -55,5 +65,18 @@ export class QuestionService {
         id: id
       }
     });
+  }
+
+  getQuestions(categoryId: number, offset: number, limit: number) {
+    return this.apollo.watchQuery({
+      query: QueryQuestions,
+      variables: {
+         criteria: {
+           categoryId: categoryId,
+           offset: offset,
+           limit: limit
+       }
+      }
+     });
   }
 }

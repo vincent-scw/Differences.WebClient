@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Apollo, ApolloQueryObservable } from 'apollo-angular';
-import gql from 'graphql-tag';
 
-const QuestionsQuery = gql`
-  query questions($criteria:CriteriaInput!) {
-    questions(criteria: $criteria){
-      id
-      title
-      content
-    }
-  }
-`;
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-question-list',
@@ -21,18 +12,9 @@ const QuestionsQuery = gql`
 export class QuestionListComponent implements OnInit {
   data: ApolloQueryObservable<any>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private questionService: QuestionService) {}
 
   ngOnInit() {
-    this.data = this.apollo.watchQuery({
-       query: QuestionsQuery,
-       variables: {
-          criteria: {
-            categoryId: 1,
-            offset: 0,
-            limit: 100
-        }
-       }
-      });
+    this.data = this.questionService.getQuestions(1, 0, 100);
   }
 }
