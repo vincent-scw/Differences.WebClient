@@ -17,13 +17,14 @@ export class SubmitQuestionService {
   constructor(private apollo: Apollo) {
   }
 
-  submitQuestion(title: string, content: string) {
+  submitQuestion(title: string, content: string, categoryId: number) {
     return this.apollo.mutate({
       mutation: this.mutation,
       variables: {
         question: {
           title: title,
-          content: content
+          content: content,
+          categoryId: categoryId
         }
       }
     });

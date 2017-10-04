@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog,
-  MdDialogRef,
-  MD_DIALOG_DATA,
-  MdSnackBar } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -36,7 +33,7 @@ export class AccountComponent implements OnInit {
       });
   }
 
-  constructor(public dialog: MdDialog,
+  constructor(
     public snackBar: MdSnackBar,
     protected authService: AuthService,
     protected apiclientService: ApiClientService) {}

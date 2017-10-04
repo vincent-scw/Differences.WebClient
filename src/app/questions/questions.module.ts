@@ -23,6 +23,9 @@ import { QuestionDetailComponent } from './question-detail.component';
   ],
   providers: [
     SubmitQuestionService
+  ],
+  entryComponents: [
+    AskQuestionComponent
   ]
 })
 export class QuestionsModule {}

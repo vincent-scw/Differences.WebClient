@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+
+import { AskQuestionComponent } from '../questions/ask-question.component';
 
 @Component({
   selector: 'app-toc',
   templateUrl: './toc.component.html'
 })
 export class TocComponent {
-  constructor(private router: Router) {
+  constructor(private dialog: MdDialog) {
 
   }
 
-  askQuestion() {
-    this.router.navigateByUrl('/ask-question');
+  askQuestion(): void {
+    this.dialog.open(AskQuestionComponent, {
+    });
   }
 }
