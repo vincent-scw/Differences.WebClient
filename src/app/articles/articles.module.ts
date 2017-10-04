@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { ArticlesRoutingModule } from './articles-routing.module';
 
+import { ArticleService } from '../services/article.service';
+
 import { ArticleListComponent } from './article-list.component';
 import { ArticleDetailComponent } from './article-detail.component';
 
@@ -15,6 +17,8 @@ import { ArticleDetailComponent } from './article-detail.component';
     ArticleListComponent,
     ArticleDetailComponent
   ],
-  providers: []
+  providers: [
+    ArticleService
+  ]
 })
 export class ArticlesModule {}

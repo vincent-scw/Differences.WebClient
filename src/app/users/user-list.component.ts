@@ -1,18 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo, ApolloQueryObservable } from 'apollo-angular';
+import { ApolloQueryObservable } from 'apollo-angular';
 
-import gql from 'graphql-tag';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-
-const UserQuery = gql`
-  query user {
-    topUsers {
-      id
-      displayName
-    }
-  }
-  `;
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -21,9 +10,9 @@ const UserQuery = gql`
 
 export class UserListComponent implements OnInit {
   data: ApolloQueryObservable<any>;
-  constructor(private apollo: Apollo) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.data = this.apollo.watchQuery({ query: UserQuery });
+    this.data = this.userService.getUsers(1, 20);
   }
 }
