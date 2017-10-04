@@ -1,0 +1,9 @@
+<div *ngIf="question">
+  <div>{{question.title}}</div>
+  <br/>
+  <div>
+    <quill-editor class="form-control" 
+      [formControl]="editorContent" 
+      [options]="editorOptions"></quill-editor>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 export class User {
-  public id: string;
+  public id: number;
   public guid: string;
   public name: string;
   public jobTitle: string;
