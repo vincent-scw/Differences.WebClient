@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MdDialogRef } from '@angular/material';
 
-import { SubmitQuestionService } from '../services/submit-question.service';
+import { QuestionService } from '../services/question.service';
 
 @Component({
   selector: 'app-ask-question',
@@ -29,7 +29,7 @@ export class AskQuestionComponent implements OnInit {
     }
   };
 
-  constructor(private submitQuestionService: SubmitQuestionService,
+  constructor(private questionService: QuestionService,
     private router: Router,
     private dialogRef: MdDialogRef<AskQuestionComponent>) {}
 
@@ -37,7 +37,7 @@ export class AskQuestionComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitQuestionService.submitQuestion(
+    this.questionService.submitQuestion(
       this.titleCtrl.value + '有什么不同？',
       this.editorContent.value,
       1 // TODO: categoryId

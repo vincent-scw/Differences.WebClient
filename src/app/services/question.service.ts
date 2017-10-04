@@ -2,24 +2,25 @@ import {Component, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
-@Injectable()
-export class SubmitQuestionService {
-  mutation = gql`
-    mutation differencesMutation($question: QuestionInput!) {
-      submitQuestion(question: $question) {
-        id
-        title
-        content
-      }
+const MutationSubmitQuestion = gql`
+  mutation differencesMutation($question: QuestionInput!) {
+    submitQuestion(question: $question) {
+      id
+      title
+      content
     }
-  `;
+  }
+`;
+
+@Injectable()
+export class QuestionService {
 
   constructor(private apollo: Apollo) {
   }
 
   submitQuestion(title: string, content: string, categoryId: number) {
     return this.apollo.mutate({
-      mutation: this.mutation,
+      mutation: MutationSubmitQuestion,
       variables: {
         question: {
           title: title,
