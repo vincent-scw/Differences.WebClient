@@ -35,9 +35,9 @@ export class AccountComponent implements OnInit {
   }
 
   constructor(
-    public snackBar: MdSnackBar,
-    protected authService: AuthService,
-    protected apiclientService: ApiClientService) {}
+    private snackBar: MdSnackBar,
+    private authService: AuthService,
+    private apiClientService: ApiClientService) {}
 
   onSignClicked(): void {
     this.authService.login();
@@ -51,7 +51,7 @@ export class AccountComponent implements OnInit {
   }
 
   onAccountClicked() {
-    this.apiclientService.callAuth('/health/ping_secure')
+    this.apiClientService.callAuth('/health/ping_secure')
       .subscribe(
       (res: any) => {
           alert(JSON.stringify(res));
