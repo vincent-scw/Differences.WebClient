@@ -2,20 +2,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { JwtHelper } from 'angular2-jwt';
-import { Apollo, ApolloQueryObservable } from 'apollo-angular';
-import gql from 'graphql-tag';
 
 import { Config } from '../config';
 import { User } from '../models/user';
 import { BrowserStorage } from './browser-storage.service';
-
-const UserQuery = gql`
-  query user {
-    checkUserInDb {
-      id
-    }
-  }
-  `;
+import { UserService } from './user.service';
 
 @Injectable()
 export class AuthService {
@@ -47,7 +38,7 @@ export class AuthService {
 
   constructor(private browserStorage: BrowserStorage,
     private jwtHelper: JwtHelper,
-    private apollo: Apollo) {
+    private userService: UserService) {
 
   }
 
@@ -63,21 +54,13 @@ export class AuthService {
         user.jobTitle = fromToken.jobTitle;
         user.emails = fromToken.emails;
 
-        // Fetch user id from api
-        _this.apollo.watchQuery({ query: UserQuery })
-          .subscribe((data: any) => { user.id = data.checkUserInDb.id; },
-          (error) => {
-            console.log(error);
-          });
-
         _this.authTime = fromToken.auth_time;
         // Calculates token expiration.
         _this.expiresIn = fromToken.exp as number * 1000; // To milliseconds.
         _this.storeExpiry(_this.authTime + _this.expiresIn);
 
-        _this.signinStatus.next(true);
-        _this.user.next(user);
         _this.storeUser(user);
+        _this.user.next(user);
 
         _this.scheduleRefresh();
       }, function (error: any) {
@@ -87,6 +70,7 @@ export class AuthService {
 
   public logout() {
     this.clientApplication.logout();
+    this.browserStorage.remove('user_id');
     this.browserStorage.remove('user_info');
     this.signinStatus.next(false);
     this.user.next(new User());
@@ -103,13 +87,11 @@ export class AuthService {
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
         function (accessToken: any) {
             _this.storeToken(accessToken);
-            _this.signinStatus.next(true);
         }, function (error: any) {
           console.log(error);
           _this.clientApplication.acquireTokenPopup(_this.authSettings.scopes).then(
             function (accessToken: any) {
               _this.storeToken(accessToken);
-              _this.signinStatus.next(true);
             }, function (ex: any) {
                 console.log('Error acquiring the popup:\n' + ex);
             });
@@ -121,13 +103,6 @@ export class AuthService {
    */
   public isSignedIn(): BehaviorSubject<boolean> {
       return this.signinStatus;
-  }
-
-  /**
-   * Calls UserInfo endpoint to retrieve user's data.
-   */
-  public userChanged(): BehaviorSubject<any> {
-      return this.user;
   }
 
   private setAuthenticated(accessToken: string) {
@@ -151,8 +126,20 @@ export class AuthService {
    * Stores access token & refresh token.
    */
   private storeToken(accessToken: string): void {
-    console.log(accessToken);
     this.browserStorage.set('access_token', accessToken);
+    this.signinStatus.next(true);
+
+    const userId = this.getUserId();
+    if (userId === 0) {
+      // Fetch user id from api
+      this.userService.checkUserInDb()
+        .subscribe((data: any) => {
+          this.storeUserId(data.checkUserInDb.id);
+        },
+        (error) => {
+          console.log(error);
+        });
+    }
       // this.browserStorage.set('refresh_token', body.refresh_token);
       // this.browserStorage.set('token_type', body.token_type);
   }
@@ -168,11 +155,19 @@ export class AuthService {
       this.browserStorage.set('expires', exp.toString());
   }
 
-  private getUser(): User {
+  public getUser(): User {
       return this.browserStorage.get('user_info') ? JSON.parse(this.browserStorage.get('user_info')) : undefined;
   }
 
   private storeUser(user: User): void {
       this.browserStorage.set('user_info', JSON.stringify(user));
+  }
+
+  private storeUserId(id: number): void {
+    this.browserStorage.set('user_id', id.toString());
+  }
+
+  public getUserId(): number {
+    return parseInt(this.browserStorage.get('user_id'), 0);
   }
 }

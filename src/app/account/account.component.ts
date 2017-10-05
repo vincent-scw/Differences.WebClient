@@ -20,9 +20,10 @@ export class AccountComponent implements OnInit {
   ngOnInit() {
     this.isSignedIn = this.authService.isSignedIn();
 
-    this.authService.userChanged().subscribe(
-      (user: User) => {
-        if (this.isSignedIn.getValue()) {
+    this.isSignedIn.subscribe(
+      (signedIn: boolean) => {
+        if (signedIn) {
+          const user = this.authService.getUser();
           this.currentUser = user;
           // this.isAdmin = this.authenticationService.isInRole('administrator');
 

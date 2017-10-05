@@ -13,6 +13,14 @@ const QueryUser = gql`
   }
 `;
 
+const QueryCheckUser = gql`
+  query user {
+    checkUserInDb {
+      id
+    }
+  }
+`;
+
 @Injectable()
 export class UserService {
   constructor(private apollo: Apollo) {
@@ -20,5 +28,9 @@ export class UserService {
 
   getUsers(categoryId: number, count: number) {
     return this.apollo.watchQuery({ query: QueryUser });
+  }
+
+  checkUserInDb() {
+    return this.apollo.watchQuery({ query: QueryCheckUser });
   }
 }
