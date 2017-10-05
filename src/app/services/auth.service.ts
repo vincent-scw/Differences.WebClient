@@ -49,7 +49,7 @@ export class AuthService {
         const fromToken = _this.jwtHelper.decodeToken(idToken);
 
         const user = new User();
-        user.guid = fromToken.oid;
+        user.id = fromToken.oid;
         user.name = fromToken.name;
         user.jobTitle = fromToken.jobTitle;
         user.emails = fromToken.emails;
@@ -129,17 +129,13 @@ export class AuthService {
     this.browserStorage.set('access_token', accessToken);
     this.signinStatus.next(true);
 
-    const userId = this.getUserId();
-    if (userId === 0) {
-      // Fetch user id from api
-      this.userService.checkUserInDb()
-        .subscribe((data: any) => {
-          this.storeUserId(data.checkUserInDb.id);
-        },
-        (error) => {
-          console.log(error);
-        });
-    }
+    // Check user is stored in DB
+    this.userService.checkUserInDb()
+      .subscribe((data: any) => {
+      },
+      (error) => {
+        console.log(error);
+      });
       // this.browserStorage.set('refresh_token', body.refresh_token);
       // this.browserStorage.set('token_type', body.token_type);
   }
@@ -161,13 +157,5 @@ export class AuthService {
 
   private storeUser(user: User): void {
       this.browserStorage.set('user_info', JSON.stringify(user));
-  }
-
-  private storeUserId(id: number): void {
-    this.browserStorage.set('user_id', id.toString());
-  }
-
-  public getUserId(): number {
-    return parseInt(this.browserStorage.get('user_id'), 0);
   }
 }

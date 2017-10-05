@@ -18,8 +18,6 @@ export class QuestionDetailComponent implements OnInit {
   question: any;
   id: number;
 
-  titleCtrl = new FormControl();
-  editorContent = new FormControl();
   editorOptions = {
     readOnly: true,
     modules: {
@@ -39,7 +37,6 @@ export class QuestionDetailComponent implements OnInit {
       .subscribe(() => this.questionService.getQuestion(this.id)
         .subscribe(({data}) => {
           this.question = data.question;
-          // this.editorContent = data.question.content;
         })
       );
   }
