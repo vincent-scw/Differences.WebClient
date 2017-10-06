@@ -2,13 +2,18 @@
   <div>{{question.title}}</div>
   <br/>
   <div>
-    <quill-editor class="form-control" 
-      [(ngModel)]="question.content" 
-      [options]="editorOptions"></quill-editor>
+    <quill-editor
+      [(ngModel)]="question.content" [options]="editorOptions"></quill-editor>
   </div>
 </div>
 <br/>
 <div>我来回答</div>
-<div>
 
+<md-list>
+  <md-list-item *ngFor="let answer of answers | async | select: 'question_answers'">
+    <span>{{answer.content}}</span>
+  </md-list-item>
+</md-list>
+<div>
+  <button md-button (click)="goBack()">返回</button>
 </div>

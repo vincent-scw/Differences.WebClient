@@ -11,7 +11,8 @@ import { QuestionService } from '../services/question.service';
 })
 
 export class AskQuestionComponent implements OnInit {
-  titleCtrl = new FormControl();
+  title = '';
+  content = '';
   editorContent = new FormControl();
   editorOptions = {
     theme: 'snow',
@@ -37,17 +38,18 @@ export class AskQuestionComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.questionService.submitQuestion(
-      this.titleCtrl.value + '有什么不同？',
-      this.editorContent.value,
-      1 // TODO: categoryId
-    )
-    .subscribe(({ data }) => {
-      this.router.navigateByUrl('/questions');
-      this.dialogRef.close();
-    }, (error) => {
-      console.log('there was an error sending the query', error);
-    });
+    alert(this.content);
+    // this.questionService.submitQuestion(
+    //   this.title + '有什么不同？',
+    //   this.editorContent.value,
+    //   1 // TODO: categoryId
+    // )
+    // .subscribe(({ data }) => {
+    //   this.router.navigateByUrl('/questions');
+    //   this.dialogRef.close();
+    // }, (error) => {
+    //   console.log('there was an error sending the query', error);
+    // });
   }
 
   onCancel(): void {

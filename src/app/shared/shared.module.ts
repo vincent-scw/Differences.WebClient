@@ -28,7 +28,7 @@ import { provideClient } from '../services/apollo-client.service';
         MaterialModule,
         QuillEditorModule,
         AvatarModule,
-        ApolloModule,
+        ApolloModule
     ]
 })
 

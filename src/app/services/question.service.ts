@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { Question } from '../models/question';
 
 const MutationSubmitQuestion = gql`
-  mutation differencesMutation($question: QuestionInput!) {
+  mutation differencesMutation($question: SubjectInput!) {
     submitQuestion(question: $question) {
       id
       title
@@ -29,6 +29,15 @@ const QueryQuestions = gql`
     questions(criteria: $criteria){
       id
       title
+      content
+    }
+  }
+`;
+
+const QueryQuestionAnswers = gql`
+  query question($questionId: Int!) {
+    question_answers(questionId: $questionId) {
+      id
       content
     }
   }
@@ -78,5 +87,14 @@ export class QuestionService {
        }
       }
      });
+  }
+
+  getQuestionAnswers(questionId: number) {
+    return this.apollo.watchQuery({
+      query: QueryQuestionAnswers,
+      variables: {
+        questionId: questionId
+      }
+    });
   }
 }

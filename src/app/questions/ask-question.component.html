@@ -1,20 +1,22 @@
 <form name="form" (ngSubmit)="onSubmit()">
   <div>
     <md-form-field class="full-width form-control question-title">
-      <input mdInput #title maxlength="200" 
-        [formControl]="titleCtrl"
+      <input mdInput required 
+        name="title"
+        maxlength="200" 
+        [(ngModel)]="title"
         placeholder="输入标题（用大括号来标记比对项）">
       <span mdSuffix>有什么不同？</span>
       <md-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}我{{ '}' }}之间有什么不同？</md-hint>
-      <md-hint align="end">{{title.value.length}} / 80</md-hint>
+      <md-hint align="end">{{title.length}} / 80</md-hint>
     </md-form-field>
   </div>
   <br/>
   <div>
-    <div class="form-group" 
-          [ngClass]="{'has-error': (!editorContent.valid && editorContent.touched), 'has-success': (editorContent.valid && editorContent.touched)}">
+    <div class="form-group">
       <quill-editor class="form-control" 
-        [formControl]="editorContent" 
+        name="content"
+        [(ngModel)]="content"
         [options]="editorOptions"></quill-editor>
     </div>
   </div>
