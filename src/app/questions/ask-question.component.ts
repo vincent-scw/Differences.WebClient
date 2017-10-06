@@ -13,7 +13,7 @@ import { QuestionService } from '../services/question.service';
 export class AskQuestionComponent implements OnInit {
   title = '';
   content = '';
-  editorContent = new FormControl();
+
   editorOptions = {
     theme: 'snow',
     placeholder: '输入问题的描述...',
@@ -38,18 +38,17 @@ export class AskQuestionComponent implements OnInit {
   }
 
   onSubmit(): void {
-    alert(this.content);
-    // this.questionService.submitQuestion(
-    //   this.title + '有什么不同？',
-    //   this.editorContent.value,
-    //   1 // TODO: categoryId
-    // )
-    // .subscribe(({ data }) => {
-    //   this.router.navigateByUrl('/questions');
-    //   this.dialogRef.close();
-    // }, (error) => {
-    //   console.log('there was an error sending the query', error);
-    // });
+    this.questionService.submitQuestion(
+      this.title + '有什么不同？',
+      this.content,
+      1 // TODO: categoryId
+    )
+    .subscribe(({ data }) => {
+      this.router.navigateByUrl('/questions');
+      this.dialogRef.close();
+    }, (error) => {
+      console.log('there was an error sending the query', error);
+    });
   }
 
   onCancel(): void {
