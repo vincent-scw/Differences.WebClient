@@ -2,8 +2,9 @@
   <div>{{question.title}}</div>
   <br/>
   <div>
-    <quill-editor
-      [(ngModel)]="question.content" [options]="editorOptions"></quill-editor>
+    <ez-quill-editor
+      [(ngModel)]="question.content"
+      readOnly="true"></ez-quill-editor>
   </div>
 </div>
 <br/>

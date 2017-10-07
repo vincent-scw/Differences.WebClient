@@ -7,6 +7,7 @@ import { QuillEditorModule } from 'ngx-quill-editor';
 import { ApolloModule } from 'apollo-angular';
 import { AvatarModule } from 'ngx-avatar';
 
+import { EasyQuillEditorComponent } from './ez-quill-editor';
 import { provideClient } from '../services/apollo-client.service';
 
 @NgModule({
@@ -20,6 +21,9 @@ import { provideClient } from '../services/apollo-client.service';
         AvatarModule,
         ApolloModule.forRoot(provideClient)
     ],
+    declarations: [
+      EasyQuillEditorComponent
+    ],
     exports: [
         HttpModule,
         CommonModule,
@@ -28,7 +32,8 @@ import { provideClient } from '../services/apollo-client.service';
         MaterialModule,
         QuillEditorModule,
         AvatarModule,
-        ApolloModule
+        ApolloModule,
+        EasyQuillEditorComponent
     ]
 })
 
