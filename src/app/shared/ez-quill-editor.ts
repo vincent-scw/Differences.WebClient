@@ -1,18 +1,31 @@
 import { Component,
   OnInit,
   Input,
+  OnChanges,
+  SimpleChanges,
   forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'ez-quill-editor',
   template: `
-  <quill-editor class="form-control"
-    [(ngModel)]="value" [options]="editorOptions"
-    (blur)="onBlur()"
-    (change)="onChange()">
-  </quill-editor>
+  <div>
+    <quill-editor *ngIf="readOnly"
+      [(ngModel)]="value" [options]="readonlyOptions">
+    </quill-editor>
+    <quill-editor *ngIf="!readOnly"
+      class="form-control"
+      [(ngModel)]="value" [options]="editorOptions"
+      (blur)="onBlur()"
+      (change)="onChange()">
+    </quill-editor>
+  </div>
+  <div *ngIf="showStatusBar">
+    <ngx-avatar [name]="user.displayName" size="30"></ngx-avatar>{{user.displayName}}
+  </div>
   `,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -21,32 +34,44 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   }]
 })
 
-export class EasyQuillEditorComponent implements OnInit, ControlValueAccessor {
+export class EasyQuillEditorComponent implements OnInit, ControlValueAccessor, OnChanges {
   @Input() readOnly: boolean;
+  @Input() showStatusBar: boolean;
+  @Input() user: any;
 
   private innerValue: string;
 
-  editorOptions: any;
+  readonlyOptions = {
+    readOnly: true,
+    modules: {
+      toolbar: false
+    }
+  };
+  editorOptions = {
+    theme: 'snow',
+    placeholder: '写点什么...',
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'align': [] }],
+        ['link', 'image'],
+        ['clean']
+      ]
+    }
+  };
+
   onModelChange: Function = (_: any) => {};
   onModelTouched: Function = () => {};
 
   ngOnInit() {
-    this.editorOptions = {
-      theme: 'snow',
-      readOnly: this.readOnly,
-      placeholder: '写点什么...',
-      modules: {
-        toolbar: this.readOnly ? false : [
-          ['bold', 'italic', 'underline', 'strike'],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-          [{ 'color': [] }, { 'background': [] }],
-          [{ 'align': [] }],
-          ['link', 'image'],
-          ['clean']
-        ]
-      }
-    };
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
   }
 
   get value(): string {

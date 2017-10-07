@@ -4,7 +4,9 @@
   <div>
     <ez-quill-editor
       [(ngModel)]="question.content"
-      readOnly="true"></ez-quill-editor>
+      [readOnly]="isReadOnly"
+      showStatusBar="true"
+      [user]="question.user"></ez-quill-editor>
   </div>
 </div>
 <br/>

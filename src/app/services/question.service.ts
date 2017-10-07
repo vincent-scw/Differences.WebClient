@@ -3,45 +3,7 @@ import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { Question } from '../models/question';
-
-const MutationSubmitQuestion = gql`
-  mutation differencesMutation($question: SubjectInput!) {
-    submitQuestion(question: $question) {
-      id
-      title
-      content
-    }
-  }
-`;
-
-const QueryQuestionDetail = gql`
-  query question($id: Int!) {
-    question(id: $id) {
-      id
-      title
-      content
-    }
-  }
-`;
-
-const QueryQuestions = gql`
-  query questions($criteria:CriteriaInput!) {
-    questions(criteria: $criteria){
-      id
-      title
-      content
-    }
-  }
-`;
-
-const QueryQuestionAnswers = gql`
-  query question($questionId: Int!) {
-    question_answers(questionId: $questionId) {
-      id
-      content
-    }
-  }
-`;
+import { fragments } from './fragments';
 
 export interface QuestionQueryResponse {
   question;
@@ -51,12 +13,67 @@ export interface QuestionQueryResponse {
 @Injectable()
 export class QuestionService {
 
+  MutationSubmitQuestion = gql`
+    mutation differencesMutation($question: SubjectInput!) {
+      submitQuestion(question: $question) {
+        id
+        title
+        content
+        user {
+          ...UserInfo
+        }
+      }
+    }
+    ${fragments.user}
+    `;
+
+  QueryQuestionDetail = gql`
+    query question($id: Int!) {
+      question(id: $id) {
+        id
+        title
+        content
+        user {
+          ...UserInfo
+        }
+      }
+    }
+    ${fragments.user}
+    `;
+
+  QueryQuestions = gql`
+    query questions($criteria:CriteriaInput!) {
+      questions(criteria: $criteria){
+        id
+        title
+        content
+        user {
+          ...UserInfo
+        }
+      }
+    }
+    ${fragments.user}
+  `;
+
+  QueryQuestionAnswers = gql`
+    query question($questionId: Int!) {
+      question_answers(questionId: $questionId) {
+        id
+        content
+        user {
+          ...UserInfo
+        }
+      }
+    }
+    ${fragments.user}
+  `;
+
   constructor(private apollo: Apollo) {
   }
 
   submitQuestion(title: string, content: string, categoryId: number) {
     return this.apollo.mutate({
-      mutation: MutationSubmitQuestion,
+      mutation: this.MutationSubmitQuestion,
       variables: {
         question: {
           title: title,
@@ -69,7 +86,7 @@ export class QuestionService {
 
   getQuestion(id: number) {
     return this.apollo.watchQuery<QuestionQueryResponse>({
-      query: QueryQuestionDetail,
+      query: this.QueryQuestionDetail,
       variables: {
         id: id
       }
@@ -78,7 +95,7 @@ export class QuestionService {
 
   getQuestions(categoryId: number, offset: number, limit: number) {
     return this.apollo.watchQuery({
-      query: QueryQuestions,
+      query: this.QueryQuestions,
       variables: {
          criteria: {
            categoryId: categoryId,
@@ -91,7 +108,7 @@ export class QuestionService {
 
   getQuestionAnswers(questionId: number) {
     return this.apollo.watchQuery({
-      query: QueryQuestionAnswers,
+      query: this.QueryQuestionAnswers,
       variables: {
         questionId: questionId
       }
