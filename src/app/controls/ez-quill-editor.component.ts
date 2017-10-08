@@ -11,22 +11,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'ez-quill-editor',
-  template: `
-  <div>
-    <quill-editor *ngIf="readOnly"
-      [(ngModel)]="value" [options]="readonlyOptions">
-    </quill-editor>
-    <quill-editor *ngIf="!readOnly"
-      class="form-control"
-      [(ngModel)]="value" [options]="editorOptions"
-      (blur)="onBlur()"
-      (change)="onChange()">
-    </quill-editor>
-  </div>
-  <div *ngIf="showStatusBar">
-    <ngx-avatar [name]="user.displayName" size="30"></ngx-avatar>{{user.displayName}}
-  </div>
-  `,
+  templateUrl: './ez-quill-editor.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => EasyQuillEditorComponent),

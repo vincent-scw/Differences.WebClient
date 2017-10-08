@@ -22,6 +22,7 @@ export class QuestionService {
         user {
           ...UserInfo
         }
+        createTime
       }
     }
     ${fragments.user}
@@ -36,6 +37,7 @@ export class QuestionService {
         user {
           ...UserInfo
         }
+        createTime
       }
     }
     ${fragments.user}
@@ -50,6 +52,7 @@ export class QuestionService {
         user {
           ...UserInfo
         }
+        createTime
       }
     }
     ${fragments.user}
@@ -63,6 +66,7 @@ export class QuestionService {
         user {
           ...UserInfo
         }
+        createTime
       }
     }
     ${fragments.user}

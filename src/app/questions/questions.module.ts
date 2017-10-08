@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
+import { ControlsModule } from '../controls/contorls.module';
 import { QuestionsRoutingModule } from './questions-routing.module';
 
 import { QuestionService } from '../services/question.service';
@@ -14,6 +15,7 @@ import { QuestionDetailComponent } from './question-detail.component';
   imports: [
     ReactiveFormsModule,
     SharedModule,
+    ControlsModule,
     QuestionsRoutingModule
   ],
   declarations: [
