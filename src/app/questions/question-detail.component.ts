@@ -18,7 +18,6 @@ export class QuestionDetailComponent implements OnInit {
   question: any;
   id: number;
   answers: ApolloQueryObservable<any>;
-  private isReadOnly = true;
 
   constructor(
     private questionService: QuestionService,
@@ -39,7 +38,6 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.isReadOnly = false;
-    // this.location.back();
+    this.location.back();
   }
 }

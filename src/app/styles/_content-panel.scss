@@ -1,12 +1,24 @@
 content-panel {
   .avatar-div {
-    position: relative;
     padding-right: 16px;
     float: left;
   }
 
   .panel-div {
     padding-left: 60px;
+  }
+
+  .user-div {
+    margin-bottom: 10px;
+
+    .time {
+      float: right;
+      margin-top: 2px;
+    }
+  }
+
+  .editor {
+    
   }
 }
 

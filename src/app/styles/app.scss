@@ -166,9 +166,9 @@ form {
   border: 1px solid #ccc; 
   position: relative; 
 } 
-.has-error { 
-  border-color: red; 
-} 
-.has-success { 
-  border-color: green; 
+
+.item-wrapper {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dcdcdc;
+  margin-bottom: 16px;
 }

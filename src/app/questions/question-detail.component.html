@@ -1,19 +1,19 @@
 <div *ngIf="question">
-  <div>{{question.title}}</div>
-  <br/>
+  <h3>{{question.title}}</h3>
   <div>
     <content-panel
       showStatusBar="true"
       [data]="question"></content-panel>
   </div>
 </div>
-<br/>
-<div>我来回答</div>
 
 <md-list>
-  <md-list-item *ngFor="let answer of answers | async | select: 'question_answers'">
-    <span>{{answer.content}}</span>
-  </md-list-item>
+  <div class="item-wrapper"
+    *ngFor="let answer of answers | async | select: 'question_answers'">
+    <content-panel 
+      showStatusBar="true"
+      [data]="answer"></content-panel>
+  </div>
 </md-list>
 <div>
   <button md-button (click)="goBack()">返回</button>

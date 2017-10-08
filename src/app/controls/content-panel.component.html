@@ -2,11 +2,11 @@
   <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
 </div>
 <div class="panel-div">
-  <div>
+  <div class="user-div">
+    <div class="time">{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</div>
     <a [routerLink]="['/user', data.user.id]">{{data.user.displayName}}</a>
-    <span>{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</span>
   </div>
-  <ez-quill-editor
+  <ez-quill-editor class="editor"
     [(ngModel)]="data.content"
     readOnly=true>
   </ez-quill-editor>
