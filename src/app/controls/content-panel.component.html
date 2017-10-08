@@ -1,0 +1,17 @@
+<div class="avatar-div">
+  <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
+</div>
+<div class="panel-div">
+  <div>
+    <a [routerLink]="['/user', data.user.id]">{{data.user.displayName}}</a>
+    <span>{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</span>
+  </div>
+  <ez-quill-editor
+    [(ngModel)]="data.content"
+    readOnly=true>
+  </ez-quill-editor>
+
+  <div *ngIf="showStatusBar">
+      
+  </div>
+</div>

@@ -21,8 +21,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class EasyQuillEditorComponent implements OnInit, ControlValueAccessor, OnChanges {
   @Input() readOnly: boolean;
-  @Input() showStatusBar: boolean;
-  @Input() user: any;
 
   private innerValue: string;
 

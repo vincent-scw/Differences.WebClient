@@ -2,11 +2,9 @@
   <div>{{question.title}}</div>
   <br/>
   <div>
-    <ez-quill-editor
-      [(ngModel)]="question.content"
-      [readOnly]="isReadOnly"
+    <content-panel
       showStatusBar="true"
-      [user]="question.user"></ez-quill-editor>
+      [data]="question"></content-panel>
   </div>
 </div>
 <br/>

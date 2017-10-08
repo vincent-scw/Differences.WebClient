@@ -1,19 +1,9 @@
-<div class="avatar-div">
-  <ngx-avatar [name]="user.displayName" size="40"></ngx-avatar>
-</div>
-<div class="panel-div">
-  <a [routerLink]="['/user', user.id]">{{user.displayName}}</a>
-  <quill-editor *ngIf="readOnly"
-    [(ngModel)]="value" [options]="readonlyOptions">
-  </quill-editor>
-  <quill-editor *ngIf="!readOnly"
-    class="form-control"
-    [(ngModel)]="value" [options]="editorOptions"
-    (blur)="onBlur()"
-    (change)="onChange()">
-  </quill-editor>
-
-  <div *ngIf="showStatusBar">
-      
-  </div>
-</div>
+<quill-editor *ngIf="readOnly"
+  [(ngModel)]="value" [options]="readonlyOptions">
+</quill-editor>
+<quill-editor *ngIf="!readOnly"
+  class="form-control"
+  [(ngModel)]="value" [options]="editorOptions"
+  (blur)="onBlur()"
+  (change)="onChange()">
+</quill-editor>

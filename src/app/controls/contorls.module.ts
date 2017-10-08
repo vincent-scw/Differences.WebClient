@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { EasyQuillEditorComponent } from '../controls/ez-quill-editor.component';
+import { EasyQuillEditorComponent } from './ez-quill-editor.component';
+import { ContentPanelComponent } from './content-panel.component';
 
 @NgModule({
   imports: [
@@ -13,10 +14,12 @@ import { EasyQuillEditorComponent } from '../controls/ez-quill-editor.component'
     RouterModule
   ],
   declarations: [
-    EasyQuillEditorComponent
+    EasyQuillEditorComponent,
+    ContentPanelComponent
   ],
   exports: [
-    EasyQuillEditorComponent
+    EasyQuillEditorComponent,
+    ContentPanelComponent
   ]
 })
 export class ControlsModule {}
