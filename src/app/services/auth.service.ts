@@ -118,8 +118,8 @@ export class AuthService {
    */
   private tokenNotExpired(): boolean {
     const user = this.getUser();
-    // const token: string = this.browserStorage.get('access_token');
-    return /*token != null && */user !== undefined && (this.getExpiry() > new Date().valueOf());
+    const token: string = this.browserStorage.get('access_token');
+    return token != null && user !== undefined && (this.getExpiry() > new Date().valueOf());
   }
 
   /**

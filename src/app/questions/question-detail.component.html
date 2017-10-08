@@ -7,6 +7,17 @@
   </div>
 </div>
 
+<div class="panelTitle underline">
+  <button class="float-right" md-button (click)="expansionPanel.toggle()">我有话说</button>
+  <span>回复</span>
+</div>
+<md-expansion-panel #expansionPanel>
+  <div>
+    <ez-quill-editor></ez-quill-editor>
+    <button md-raised-button color="accent">提交</button>
+  </div>
+</md-expansion-panel>
+
 <md-list>
   <div class="item-wrapper"
     *ngFor="let answer of answers | async | select: 'question_answers'">

@@ -172,3 +172,20 @@ form {
   border-bottom: 1px solid #dcdcdc;
   margin-bottom: 16px;
 }
+
+.underline {
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.panelTitle {
+  font-size: 18px;
+  clear: both;
+  overflow: hidden;
+  height: 40px;
+  line-height: 40px;
+  font-weight: normal;
+}
+
+.float-right {
+  float: right;
+}
