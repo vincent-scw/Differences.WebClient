@@ -18,6 +18,7 @@ export class QuestionDetailComponent implements OnInit {
   question: any;
   id: number;
   answers: ApolloQueryObservable<any>;
+  myAnswerContent: string;
 
   constructor(
     private questionService: QuestionService,
@@ -39,5 +40,12 @@ export class QuestionDetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  submitAnswer(): void {
+    this.questionService.submitAnswer(this.id, null, this.myAnswerContent)
+      .subscribe((data) => {
+        this.myAnswerContent = null;
+      });
   }
 }

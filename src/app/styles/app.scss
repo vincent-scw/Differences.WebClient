@@ -189,3 +189,13 @@ form {
 .float-right {
   float: right;
 }
+
+.mat-expansion-panel {
+  box-shadow: 0 0 0 0 !important;
+  background-color: transparent;
+  margin-bottom: 20px !important;
+}
+
+.mat-expansion-panel-body {
+  padding: 0 0 0 0 !important;
+}

@@ -28,6 +28,20 @@ export class QuestionService {
     ${fragments.user}
     `;
 
+  MutationSubmitAnswer = gql`
+    mutation differencesMutation($answer: ReplyInput!) {
+      submitAnswer(answer: $answer) {
+        id
+        content
+        createTime
+        user {
+          ...UserInfo
+        }
+      }
+    }
+    ${fragments.user}
+  `;
+
   QueryQuestionDetail = gql`
     query question($id: Int!) {
       question(id: $id) {
@@ -83,6 +97,19 @@ export class QuestionService {
           title: title,
           content: content,
           categoryId: categoryId
+        }
+      }
+    });
+  }
+
+  submitAnswer(questionId: number, parentId: number, content: string) {
+    return this.apollo.mutate({
+      mutation: this.MutationSubmitAnswer,
+      variables: {
+        answer: {
+          subjectId: questionId,
+          content: content,
+          parentId: parentId
         }
       }
     });
