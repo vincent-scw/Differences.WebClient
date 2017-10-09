@@ -92,6 +92,7 @@ export class QuestionService {
   }
 
   submitQuestion(title: string, content: string, categoryId: number) {
+    const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitQuestion,
       variables: {
@@ -99,6 +100,28 @@ export class QuestionService {
           title: title,
           content: content,
           categoryId: categoryId
+        }
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitQuestion: {
+          __typename: 'QuestionType',
+          title: title,
+          content: content,
+          createTime: +new Date,
+          user: {
+            __typename: 'UserType',
+            id: user.id,
+            displayName: user.name,
+            avatarUrl: null
+          }
+        }
+      },
+      updateQueries: {
+        questions: (previousResult, { mutationResult }) => {
+          return {
+            questions: [mutationResult.data.submitQuestion, ...previousResult.questions]
+          };
         }
       }
     });
