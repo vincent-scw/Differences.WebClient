@@ -2,6 +2,7 @@ import {Component, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
+import { AuthService } from '../services/auth.service';
 import { Question } from '../models/question';
 import { fragments } from './fragments';
 
@@ -73,7 +74,7 @@ export class QuestionService {
   `;
 
   QueryQuestionAnswers = gql`
-    query question($questionId: Int!) {
+    query question_answers($questionId: Int!) {
       question_answers(questionId: $questionId) {
         id
         content
@@ -86,7 +87,8 @@ export class QuestionService {
     ${fragments.user}
   `;
 
-  constructor(private apollo: Apollo) {
+  constructor(private apollo: Apollo,
+    private authService: AuthService) {
   }
 
   submitQuestion(title: string, content: string, categoryId: number) {
@@ -103,6 +105,7 @@ export class QuestionService {
   }
 
   submitAnswer(questionId: number, parentId: number, content: string) {
+    const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitAnswer,
       variables: {
@@ -110,6 +113,27 @@ export class QuestionService {
           subjectId: questionId,
           content: content,
           parentId: parentId
+        }
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitAnswer: {
+          __typename: 'AnswerType',
+          content: content,
+          createTime: +new Date,
+          user: {
+            __typename: 'UserType',
+            id: user.id,
+            displayName: user.name,
+            avatarUrl: null
+          }
+        }
+      },
+      updateQueries: {
+        question_answers: (previousResult, { mutationResult }) => {
+          return {
+            question_answers: [mutationResult.data.submitAnswer, ...previousResult.question_answers]
+          };
         }
       }
     });
