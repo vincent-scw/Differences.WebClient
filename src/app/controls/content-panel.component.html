@@ -11,7 +11,14 @@
     readOnly=true>
   </ez-quill-editor>
 
-  <div *ngIf="showStatusBar">
-      
+  <div (mouseover)="showStatusBar=true"
+    (mouseout)="showStatusBar=false">
+    <div [style.visibility]="showStatusBar ? 'visible': 'hidden'" >
+      <button md-icon-button>
+        <md-icon>thumb_up</md-icon>
+      </button>
+      <button md-icon-button (click)="onEdit()">
+        <md-icon>edit</md-icon>
+      </button>
   </div>
 </div>

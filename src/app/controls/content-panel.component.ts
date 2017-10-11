@@ -15,7 +15,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class ContentPanelComponent implements OnInit, OnChanges {
   @Input() data: any;
-  @Input() showStatusBar: boolean;
+  showStatusBar: boolean;
 
   onModelChange: Function = (_: any) => {};
   onModelTouched: Function = () => {};
@@ -26,5 +26,9 @@ export class ContentPanelComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
 
+  }
+
+  onEdit() {
+    alert(0);
   }
 }

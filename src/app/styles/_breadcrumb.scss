@@ -51,13 +51,21 @@ $green-darken 		  : #16a085;
     }
     &:last-child{
       a, span {
+        background-color: $green !important;
+        border-color:$green !important;
         padding-right:15px;
         -moz-border-radius: 0 4px 4px 0;
         -webkit-border-radius: 0;
         border-radius: 0 4px 4px 0;
-        &:after{
-          border:none;
+
+        &:before{
+          border-color:$green;
+          border-left-color:transparent;
          }
+        &:after{
+          border-left-color:$green;
+          border:none;
+        }
       }
     }
 
