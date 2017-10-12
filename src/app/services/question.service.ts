@@ -7,8 +7,8 @@ import { Question } from '../models/question';
 import { fragments } from './fragments';
 
 export interface QuestionQueryResponse {
-  question;
-  loading;
+  question: any;
+  loading: any;
 }
 
 @Injectable()

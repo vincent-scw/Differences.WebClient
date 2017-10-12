@@ -7,8 +7,8 @@ import { AuthService } from '../services/auth.service';
 import { fragments } from './fragments';
 
 export interface ArticleQueryResponse {
-  article;
-  loading;
+  article: any;
+  loading: any;
 }
 
 @Injectable()
