@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Apollo, ApolloQueryObservable } from 'apollo-angular';
+import { ApolloQueryObservable } from 'apollo-angular';
 
 import { QuestionService } from '../services/question.service';
 

@@ -24,7 +24,8 @@
   <div class="item-wrapper"
     *ngFor="let answer of answers | async | select: 'question_answers'">
     <content-panel 
-      [data]="answer"></content-panel>
+      [data]="answer"
+      (onUpdate)="onUpdate($event)"></content-panel>
   </div>
 </md-list>
 <div>

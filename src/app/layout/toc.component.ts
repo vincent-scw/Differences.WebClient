@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { AskQuestionComponent } from '../questions/ask-question.component';
+import { WriteArticleComponent } from '../articles/write-article.component';
 
 @Component({
   selector: 'app-toc',
@@ -15,5 +16,9 @@ export class TocComponent {
   askQuestion(): void {
     this.dialog.open(AskQuestionComponent, {
     });
+  }
+
+  writeArticle(): void {
+    this.dialog.open(WriteArticleComponent, {});
   }
 }

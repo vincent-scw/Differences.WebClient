@@ -48,4 +48,8 @@ export class QuestionDetailComponent implements OnInit {
         this.myAnswerContent = null;
       });
   }
+
+  onUpdate(data: any): void {
+    alert(JSON.stringify(data));
+  }
 }

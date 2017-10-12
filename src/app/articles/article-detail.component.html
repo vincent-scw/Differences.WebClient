@@ -1,0 +1,33 @@
+<div *ngIf="article">
+  <h3>{{article.title}}</h3>
+  <div>
+    <content-panel
+      [data]="article"></content-panel>
+  </div>
+</div>
+
+<div class="panelTitle underline">
+  <button class="float-right" md-button color="primary"
+   (click)="expansionPanel.toggle()">我有话说</button>
+  <span>回复</span>
+</div>
+<md-expansion-panel #expansionPanel>
+  <div>
+    <ez-quill-editor
+      [(ngModel)]="myCommentContent"></ez-quill-editor>
+    <button md-raised-button color="accent"
+      (click)="submitComment()">提交</button>
+  </div>
+</md-expansion-panel>
+
+<md-list>
+  <div class="item-wrapper"
+    *ngFor="let comment of comments | async | select: 'article_comments'">
+    <content-panel 
+      [data]="comment"
+      (onUpdate)="onUpdate($event)"></content-panel>
+  </div>
+</md-list>
+<div>
+  <button md-button (click)="goBack()">返回</button>
+</div>

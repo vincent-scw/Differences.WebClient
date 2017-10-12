@@ -3,6 +3,7 @@ import { Component,
   Input,
   Output,
   OnChanges,
+  EventEmitter,
   SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -15,7 +16,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class ContentPanelComponent implements OnInit, OnChanges {
   @Input() data: any;
+  @Output() onUpdate = new EventEmitter<any>();
   showStatusBar: boolean;
+  isReadOnly = true;
 
   onModelChange: Function = (_: any) => {};
   onModelTouched: Function = () => {};
@@ -29,6 +32,14 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   }
 
   onEdit() {
-    alert(0);
+    this.isReadOnly = false;
+  }
+
+  onSubmit() {
+    this.onUpdate.emit(this.data);
+  }
+
+  onCancel() {
+    this.isReadOnly = true;
   }
 }

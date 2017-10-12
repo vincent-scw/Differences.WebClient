@@ -8,6 +8,7 @@ import { ArticleService } from '../services/article.service';
 
 import { ArticleListComponent } from './article-list.component';
 import { ArticleDetailComponent } from './article-detail.component';
+import { WriteArticleComponent } from './write-article.component';
 
 @NgModule({
   imports: [
@@ -17,10 +18,14 @@ import { ArticleDetailComponent } from './article-detail.component';
   ],
   declarations: [
     ArticleListComponent,
-    ArticleDetailComponent
+    ArticleDetailComponent,
+    WriteArticleComponent
   ],
   providers: [
     ArticleService
+  ],
+  entryComponents: [
+    WriteArticleComponent
   ]
 })
 export class ArticlesModule {}

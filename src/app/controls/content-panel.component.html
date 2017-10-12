@@ -8,10 +8,19 @@
   </div>
   <ez-quill-editor class="editor"
     [(ngModel)]="data.content"
-    readOnly=true>
+    [readOnly]="isReadOnly">
   </ez-quill-editor>
 
-  <div (mouseover)="showStatusBar=true"
+  <div *ngIf="!isReadOnly">
+    <button md-icon-button (click)="onSubmit()">
+      <md-icon>check</md-icon>
+    </button>
+    <button md-icon-button (click)="onCancel()">
+      <md-icon>close</md-icon>
+    </button>
+  </div>
+  <div *ngIf="isReadOnly"
+    (mouseover)="showStatusBar=true"
     (mouseout)="showStatusBar=false">
     <div [style.visibility]="showStatusBar ? 'visible': 'hidden'" >
       <button md-icon-button>
