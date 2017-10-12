@@ -16,20 +16,8 @@ import { UsersModule } from './users/users.module';
 import { AuthService } from './services/auth.service';
 import { IdentityService } from './services/identity.service';
 import { BrowserStorage } from './services/browser-storage.service';
-import { ApiClientService } from './services/api-client.service';
 
 import { AppComponent } from './app.component';
-
-// angular2-jwt config for JiT and AoT compilation.
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
-
-// Set tokenGetter to use the same storage in AuthenticationService.Helpers.
-export function getAuthHttp(http: Http) {
-  return new AuthHttp(new AuthConfig({
-      noJwtError: true,
-      tokenGetter: (() => localStorage.getItem('access_token'))
-  }), http);
-}
 
 @NgModule({
   declarations: [
@@ -52,13 +40,7 @@ export function getAuthHttp(http: Http) {
     JwtHelper,
     AuthService,
     IdentityService,
-    ApiClientService,
-    BrowserStorage,
-    {
-      provide: AuthHttp,
-      useFactory: getAuthHttp,
-      deps: [Http]
-    }
+    BrowserStorage
   ],
   bootstrap: [AppComponent]
 })

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../services/auth.service';
-import { ApiClientService } from '../services/api-client.service';
 import { User } from '../models/user';
 
 @Component({
@@ -36,8 +35,7 @@ export class AccountComponent implements OnInit {
 
   constructor(
     private snackBar: MdSnackBar,
-    private authService: AuthService,
-    private apiClientService: ApiClientService) {}
+    private authService: AuthService) {}
 
   onSignClicked(): void {
     this.authService.login();
@@ -51,13 +49,6 @@ export class AccountComponent implements OnInit {
   }
 
   onAccountClicked() {
-    this.apiClientService.callAuth('/health/ping_secure')
-      .subscribe(
-      (res: any) => {
-          alert(JSON.stringify(res));
-      },
-      (error: any) => {
-          console.log(error);
-      });
+
   }
 }
