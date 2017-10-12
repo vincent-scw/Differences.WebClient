@@ -4,6 +4,7 @@
   "discription": "Differences web client",
   "author": "Vincent Shen",
   "license": "MIT",
+  "build:aot": "ngc -p tsconfig-aot.json && rollup -c rollup-config.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
