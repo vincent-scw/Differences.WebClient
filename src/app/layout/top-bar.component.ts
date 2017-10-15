@@ -31,4 +31,8 @@ export class TopBarComponent {
   sideNavToggle() {
     this.onSideNavToggled.emit();
   }
+
+  doSearch(data: any) {
+
+  }
 }

@@ -8,4 +8,7 @@ import { NavigationNode } from './models/navigation.model';
 })
 export class AppComponent {
   isOpened: boolean;
+  isFetching: boolean;
+
+  tocMaxHeight = 400;
 }
