@@ -52,4 +52,8 @@ export class ArticleDetailComponent implements OnInit {
   onUpdate(data: any): void {
     alert(JSON.stringify(data));
   }
+
+  submitComment(): void {
+    
+  }
 }
