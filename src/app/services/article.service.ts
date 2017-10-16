@@ -154,7 +154,7 @@ export class ArticleService {
       updateQueries: {
         article_comments: (previousResult, { mutationResult }) => {
           return {
-            article_comments: [mutationResult.data.submitAnswer, ...previousResult.question_answers]
+            article_comments: [mutationResult.data.submitComment, ...previousResult.article_comments]
           };
         }
       }
