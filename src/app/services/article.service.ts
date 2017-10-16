@@ -28,9 +28,9 @@ export class ArticleService {
     ${fragments.user}
     `;
 
-  MutationSubmitAnswer = gql`
-    mutation differencesMutation($answer: ReplyInput!) {
-      submitAnswer(answer: $answer) {
+  MutationSubmitComment = gql`
+    mutation differencesMutation($comment: ReplyInput!) {
+      submitComment(comment: $comment) {
         id
         content
         createTime
@@ -129,7 +129,7 @@ export class ArticleService {
   submitComment(articleId: number, parentId: number, content: string) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitAnswer,
+      mutation: this.MutationSubmitComment,
       variables: {
         comment: {
           subjectId: articleId,
