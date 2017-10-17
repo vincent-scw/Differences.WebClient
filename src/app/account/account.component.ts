@@ -29,6 +29,8 @@ export class AccountComponent implements OnInit {
           this.snackBar.open('你好，' + user.name + '!', null, {
             duration: 2000,
           });
+
+          this.authService.scheduleRefresh();
         }
       });
   }

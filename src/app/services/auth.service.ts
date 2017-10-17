@@ -1,7 +1,11 @@
 ///<reference path="../../../node_modules/msal/out/msal.d.ts" />
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { JwtHelper } from 'angular2-jwt';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
 
 import { Config } from '../config';
 import { User } from '../models/user';
@@ -18,6 +22,12 @@ export class AuthService {
    */
   private expiresIn: number;
   private authTime: number;
+  private interval: number;
+
+  /**
+   * Scheduling of the refresh token.
+   */
+  private refreshSubscription: any;
 
   isAuthenticated = false;
   authSettings = Config.AUTH_SETTINGS;
@@ -46,22 +56,10 @@ export class AuthService {
     const _this = this;
     this.clientApplication.loginPopup(this.authSettings.scopes)
       .then(function (idToken: any) {
+        console.log(JSON.stringify(idToken));
         const fromToken = _this.jwtHelper.decodeToken(idToken);
 
-        const user = new User();
-        user.id = fromToken.oid;
-        user.name = fromToken.name;
-        user.jobTitle = fromToken.jobTitle;
-        user.emails = fromToken.emails;
-
-        _this.authTime = fromToken.auth_time;
-        // Calculates token expiration.
-        _this.expiresIn = fromToken.exp as number * 1000; // To milliseconds.
-        _this.storeExpiry(_this.authTime + _this.expiresIn);
-
-        _this.storeUser(user);
-        _this.user.next(user);
-
+        _this.interval = fromToken.exp - fromToken.auth_time - 60;
         _this.scheduleRefresh();
       }, function (error: any) {
         console.log('Error during login:\n' + error);
@@ -74,24 +72,41 @@ export class AuthService {
     this.browserStorage.remove('user_info');
     this.signinStatus.next(false);
     this.user.next(new User());
-    //         // Unschedules the refresh token.
-//         this.unscheduleRefresh();
-
-//         // Revokes tokens.
-//         this.revokeToken();
-//         this.revokeRefreshToken();
+    // Unschedules the refresh token.
+    this.unscheduleRefresh();
   }
 
   public scheduleRefresh(): void {
+    const expires = this.getExpiry();
+    const dateNow = Date.now();
+    let diff = expires < dateNow ? 0 : expires - dateNow;
+    if (this.getUser() === undefined) { diff = 0; }
+
+    this.refreshSubscription = Observable.timer(diff)
+      .subscribe(() => this.refreshToken());
+  }
+
+  /**
+   * Unsubscribes from the scheduling of the refresh token.
+   */
+  public unscheduleRefresh(): void {
+      if (this.refreshSubscription) {
+          this.refreshSubscription.unsubscribe();
+      }
+  }
+
+  private refreshToken(): void {
     const _this = this;
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
         function (accessToken: any) {
-            _this.storeToken(accessToken);
+          _this.storeToken(accessToken);
+          _this.scheduleRefresh();
         }, function (error: any) {
           console.log(error);
           _this.clientApplication.acquireTokenPopup(_this.authSettings.scopes).then(
             function (accessToken: any) {
               _this.storeToken(accessToken);
+              _this.scheduleRefresh();
             }, function (ex: any) {
                 console.log('Error acquiring the popup:\n' + ex);
             });
@@ -127,6 +142,21 @@ export class AuthService {
    */
   private storeToken(accessToken: string): void {
     this.browserStorage.set('access_token', accessToken);
+    const fromToken = this.jwtHelper.decodeToken(accessToken);
+
+    const user = new User();
+    user.id = fromToken.oid;
+    user.name = fromToken.name;
+    // user.jobTitle = fromToken.jobTitle;
+    user.emails = fromToken.emails;
+
+    this.authTime = fromToken.auth_time;
+
+    this.expiresIn = fromToken.exp * 1000;
+    this.storeExpiry(this.expiresIn);
+
+    this.storeUser(user);
+    this.user.next(user);
     this.signinStatus.next(true);
 
     // Check user is stored in DB
@@ -136,8 +166,6 @@ export class AuthService {
       (error) => {
         console.log(error);
       });
-      // this.browserStorage.set('refresh_token', body.refresh_token);
-      // this.browserStorage.set('token_type', body.token_type);
   }
 
   /**
