@@ -13,6 +13,7 @@ $green-darken 		  : #16a085;
   .breadcrumb-item {
     float: left;
     min-width: 100px;
+    cursor: pointer;
 
     a, span {
       color: white;

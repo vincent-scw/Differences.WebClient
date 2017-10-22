@@ -8,6 +8,9 @@ import { Component,
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { AuthService } from '../services/auth.service';
+import { User } from '../models/user';
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'content-panel',
@@ -20,7 +23,13 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   showStatusBar: boolean;
   isReadOnly = true;
 
+  currentUser: User;
+
   newContent: string;
+
+  constructor(private authService: AuthService) {
+    this.currentUser = authService.getUser();
+  }
 
   ngOnInit() {
     this.newContent = this.data.content;

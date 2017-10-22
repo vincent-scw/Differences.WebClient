@@ -13,21 +13,27 @@
     [readOnly]="isReadOnly">
   </ez-quill-editor>
 
-  <div *ngIf="!isReadOnly">
-    <button md-icon-button (click)="onSubmit()">
-      <md-icon>check</md-icon>
-    </button>
-    <button md-icon-button (click)="onCancel()">
-      <md-icon>close</md-icon>
-    </button>
-  </div>
-  <div *ngIf="isReadOnly">
-    <div [style.visibility]="showStatusBar ? 'visible': 'hidden'" >
-      <button md-icon-button>
-        <md-icon>thumb_up</md-icon>
+  <div class="action-bar">
+    <div *ngIf="!isReadOnly">
+      <button md-icon-button (click)="onSubmit()">
+        <md-icon>check</md-icon>
       </button>
-      <button md-icon-button (click)="onEdit()">
-        <md-icon>edit</md-icon>
+      <button md-icon-button (click)="onCancel()">
+        <md-icon>close</md-icon>
       </button>
+    </div>
+    <div *ngIf="isReadOnly">
+      <div [style.visibility]="showStatusBar ? 'visible': 'hidden'" >
+        <button md-icon-button>
+          <md-icon>thumb_up</md-icon>
+        </button>
+        <button md-icon-button (click)="onEdit()"
+          *ngIf="currentUser != null && currentUser.id == data.user.id">
+          <md-icon>edit</md-icon>
+        </button>
+        <button md-icon-button>
+          <md-icon>reply</md-icon>
+        </button>
+    </div>
   </div>
 </div>

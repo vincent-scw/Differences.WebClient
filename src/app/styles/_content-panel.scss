@@ -6,6 +6,11 @@ content-panel {
 
   .panel-div {
     padding-left: 60px;
+    padding-bottom: 25px;
+
+    .action-bar {
+      float: right;
+    }
   }
 
   .user-div {
