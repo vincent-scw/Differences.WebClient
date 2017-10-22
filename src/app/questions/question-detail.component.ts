@@ -43,13 +43,20 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   submitAnswer(): void {
-    this.questionService.submitAnswer(this.id, null, this.myAnswerContent)
+    this.questionService.addAnswer(this.id, null, this.myAnswerContent)
       .subscribe((data) => {
         this.myAnswerContent = null;
       });
   }
 
-  onUpdate(data: any): void {
-    alert(JSON.stringify(data));
+  onUpdateAnswer(data: any): void {
+    this.questionService.updateAnswer(data.id, data.content)
+      .subscribe((_) => {});
+  }
+
+  onUpdateQuestionContent(data: any): void {
+    this.questionService.updateQuestion(data.id, this.question.title,
+      data.content, 1)
+      .subscribe((_) => {});
   }
 }

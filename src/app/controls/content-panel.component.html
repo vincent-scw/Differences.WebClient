@@ -1,13 +1,15 @@
 <div class="avatar-div">
   <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
 </div>
-<div class="panel-div">
+<div class="panel-div"
+  (mouseover)="showStatusBar=true"
+  (mouseout)="showStatusBar=false">
   <div class="user-div">
     <div class="time">{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</div>
     <a [routerLink]="['/user', data.user.id]">{{data.user.displayName}}</a>
   </div>
   <ez-quill-editor class="editor"
-    [(ngModel)]="data.content"
+    [(ngModel)]="newContent"
     [readOnly]="isReadOnly">
   </ez-quill-editor>
 
@@ -19,9 +21,7 @@
       <md-icon>close</md-icon>
     </button>
   </div>
-  <div *ngIf="isReadOnly"
-    (mouseover)="showStatusBar=true"
-    (mouseout)="showStatusBar=false">
+  <div *ngIf="isReadOnly">
     <div [style.visibility]="showStatusBar ? 'visible': 'hidden'" >
       <button md-icon-button>
         <md-icon>thumb_up</md-icon>

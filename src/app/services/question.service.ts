@@ -91,7 +91,7 @@ export class QuestionService {
     private authService: AuthService) {
   }
 
-  submitQuestion(title: string, content: string, categoryId: number) {
+  askQuestion(title: string, content: string, categoryId: number) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitQuestion,
@@ -127,7 +127,38 @@ export class QuestionService {
     });
   }
 
-  submitAnswer(questionId: number, parentId: number, content: string) {
+  updateQuestion(id: number, title: string, content: string, categoryId: number) {
+    const user = this.authService.getUser();
+    return this.apollo.mutate({
+      mutation: this.MutationSubmitQuestion,
+      variables: {
+        question: {
+          id: id,
+          title: title,
+          content: content,
+          categoryId: categoryId
+        }
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitQuestion: {
+          __typename: 'QuestionType',
+          id: id,
+          title: title,
+          content: content,
+          createTime: +new Date,
+          user: {
+            __typename: 'UserType',
+            id: user.id,
+            displayName: user.name,
+            avatarUrl: null
+          }
+        }
+      }
+    });
+  }
+
+  addAnswer(questionId: number, parentId: number, content: string) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitAnswer,
@@ -157,6 +188,34 @@ export class QuestionService {
           return {
             question_answers: [mutationResult.data.submitAnswer, ...previousResult.question_answers]
           };
+        }
+      }
+    });
+  }
+
+  updateAnswer(id: number, content: string) {
+    const user = this.authService.getUser();
+    return this.apollo.mutate({
+      mutation: this.MutationSubmitAnswer,
+      variables: {
+        answer: {
+          id: id,
+          content: content
+        }
+      },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitAnswer: {
+          __typename: 'AnswerType',
+          id: id,
+          content: content,
+          createTime: +new Date,
+          user: {
+            __typename: 'UserType',
+            id: user.id,
+            displayName: user.name,
+            avatarUrl: null
+          }
         }
       }
     });

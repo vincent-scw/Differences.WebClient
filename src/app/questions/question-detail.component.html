@@ -2,7 +2,8 @@
   <h3>{{question.title}}</h3>
   <div>
     <content-panel
-      [data]="question"></content-panel>
+      [data]="question"
+      (onUpdate)="onUpdateQuestionContent($event)"></content-panel>
   </div>
 </div>
 
@@ -25,7 +26,7 @@
     *ngFor="let answer of answers | async | select: 'question_answers'">
     <content-panel 
       [data]="answer"
-      (onUpdate)="onUpdate($event)"></content-panel>
+      (onUpdate)="onUpdateAnswer($event)"></content-panel>
   </div>
 </md-list>
 <div>

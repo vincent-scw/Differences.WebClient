@@ -20,11 +20,10 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   showStatusBar: boolean;
   isReadOnly = true;
 
-  onModelChange: Function = (_: any) => {};
-  onModelTouched: Function = () => {};
+  newContent: string;
 
   ngOnInit() {
-
+    this.newContent = this.data.content;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -36,10 +35,14 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    this.onUpdate.emit(this.data);
+    this.onUpdate.emit({
+      id: this.data.id,
+      content: this.newContent});
+    this.isReadOnly = true;
   }
 
   onCancel() {
     this.isReadOnly = true;
+    this.newContent = this.data.content;
   }
 }

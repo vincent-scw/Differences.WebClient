@@ -24,12 +24,6 @@ export class EasyQuillEditorComponent implements OnInit, ControlValueAccessor, O
 
   private innerValue: string;
 
-  readonlyOptions = {
-    readOnly: true,
-    modules: {
-      toolbar: false
-    }
-  };
   editorOptions = {
     theme: 'snow',
     placeholder: '写点什么...',
