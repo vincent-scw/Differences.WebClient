@@ -1,4 +1,4 @@
-<div *ngIf='(isSignedIn | async)'>
+<div *ngIf='currentUser !== undefined'>
   <button md-button [mdMenuTriggerFor]="menu" *ngIf="!!currentUser.name">
     <div class="account-button">
       <ngx-avatar [name]="currentUser.name" size="30"></ngx-avatar>
@@ -10,6 +10,6 @@
       <button md-menu-item (click)='onSignoutClicked()'>登出</button>
   </md-menu>
 </div>
-<div *ngIf='(isSignedIn | async) === false'>
+<div *ngIf='currentUser === undefined'>
   <button md-button (click)='onSignClicked()'>登录 / 注册</button>
 </div>

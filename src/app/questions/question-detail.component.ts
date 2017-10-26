@@ -17,7 +17,9 @@ import { QuestionService } from '../services/question.service';
 export class QuestionDetailComponent implements OnInit {
   question: any;
   id: number;
-  answers: ApolloQueryObservable<any>;
+
+  isAnswersLoading = true;
+  answers: any;
   myAnswerContent: string;
 
   constructor(
@@ -33,7 +35,11 @@ export class QuestionDetailComponent implements OnInit {
         .subscribe(({data}) => {
           this.question = data.question;
 
-          this.answers = this.questionService.getQuestionAnswers(this.id);
+          this.questionService.getQuestionAnswers(this.id)
+            .subscribe((ret) => {
+              this.isAnswersLoading = ret.loading;
+              this.answers = ret.data;
+            });
         })
       );
   }

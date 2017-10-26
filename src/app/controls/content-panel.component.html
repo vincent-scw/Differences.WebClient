@@ -1,38 +1,45 @@
-<div class="avatar-div">
+<div class="avatar-div" *ngIf="showAvatar">
   <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
 </div>
-<div class="panel-div"
+<div [class]="showAvatar ? 'panel-div' : null"
   (mouseover)="showStatusBar=true"
   (mouseout)="showStatusBar=false">
   <div class="user-div">
     <div class="time">{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</div>
-    <a [routerLink]="['/user', data.user.id]">{{data.user.displayName}}</a>
+    <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
   </div>
   <ez-quill-editor class="editor"
     [(ngModel)]="newContent"
     [readOnly]="isReadOnly">
   </ez-quill-editor>
 
+  <div *ngIf="data.subReplies !== undefiend && data.subReplies.length > 0" class="sub-replies">
+    <div *ngFor="let sub of data.subReplies">
+      <content-panel [data]="sub" [showAvatar]="false"
+        [alwaysShowActionbar]="false"></content-panel>
+    </div>
+  </div>
+
   <div class="action-bar">
     <div *ngIf="!isReadOnly">
       <button md-icon-button (click)="onSubmit()">
-        <md-icon>check</md-icon>
+        <md-icon class="icon-highlight">check</md-icon>
       </button>
       <button md-icon-button (click)="onCancel()">
-        <md-icon>close</md-icon>
+        <md-icon class="icon-normal">close</md-icon>
       </button>
     </div>
     <div *ngIf="isReadOnly">
-      <div [style.visibility]="showStatusBar ? 'visible': 'hidden'" >
+      <div [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'" >
         <button md-icon-button>
-          <md-icon>thumb_up</md-icon>
+          <md-icon class="icon-normal">thumb_up</md-icon>
         </button>
         <button md-icon-button (click)="onEdit()"
           *ngIf="currentUser != null && currentUser.id == data.user.id">
-          <md-icon>edit</md-icon>
+          <md-icon class="icon-normal">edit</md-icon>
         </button>
-        <button md-icon-button>
-          <md-icon>reply</md-icon>
+        <button *ngIf="replyEnabled" md-icon-button>
+          <md-icon class="icon-normal">reply</md-icon>
         </button>
     </div>
   </div>

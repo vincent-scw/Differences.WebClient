@@ -82,6 +82,14 @@ export class QuestionService {
           ...UserInfo
         }
         createTime
+        subReplies {
+          id
+          content
+          user {
+            ...UserInfo
+          }
+          createTime
+        }
       }
     }
     ${fragments.user}

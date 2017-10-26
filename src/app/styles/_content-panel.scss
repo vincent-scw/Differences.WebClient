@@ -6,11 +6,10 @@ content-panel {
 
   .panel-div {
     padding-left: 60px;
-    padding-bottom: 25px;
+  }
 
-    .action-bar {
-      float: right;
-    }
+  .action-bar {
+    text-align: right;
   }
 
   .user-div {
@@ -24,5 +23,11 @@ content-panel {
 
   .editor {
     
+  }
+
+  .sub-replies {
+    border: $lightgray solid thin;
+    padding: 8px;
+    background-color: $backgroundgray;
   }
 }

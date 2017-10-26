@@ -7,7 +7,13 @@
 <app-top-bar (onSideNavToggled)="sidenav.toggle()"></app-top-bar>
 
 <md-sidenav-container class="sidenav-container">
-  <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">Drawer content</md-sidenav>
+  <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">
+    <md-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
+      <md-chip>Papadum</md-chip>
+      <md-chip>Naan</md-chip>
+      <md-chip>Dal</md-chip>
+    </md-chip-list>
+  </md-sidenav>
   <section class="sidenav-content">
     <breadcrumb prefix="主页"></breadcrumb>
     <router-outlet></router-outlet>

@@ -19,6 +19,9 @@ import { User } from '../models/user';
 
 export class ContentPanelComponent implements OnInit, OnChanges {
   @Input() data: any;
+  @Input() replyEnabled = true;
+  @Input() showAvatar = true;
+  @Input() alwaysShowActionbar = true;
   @Output() onUpdate = new EventEmitter<any>();
   showStatusBar: boolean;
   isReadOnly = true;

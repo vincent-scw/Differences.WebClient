@@ -76,7 +76,7 @@ h1:after, h2, h3, h4, h5, h6 {
   margin-top: 0;
 }
 
-p, ol, ul, ol, li, input, a  {
+ol, ul, ol, li, input, a  {
   font-size: 14px;
   line-height: 40px;
   letter-spacing: 0.30px;
@@ -188,4 +188,32 @@ form {
 
 .mat-expansion-panel-body {
   padding: 0 0 0 0 !important;
+}
+
+.progress-bar-container {
+  height: 2px;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 11;
+}
+
+.spinner {
+  text-align: -webkit-center;
+  width: 100%;
+}
+
+.icon-normal {
+  font-size: 18px;
+  color: $lightgray;
+
+  &:hover {
+    color: $orange;
+  }
+}
+
+.icon-highlight {
+  font-size: 18px;
+  color: $orange;
 }

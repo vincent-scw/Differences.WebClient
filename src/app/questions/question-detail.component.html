@@ -3,6 +3,7 @@
   <div>
     <content-panel
       [data]="question"
+      [replyEnabled]="false"
       (onUpdate)="onUpdateQuestionContent($event)"></content-panel>
   </div>
 </div>
@@ -23,12 +24,15 @@
 
 <md-list>
   <div class="item-wrapper"
-    *ngFor="let answer of answers | async | select: 'question_answers'">
+    *ngFor="let answer of answers | select: 'question_answers'">
     <content-panel 
       [data]="answer"
       (onUpdate)="onUpdateAnswer($event)"></content-panel>
   </div>
 </md-list>
+<div *ngIf="isAnswersLoading" class="spinner">
+  <md-spinner (color)="accent"></md-spinner>
+</div>
 <div>
   <button md-button (click)="goBack()">返回</button>
 </div>

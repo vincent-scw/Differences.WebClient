@@ -21,17 +21,15 @@ export class AccountComponent implements OnInit {
 
     this.isSignedIn.subscribe(
       (signedIn: boolean) => {
-        if (signedIn) {
           const user = this.authService.getUser();
           this.currentUser = user;
           // this.isAdmin = this.authenticationService.isInRole('administrator');
-
-          this.snackBar.open('你好，' + user.name + '!', null, {
-            duration: 2000,
-          });
-
+          if (signedIn) {
+            this.snackBar.open('你好，' + user.name + '!', null, {
+              duration: 2000,
+            });
+          }
           this.authService.scheduleRefresh();
-        }
       });
   }
 
