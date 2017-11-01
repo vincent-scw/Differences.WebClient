@@ -2,7 +2,7 @@
   [(innerHTML)]="value">
 </div>
 <quill-editor *ngIf="!readOnly"
-  class="form-control"
+  class="form-control editor"
   [(ngModel)]="value" [options]="editorOptions"
   (blur)="onBlur()"
   (change)="onChange()">

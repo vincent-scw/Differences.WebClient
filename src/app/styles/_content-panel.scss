@@ -22,12 +22,16 @@ content-panel {
   }
 
   .editor {
-    
+    background-color: $offwhite;
   }
 
   .sub-replies {
     border: $lightgray solid thin;
     padding: 8px;
     background-color: $backgroundgray;
+
+    &>div:not(:last-child) {
+      border-bottom: 1px solid #dcdcdc;
+    }
   }
 }

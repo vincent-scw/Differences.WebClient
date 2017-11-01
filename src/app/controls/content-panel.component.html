@@ -8,39 +8,51 @@
     <div class="time">{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</div>
     <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
   </div>
-  <ez-quill-editor class="editor"
+  <ez-quill-editor
     [(ngModel)]="newContent"
     [readOnly]="isReadOnly">
   </ez-quill-editor>
+  <div class="action-bar" *ngIf="!isReadOnly">
+    <button md-icon-button (click)="onSubmit()">
+      <md-icon class="icon-highlight">check</md-icon>
+    </button>
+    <button md-icon-button (click)="onCancel()">
+      <md-icon class="icon-normal">close</md-icon>
+    </button>
+  </div>
 
-  <div *ngIf="data.subReplies !== undefiend && data.subReplies.length > 0" class="sub-replies">
+  <div *ngIf="data.subReplies !== undefiend && data.subReplies.length > 0" 
+    class="sub-replies">
     <div *ngFor="let sub of data.subReplies">
       <content-panel [data]="sub" [showAvatar]="false"
         [alwaysShowActionbar]="false"></content-panel>
     </div>
   </div>
 
+  <div class="action-bar" *ngIf="isReadOnly">
+    <div [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'" >
+      <button md-icon-button>
+        <md-icon class="icon-normal">thumb_up</md-icon>
+      </button>
+      <button md-icon-button (click)="onEdit()"
+        *ngIf="currentUser != null && currentUser.id == data.user.id">
+        <md-icon class="icon-normal">edit</md-icon>
+      </button>
+      <button *ngIf="replyEnabled" md-icon-button>
+        <md-icon class="icon-normal" (click)="toggleEditPanel()">reply</md-icon>
+      </button>
+  </div>
+</div>
+
+<div *ngIf="showEditPanel">
+  <ez-quill-editor [(ngModel)]="myReplyContent">
+  </ez-quill-editor>
   <div class="action-bar">
-    <div *ngIf="!isReadOnly">
-      <button md-icon-button (click)="onSubmit()">
-        <md-icon class="icon-highlight">check</md-icon>
-      </button>
-      <button md-icon-button (click)="onCancel()">
-        <md-icon class="icon-normal">close</md-icon>
-      </button>
-    </div>
-    <div *ngIf="isReadOnly">
-      <div [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'" >
-        <button md-icon-button>
-          <md-icon class="icon-normal">thumb_up</md-icon>
-        </button>
-        <button md-icon-button (click)="onEdit()"
-          *ngIf="currentUser != null && currentUser.id == data.user.id">
-          <md-icon class="icon-normal">edit</md-icon>
-        </button>
-        <button *ngIf="replyEnabled" md-icon-button>
-          <md-icon class="icon-normal">reply</md-icon>
-        </button>
-    </div>
+    <button md-icon-button (click)="onReplySubmit()">
+      <md-icon class="icon-highlight">check</md-icon>
+    </button>
+    <button md-icon-button (click)="toggleEditPanel()">
+      <md-icon class="icon-normal">close</md-icon>
+    </button>
   </div>
 </div>

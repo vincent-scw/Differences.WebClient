@@ -65,4 +65,8 @@ export class QuestionDetailComponent implements OnInit {
       data.content, 1)
       .subscribe((_) => {});
   }
+
+  onReply(data: any): void {
+    
+  }
 }

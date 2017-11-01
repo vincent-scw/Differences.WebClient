@@ -4,7 +4,9 @@ import { Component,
   Output,
   OnChanges,
   EventEmitter,
-  SimpleChanges } from '@angular/core';
+  SimpleChanges,
+  ViewChild,
+  ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -23,12 +25,16 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   @Input() showAvatar = true;
   @Input() alwaysShowActionbar = true;
   @Output() onUpdate = new EventEmitter<any>();
+  @Output() onReply = new EventEmitter<any>();
+
   showStatusBar: boolean;
+  showEditPanel: boolean;
   isReadOnly = true;
 
   currentUser: User;
 
   newContent: string;
+  myReplyContent: string;
 
   constructor(private authService: AuthService) {
     this.currentUser = authService.getUser();
@@ -56,5 +62,17 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   onCancel() {
     this.isReadOnly = true;
     this.newContent = this.data.content;
+  }
+
+  onReplySubmit() {
+    this.onReply.emit({
+      parentId: this.data.id,
+      content: this.myReplyContent
+    });
+    this.toggleEditPanel();
+  }
+
+  toggleEditPanel() {
+    this.showEditPanel = !this.showEditPanel;
   }
 }

@@ -27,7 +27,8 @@
     *ngFor="let answer of answers | select: 'question_answers'">
     <content-panel 
       [data]="answer"
-      (onUpdate)="onUpdateAnswer($event)"></content-panel>
+      (onUpdate)="onUpdateAnswer($event)"
+      (onReply)="onReply($event)"></content-panel>
   </div>
 </md-list>
 <div *ngIf="isAnswersLoading" class="spinner">
