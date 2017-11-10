@@ -2,7 +2,7 @@ import {Component, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
-import { Article } from '../models/article';
+import { Article } from '../models/article.model';
 import { AuthService } from '../services/auth.service';
 import { fragments } from './fragments';
 

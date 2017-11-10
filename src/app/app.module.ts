@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
 
 import { AuthService } from './services/auth.service';
 import { IntermediaryService } from './services/intermediary.service';
+import { CategoryService } from './services/category.service';
 import { BrowserStorage } from './services/browser-storage.service';
 
 import { AppComponent } from './app.component';
@@ -40,6 +41,7 @@ import { AppComponent } from './app.component';
     JwtHelper,
     AuthService,
     IntermediaryService,
+    CategoryService,
     BrowserStorage
   ],
   bootstrap: [AppComponent]

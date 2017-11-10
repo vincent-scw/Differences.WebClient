@@ -3,7 +3,7 @@ import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { AuthService } from '../services/auth.service';
-import { Question } from '../models/question';
+import { Question } from '../models/question.model';
 import { fragments } from './fragments';
 
 export interface QuestionQueryResponse {

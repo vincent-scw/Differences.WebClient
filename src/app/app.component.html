@@ -9,9 +9,9 @@
 <md-sidenav-container class="sidenav-container">
   <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">
     <md-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
-      <md-chip>Papadum</md-chip>
-      <md-chip>Naan</md-chip>
-      <md-chip>Dal</md-chip>
+      <md-chip *ngFor="let category of categories">
+        {{category.name}}
+      </md-chip>
     </md-chip-list>
   </md-sidenav>
   <section class="sidenav-content">

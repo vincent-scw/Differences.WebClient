@@ -2,7 +2,7 @@ import {Component, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 
 const QueryUser = gql`
   query user {

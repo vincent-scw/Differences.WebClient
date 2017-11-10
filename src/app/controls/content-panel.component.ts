@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../services/auth.service';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 
 @Component({
   // tslint:disable-next-line:component-selector

@@ -8,7 +8,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
 
 import { Config } from '../config';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { BrowserStorage } from './browser-storage.service';
 import { UserService } from './user.service';
 
