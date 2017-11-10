@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationNode } from './models/navigation.model';
 import { Router,
   Event as RouterEvent,
@@ -7,6 +7,7 @@ import { Router,
   NavigationCancel,
   NavigationError } from '@angular/router';
 import { BreadcrumbService } from 'ng2-breadcrumb/ng2-breadcrumb';
+import { IntermediaryService } from './services/intermediary.service';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +15,14 @@ import { BreadcrumbService } from 'ng2-breadcrumb/ng2-breadcrumb';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   isOpened = true;
   isFetching: boolean;
 
   tocMaxHeight = 400;
 
   constructor(private breadcrumbService: BreadcrumbService,
+    private intermediaryService: IntermediaryService,
     private router: Router) {
     breadcrumbService.addFriendlyNameForRoute('/questions', '问题');
     breadcrumbService.addCallbackForRouteRegex('/questions/[0-9]+', this.getQuestionName);
@@ -30,9 +32,12 @@ export class AppComponent {
 
     breadcrumbService.addFriendlyNameForRoute('/users', '大神');
     // breadcrumbService.addCallbackForRouteRegex('/users/[0-9]+', this.getArticleName);
+  }
 
-    router.events.subscribe((event: RouterEvent) => {
-
+  ngOnInit() {
+    this.intermediaryService.loadingState().subscribe(
+      (loadingObj: any) => {
+        this.isFetching = loadingObj.isLoading;
     });
   }
 

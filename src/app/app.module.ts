@@ -14,6 +14,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { UsersModule } from './users/users.module';
 
 import { AuthService } from './services/auth.service';
+import { IntermediaryService } from './services/intermediary.service';
 import { BrowserStorage } from './services/browser-storage.service';
 
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import { AppComponent } from './app.component';
     Title,
     JwtHelper,
     AuthService,
+    IntermediaryService,
     BrowserStorage
   ],
   bootstrap: [AppComponent]
