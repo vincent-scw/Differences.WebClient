@@ -8,11 +8,7 @@
 
 <md-sidenav-container class="sidenav-container">
   <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">
-    <md-chip-list class="mat-chip-list-stacked" aria-orientation="vertical">
-      <md-chip *ngFor="let category of categories">
-        {{category.name}}
-      </md-chip>
-    </md-chip-list>
+    <app-category-panel></app-category-panel>
   </md-sidenav>
   <section class="sidenav-content">
     <breadcrumb prefix="主页"></breadcrumb>

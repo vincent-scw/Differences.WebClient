@@ -1,0 +1,8 @@
+<md-chip-list class="mat-chip-list-stacked" aria-orientation="vertical"
+  (selectionChange)="selectionChange"
+  selectable=true>
+  <md-chip *ngFor="let category of categories"
+    [selected]="selectedCategory !== undefined && category.id === selectedCategory.id">
+    {{category.name}}
+  </md-chip>
+</md-chip-list>

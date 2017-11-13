@@ -30,7 +30,19 @@ export class CategoryService {
     }
   ];
 
+  selectedCategory: BehaviorSubject<Category>;
+
   constructor(private browserStorage: BrowserStorage) {
 
+  }
+
+  setSelectedCategory(categoryId: number) {
+    const found = this.categories.find(obj => obj.id === categoryId);
+    if (found === undefined) {
+      console.log('Category cannot be found');
+      return;
+    }
+
+    this.selectedCategory.next(found);
   }
 }

@@ -8,8 +8,6 @@ import { Router,
   NavigationError } from '@angular/router';
 import { BreadcrumbService } from 'ng2-breadcrumb/ng2-breadcrumb';
 import { IntermediaryService } from './services/intermediary.service';
-import { CategoryService } from './services/category.service';
-import { Category } from './models/category.model';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +18,11 @@ import { Category } from './models/category.model';
 export class AppComponent implements OnInit {
   isOpened = true;
   isFetching: boolean;
-  categories: Category[];
 
   tocMaxHeight = 400;
 
   constructor(private breadcrumbService: BreadcrumbService,
     private intermediaryService: IntermediaryService,
-    private categoryService: CategoryService,
     private router: Router) {
     breadcrumbService.addFriendlyNameForRoute('/questions', '问题');
     breadcrumbService.addCallbackForRouteRegex('/questions/[0-9]+', this.getQuestionName);
@@ -43,7 +39,6 @@ export class AppComponent implements OnInit {
       (loadingObj: any) => {
         this.isFetching = loadingObj.isLoading;
     });
-    this.categories = this.categoryService.categories;
   }
 
   getQuestionName(id: string): string {

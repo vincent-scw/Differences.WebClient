@@ -9,6 +9,7 @@ import { TopMenuComponent } from './top-menu.component';
 import { TopBarComponent } from './top-bar.component';
 import { SearchBoxComponent } from '../search/search-box.component';
 import { TocComponent } from './toc.component';
+import { CategoryPanelComponent } from './category-panel.component';
 
 import { LocationService } from '../services/location.service';
 
@@ -23,11 +24,13 @@ import { LocationService } from '../services/location.service';
       TopMenuComponent,
       SearchBoxComponent,
       TopBarComponent,
-      TocComponent
+      TocComponent,
+      CategoryPanelComponent
     ],
     exports: [
       TopBarComponent,
-      TocComponent
+      TocComponent,
+      CategoryPanelComponent
     ],
     providers: [
       LocationService,
