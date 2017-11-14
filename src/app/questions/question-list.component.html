@@ -1,6 +1,7 @@
 <md-nav-list>
   <md-list-item *ngFor="let question of data | async | select: 'questions'">
-      <a mdLine [routerLink]="['/questions', question.id]">{{question.title}}</a>
+      <a mdLine [routerLink]="['/questions', question.id]" 
+        [innerHTML]="question.title | title"></a>
         <md-icon>info</md-icon>
   </md-list-item>
 </md-nav-list>

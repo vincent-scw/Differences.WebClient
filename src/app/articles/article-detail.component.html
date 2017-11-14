@@ -1,5 +1,5 @@
 <div *ngIf="article">
-  <h3>{{article.title}}</h3>
+  <h3 [innerHTML]="article.title | title"></h3>
   <div>
     <content-panel
       [data]="article"></content-panel>

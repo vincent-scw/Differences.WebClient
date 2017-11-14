@@ -7,9 +7,14 @@ import { QuillEditorModule } from 'ngx-quill-editor';
 import { ApolloModule } from 'apollo-angular';
 import { AvatarModule } from 'ngx-avatar';
 
+import { TitlePipe } from '../utlities/title.pipe';
+
 import { provideClient } from '../services/apollo-client.service';
 
 @NgModule({
+    declarations: [
+        TitlePipe
+    ],
     imports: [
         HttpModule,
         CommonModule,
@@ -28,7 +33,8 @@ import { provideClient } from '../services/apollo-client.service';
         MaterialModule,
         QuillEditorModule,
         AvatarModule,
-        ApolloModule
+        ApolloModule,
+        TitlePipe
     ]
 })
 

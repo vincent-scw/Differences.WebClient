@@ -2,7 +2,7 @@
   <md-list-item *ngFor="let category of categories">
     <a class="rounded-button" 
       (click)="selectionChange(category)"
-      [class.select-rounded]="category.id == selectedCategory.value.id">
+      [class.select-rounded]="selectedCategory.value != null && category.id == selectedCategory.value.id">
       {{category.name}}</a>
   </md-list-item>
 </md-list>
