@@ -22,8 +22,8 @@ $mist: #ECEFF1;
 $mediumgray: #6e6e6e;
 $darkgray: #333;
 $black: #0A1014;
-$orange: #FF9800;
-$amber: #FFD740;
+$orange: #EE8830;
+$amber: #FFDD40;
 $anti-pattern: $brightred;
 
 // API & CODE COLORS
@@ -53,9 +53,9 @@ $teal-500: #009688;
 $lightgrey: #F5F6F7;
 
 // GRADIENTS
-$bluegradient: linear-gradient(145deg,#0D47A1,#42A5F5);
 $redgradient: linear-gradient(145deg,$darkred,$brightred);
-$ambergradient: linear-gradient(145deg,$orange,$amber);
+$ambergradient: linear-gradient(145deg,$amber, yellow);
+$bluegradient: linear-gradient(145deg, #37ecba, #009efd);
 
 // API LABEL COLOR AND SYMBOLS MAP
 $api-symbols: (
