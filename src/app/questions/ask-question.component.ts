@@ -23,7 +23,7 @@ export class AskQuestionComponent implements OnInit {
 
   onSubmit(values: any): void {
     this.questionService.askQuestion(
-      values.title + '有什么不同？',
+      values.title,
       values.content,
       1 // TODO: categoryId
     )

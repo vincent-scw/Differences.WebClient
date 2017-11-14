@@ -144,18 +144,6 @@ form {
   width: 100%;
 }
 
-md-chip {
-  cursor: pointer !important;
-
-  &:hover {
-    color: $accentblue
-  }
-
-  .selected {
-    color: $orange
-  }
-}
-
 .full-width {
   width: 100%;
 }

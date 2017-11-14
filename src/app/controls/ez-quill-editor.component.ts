@@ -5,8 +5,6 @@ import { Component,
   SimpleChanges,
   forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Component({
   // tslint:disable-next-line:component-selector

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category.model';
@@ -10,6 +11,7 @@ import { Category } from '../models/category.model';
 
 export class CategoryPanelComponent implements OnInit {
   categories: Category[];
+  selectedCategory: BehaviorSubject<Category>;
 
   constructor(private categoryService: CategoryService) {
 
@@ -17,10 +19,10 @@ export class CategoryPanelComponent implements OnInit {
 
   ngOnInit() {
     this.categories = this.categoryService.categories;
+    this.selectedCategory = this.categoryService.selectedCategory;
   }
 
-  selectionChange(data) {
-    alert(JSON.stringify(data));
-    // this.categoryService.setSelectedCategory()
+  selectionChange(category: Category) {
+    this.categoryService.setSelectedCategory(category.id);
   }
 }
