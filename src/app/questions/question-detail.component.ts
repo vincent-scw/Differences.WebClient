@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { Location } from '@angular/common';
 import { ApolloQueryObservable } from 'apollo-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
@@ -27,8 +26,7 @@ export class QuestionDetailComponent implements OnInit {
   constructor(
     private questionService: QuestionService,
     private intermediaryService: IntermediaryService,
-    private route: ActivatedRoute,
-    private location: Location
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -47,10 +45,6 @@ export class QuestionDetailComponent implements OnInit {
             });
         })
       );
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   submitAnswer(): void {

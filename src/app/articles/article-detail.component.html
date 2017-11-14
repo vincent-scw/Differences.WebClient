@@ -1,5 +1,5 @@
 <div *ngIf="article">
-  <h3 [innerHTML]="article.title | title"></h3>
+  <h2 [innerHTML]="article.title | title"></h2>
   <div>
     <content-panel
       [data]="article"></content-panel>
@@ -28,6 +28,3 @@
       (onUpdate)="onUpdate($event)"></content-panel>
   </div>
 </md-list>
-<div>
-  <button md-button (click)="goBack()">返回</button>
-</div>

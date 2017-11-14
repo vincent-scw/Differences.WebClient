@@ -218,6 +218,10 @@ form {
   color: $orange;
 }
 
+.icon-large {
+  font-size: 24px !important;
+}
+
 .highlight {
   color: $accentblue;
   font: bold;
@@ -285,7 +289,7 @@ form {
 .big-rounded span {
 	display: block;
 	text-transform: none;
-	font: italic normal 12px/18px Georgia, sans-serif;
+	font: normal 12px/18px Georgia, sans-serif;
 	text-shadow: 1px 1px 1px rgba(255,255,255, .12);
 }
 

@@ -1,5 +1,5 @@
 <div *ngIf="question">
-  <h3 [innerHTML]="question.title | title"></h3>
+  <h2 [innerHTML]="question.title | title"></h2>
   <div>
     <content-panel
       [data]="question"
@@ -33,7 +33,4 @@
 </md-list>
 <div *ngIf="isAnswersLoading" class="spinner">
   <md-spinner (color)="accent"></md-spinner>
-</div>
-<div>
-  <button md-button (click)="goBack()">返回</button>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { NavigationNode } from './models/navigation.model';
 import { Router,
   Event as RouterEvent,
@@ -21,7 +23,8 @@ export class AppComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService,
     private intermediaryService: IntermediaryService,
-    private router: Router) {
+    private router: Router,
+    private location: Location) {
     breadcrumbService.addFriendlyNameForRoute('/questions', '问题');
     breadcrumbService.addCallbackForRouteRegex('/questions/[0-9]+', this.getQuestionName);
 
@@ -45,5 +48,9 @@ export class AppComponent implements OnInit {
 
   getArticleName(id: string): string {
     return '文章 ' + id;
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

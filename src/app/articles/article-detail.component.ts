@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { Location } from '@angular/common';
 import { ApolloQueryObservable } from 'apollo-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
@@ -25,8 +24,7 @@ export class ArticleDetailComponent implements OnInit {
   constructor(
     private articleService: ArticleService,
     private intermediaryService: IntermediaryService,
-    private route: ActivatedRoute,
-    private location: Location
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -41,10 +39,6 @@ export class ArticleDetailComponent implements OnInit {
           this.comments = this.articleService.getArticleAnswers(this.id);
         })
       );
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   submitAnswer(): void {
