@@ -217,3 +217,81 @@ form {
   font-size: 18px;
   color: $orange;
 }
+
+.rounded-button {
+  display: inline-block;
+	position: relative;
+	margin: 10px;
+	padding: 0 20px;
+  text-align: center;
+  vertical-align: middle;
+	text-decoration: none;
+  font: bold 12px/25px Arial, sans-serif;
+  cursor: pointer;
+  color: $darkgray;
+  background-color: $backgroundgray;
+  width: 100px;
+  line-height: 30px;
+  
+  text-shadow: 1px 1px 1px rgba(255,255,255, .22);
+  
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+
+  -webkit-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
+  -moz-box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
+  box-shadow: 1px 1px 1px rgba(0,0,0, .29), inset 1px 1px 1px rgba(255,255,255, .44);
+
+  -webkit-transition: all 0.15s ease;
+  -moz-transition: all 0.15s ease;
+  -o-transition: all 0.15s ease;
+  -ms-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+}
+
+.rounded-button:hover {
+  color: $offwhite;
+  background-color: $accentblue;
+	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5);
+	-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5);
+  box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5);
+}
+
+.rounded-button:active {
+	-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+	-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+	box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+}
+
+.select-rounded {
+  color: $blue-grey-800 !important;
+  background: $ambergradient !important;
+}
+
+.big-rounded {
+	padding: 0 40px;
+	padding-top: 10px;
+	height: 45px;
+	text-transform: uppercase;
+	font: bold 18px/20px Arial, sans-serif;
+}
+
+.big-rounded span {
+	display: block;
+	text-transform: none;
+	font: italic normal 12px/18px Georgia, sans-serif;
+	text-shadow: 1px 1px 1px rgba(255,255,255, .12);
+}
+
+.big-rounded:hover {
+	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5);
+	-moz-box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5);
+	box-shadow: 1px 1px 1px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5);
+}
+
+.big-rounded:active {
+	-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+	-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+	box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+}

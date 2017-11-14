@@ -19,8 +19,6 @@ export class AppComponent implements OnInit {
   isOpened = true;
   isFetching: boolean;
 
-  tocMaxHeight = 400;
-
   constructor(private breadcrumbService: BreadcrumbService,
     private intermediaryService: IntermediaryService,
     private router: Router) {
