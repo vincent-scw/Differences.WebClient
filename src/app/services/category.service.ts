@@ -10,23 +10,27 @@ const selected_category_key = 'selected_category';
 export class CategoryService implements OnInit {
   categories: Category[] = [
     {
+      id: 0,
+      name: '-- 全部 --'
+    },
+    {
       id: 1,
       name: '技术'
     },
     {
       id: 2,
-      name: '社科'
-    },
-    {
-      id: 3,
-      name: '人文'
-    },
-    {
-      id: 4,
       name: '语言'
     },
     {
-      id: 5,
+      id: 3,
+      name: '社科'
+    },
+    {
+      id: 4,
+      name: '人文'
+    },
+    {
+      id: 99,
       name: '其他'
     }
   ];
@@ -54,6 +58,6 @@ export class CategoryService implements OnInit {
   getSelectedCategory(): Category {
     return this.browserStorage.get(selected_category_key)
       ? JSON.parse(this.browserStorage.get(selected_category_key))
-      : undefined;
+      : this.categories[0];
   }
 }

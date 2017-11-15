@@ -5,7 +5,7 @@
   (mouseover)="showStatusBar=true"
   (mouseout)="showStatusBar=false">
   <div class="user-div">
-    <div class="time">{{data.createTime | date:"yyyy/MM/dd HH:mm"}}</div>
+    <div class="time">{{data.createTime | amTimeAgo}}</div>
     <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
   </div>
   <ez-quill-editor

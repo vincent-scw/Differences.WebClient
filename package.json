@@ -31,6 +31,7 @@
     "@angular/router": "^4.3.6",
     "@angular/upgrade": "^4.3.6",
     "angular2-jwt": "0.2.3",
+    "angular2-moment": "^1.7.0",
     "apollo-angular": "^0.13.1",
     "apollo-client": "^1.9.2",
     "core-js": "^2.4.1",

@@ -6,10 +6,15 @@ import { MaterialModule } from './material.module';
 import { QuillEditorModule } from 'ngx-quill-editor';
 import { ApolloModule } from 'apollo-angular';
 import { AvatarModule } from 'ngx-avatar';
+import { MomentModule } from 'angular2-moment';
+import * as moment from 'moment';
+import 'moment/min/locales';
 
 import { TitlePipe } from '../utlities/title.pipe';
 
 import { provideClient } from '../services/apollo-client.service';
+
+moment.locale('zh-cn'); // Chinese
 
 @NgModule({
     declarations: [
@@ -23,6 +28,7 @@ import { provideClient } from '../services/apollo-client.service';
         MaterialModule,
         QuillEditorModule,
         AvatarModule,
+        MomentModule,
         ApolloModule.forRoot(provideClient)
     ],
     exports: [
@@ -34,6 +40,7 @@ import { provideClient } from '../services/apollo-client.service';
         QuillEditorModule,
         AvatarModule,
         ApolloModule,
+        MomentModule,
         TitlePipe
     ]
 })
