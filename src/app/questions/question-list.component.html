@@ -1,11 +1,11 @@
 <div>
-  <md-nav-list>
-    <md-list-item *ngFor="let question of data | async | select: 'questions'">
-        <a mdLine [routerLink]="['/questions', question.id]" 
-          [innerHTML]="question.title | title"></a>
-          <md-icon>info</md-icon>
-    </md-list-item>
-  </md-nav-list>
+  <md-list>
+    <div *ngFor="let question of data | async | select: 'questions'">
+      <app-question-item
+        class="list-item"
+        [item]="question"></app-question-item>
+    </div>
+  </md-list>
 
   <md-paginator [length]="100"
     [pageSize]="25"

@@ -1,0 +1,11 @@
+<div class="content">
+  <a [routerLink]="['/questions', item.id]"
+    [innerHTML]="item.title | title"></a>
+</div>
+<div class="bar">
+  <ngx-avatar [name]="item.user.displayName"
+    size="25"></ngx-avatar>
+  <a [routerLink]="['/users', item.user.id]">{{item.user.displayName}}</a>
+  提问于{{item.createTime | amTimeAgo}}
+  <!-- <div>{{item.categoryId}}</div> -->
+</div>

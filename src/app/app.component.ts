@@ -8,7 +8,6 @@ import { Router,
   NavigationEnd,
   NavigationCancel,
   NavigationError } from '@angular/router';
-import { BreadcrumbService } from 'ng2-breadcrumb/ng2-breadcrumb';
 import { IntermediaryService } from './services/intermediary.service';
 
 @Component({
@@ -21,18 +20,10 @@ export class AppComponent implements OnInit {
   isOpened = true;
   isFetching: boolean;
 
-  constructor(private breadcrumbService: BreadcrumbService,
+  constructor(
     private intermediaryService: IntermediaryService,
     private router: Router,
     private location: Location) {
-    breadcrumbService.addFriendlyNameForRoute('/questions', '问题');
-    breadcrumbService.addCallbackForRouteRegex('/questions/[0-9]+', this.getQuestionName);
-
-    breadcrumbService.addFriendlyNameForRoute('/articles', '文章');
-    breadcrumbService.addCallbackForRouteRegex('/articles/[0-9]+', this.getArticleName);
-
-    breadcrumbService.addFriendlyNameForRoute('/users', '大神');
-    // breadcrumbService.addCallbackForRouteRegex('/users/[0-9]+', this.getArticleName);
   }
 
   ngOnInit() {
@@ -52,5 +43,9 @@ export class AppComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  refresh(): void {
+    
   }
 }

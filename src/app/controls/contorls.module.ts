@@ -6,6 +6,8 @@ import { SharedModule } from '../shared/shared.module';
 
 import { EasyQuillEditorComponent } from './ez-quill-editor.component';
 import { ContentPanelComponent } from './content-panel.component';
+import { ArticleItemComponent } from './article-item.component';
+import { QuestionItemComponent } from './question-item.component';
 
 @NgModule({
   imports: [
@@ -15,11 +17,15 @@ import { ContentPanelComponent } from './content-panel.component';
   ],
   declarations: [
     EasyQuillEditorComponent,
-    ContentPanelComponent
+    ContentPanelComponent,
+    ArticleItemComponent,
+    QuestionItemComponent
   ],
   exports: [
     EasyQuillEditorComponent,
-    ContentPanelComponent
+    ContentPanelComponent,
+    ArticleItemComponent,
+    QuestionItemComponent
   ]
 })
 export class ControlsModule {}

@@ -144,6 +144,10 @@ form {
   width: 100%;
 }
 
+.main {
+  
+}
+
 .full-width {
   width: 100%;
 }
@@ -304,4 +308,18 @@ form {
 	-webkit-box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
 	-moz-box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
 	box-shadow: inset 0px 0px 3px rgba(0,0,0, .8);
+}
+
+.list-item {  
+  .content {
+    
+  }
+  .bar {
+    float: right;
+    font-size: 11pt;
+  }
+  .bar>ngx-avatar {
+    float: left;
+    padding-right: 5px;
+  }
 }

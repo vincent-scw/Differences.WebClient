@@ -4,23 +4,27 @@
   <md-progress-bar mode="indeterminate" color="warn"></md-progress-bar>
 </div>
 
-<app-top-bar (onSideNavToggled)="sidenav.toggle()"></app-top-bar>
+<div class="main">
+  <app-top-bar (onSideNavToggled)="sidenav.toggle()"></app-top-bar>
 
-<md-sidenav-container class="sidenav-container">
-  <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">
-    <app-category-panel></app-category-panel>
-  </md-sidenav>
-  <section class="sidenav-content">
-    <!-- <breadcrumb prefix="主页"></breadcrumb> -->
-    <button md-icon-button (click)="goBack()">
-      <md-icon class="icon-highlight icon-large">keyboard_backspace</md-icon>
-    </button>
-    <router-outlet></router-outlet>
-  </section>
-</md-sidenav-container>
+  <md-sidenav-container class="sidenav-container">
+    <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">
+      <app-category-panel></app-category-panel>
+    </md-sidenav>
+    <section class="sidenav-content">
+      <button md-icon-button (click)="goBack()">
+        <md-icon class="icon-normal icon-large">keyboard_backspace</md-icon>
+      </button>
+      <!-- <button md-icon-button (click)="refresh()">
+        <md-icon class="icon-normal icon-large">refresh</md-icon>
+      </button> -->
+      <router-outlet></router-outlet>
+    </section>
+  </md-sidenav-container>
 
-<div class="toc-container">
-  <app-toc></app-toc>
+  <div class="toc-container">
+    <app-toc></app-toc>
+  </div>
 </div>
 
 <footer>
