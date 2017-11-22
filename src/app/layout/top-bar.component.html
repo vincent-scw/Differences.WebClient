@@ -1,16 +1,23 @@
-<md-toolbar color="primary" class="app-toolbar main-toolbar">
-    <button class="hamburger" md-button 
-      (click)="sideNavToggle()" title="Menu">
-      <md-icon [ngClass]="{'sidenav-open': !isSideBySide}">
-        menu
-      </md-icon>
-    </button>
-    <a class="nav-link home" href="/">
-      <img alt="主页" title="主页" src="../../assets/logo-nav@2x.png">
-    </a>
-    <app-top-menu *ngIf="isSideBySide" [nodes]="topMenuNodes">
-    </app-top-menu>
-    <app-search-box class="search-container" #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)">
-    </app-search-box>
-    <app-account></app-account>
-</md-toolbar>
+<nav class="navbar is-fixed-top is-info" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="nav-link" href="/">
+        <img class="home-img" alt="主页" title="主页" src="../../assets/logo-nav@2x.png">
+      </a>
+    </div>
+    <div class="navbar-start">
+      <a *ngFor="let node of topMenuNodes"
+        class="navbar-item" [routerLink]="node.url" [title]="node.title">{{ node.title }}
+      </a>
+    </div>
+    
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <app-search-box class="search-container" 
+          #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)">
+        </app-search-box>
+      </div>
+      <app-account class="navbar-item"></app-account>
+    </div>
+  </div>
+</nav>

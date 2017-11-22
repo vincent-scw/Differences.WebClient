@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { AccountModule } from '../account/account.module';
 
-import { TopMenuComponent } from './top-menu.component';
 import { TopBarComponent } from './top-bar.component';
 import { SearchBoxComponent } from '../search/search-box.component';
 import { TocComponent } from './toc.component';
@@ -21,7 +20,6 @@ import { LocationService } from '../services/location.service';
       RouterModule
     ],
     declarations: [
-      TopMenuComponent,
       SearchBoxComponent,
       TopBarComponent,
       TocComponent,

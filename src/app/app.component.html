@@ -4,29 +4,30 @@
   <md-progress-bar mode="indeterminate" color="warn"></md-progress-bar>
 </div>
 
-<div class="main">
-  <app-top-bar (onSideNavToggled)="sidenav.toggle()"></app-top-bar>
+<app-top-bar></app-top-bar>
+<div class="container main">
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <div class="sidenav-container tile is-2 is-child">
+        <app-category-panel></app-category-panel>
+      </div>
+      <div class="tile is-8 is-child">
+        <button md-icon-button (click)="goBack()">
+          <md-icon class="icon-normal icon-large">keyboard_backspace</md-icon>
+        </button>
+        <!-- <button md-icon-button (click)="refresh()">
+          <md-icon class="icon-normal icon-large">refresh</md-icon>
+        </button> -->
+        <router-outlet></router-outlet>
+      </div>
 
-  <md-sidenav-container class="sidenav-container">
-    <md-sidenav class="sidenav" #sidenav mode="side" [opened]="isOpened">
-      <app-category-panel></app-category-panel>
-    </md-sidenav>
-    <section class="sidenav-content">
-      <button md-icon-button (click)="goBack()">
-        <md-icon class="icon-normal icon-large">keyboard_backspace</md-icon>
-      </button>
-      <!-- <button md-icon-button (click)="refresh()">
-        <md-icon class="icon-normal icon-large">refresh</md-icon>
-      </button> -->
-      <router-outlet></router-outlet>
-    </section>
-  </md-sidenav-container>
-
-  <div class="toc-container">
-    <app-toc></app-toc>
+      <div class="tile is-2 is-child">
+        <app-toc></app-toc>
+      </div>
+    </div>
   </div>
 </div>
 
-<footer>
+<footer class="footer">
   
 </footer>

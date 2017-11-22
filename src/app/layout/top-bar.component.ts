@@ -7,8 +7,6 @@ import { NavigationNode } from '../models/navigation.model';
 })
 
 export class TopBarComponent {
-  @Output() onSideNavToggled = new EventEmitter();
-
   isSideBySide = true;
   topMenuNodes: NavigationNode[] = [
     {
@@ -27,10 +25,6 @@ export class TopBarComponent {
       url: 'users'
     }
   ];
-
-  sideNavToggle() {
-    this.onSideNavToggled.emit();
-  }
 
   doSearch(data: any) {
 
