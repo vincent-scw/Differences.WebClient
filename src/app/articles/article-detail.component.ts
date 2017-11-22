@@ -41,13 +41,6 @@ export class ArticleDetailComponent implements OnInit {
       );
   }
 
-  submitAnswer(): void {
-    this.articleService.submitComment(this.id, null, this.myCommentContent)
-      .subscribe((data) => {
-        this.myCommentContent = null;
-      });
-  }
-
   onUpdate(data: any): void {
     alert(JSON.stringify(data));
   }

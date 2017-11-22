@@ -1,0 +1,28 @@
+<article class="media">
+  <figure class="media-left">
+    <p class="image">
+      <img src="https://bulma.io/images/placeholders/128x128.png">
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <a class="subtitle has-text-weight-semibold"
+        [routerLink]="['/articles', item.id]"
+        [innerHTML]="item.title | title"></a>
+      <br />
+      <div>TODO: some breif content</div>
+    </div>
+
+    <nav class="level has-text-weight-light">
+      <div class="level-left">
+        <small class="level-item">TODO: category here</small>
+      </div>
+      <div class="level-right">
+        <small class="level-item">
+          <a [routerLink]="['/users', item.user.id]">{{item.user.displayName}}</a>
+            提问于{{item.createTime | amTimeAgo}}
+        </small>        
+      </div>
+    </nav>
+  </div>
+</article>

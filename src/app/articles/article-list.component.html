@@ -1,10 +1,11 @@
-<md-nav-list>
-  <md-list-item *ngFor="let article of data | async | select: 'articles'">
-      <a [routerLink]="['/articles', article.id]"
-        [innerHTML]="article.title | title"></a>
-        <md-icon>info</md-icon>
-  </md-list-item>
-</md-nav-list>
+<md-list>
+  <div *ngFor="let article of data | async | select: 'articles'">
+    <app-article-item
+      class="list-item"
+      [item]="article"></app-article-item>
+    <hr />
+  </div>
+</md-list>
 
 <md-paginator [length]="100"
   [pageSize]="25"

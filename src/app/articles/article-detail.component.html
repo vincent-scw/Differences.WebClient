@@ -1,23 +1,40 @@
 <div *ngIf="article">
-  <h2 [innerHTML]="article.title | title"></h2>
+  <div class="title has-text-weight-semibold" [innerHTML]="article.title | title"></div>
   <div>
     <content-panel
       [data]="article"></content-panel>
   </div>
 </div>
-
-<div class="panelTitle underline">
-  <button class="float-right" md-button color="primary"
-   (click)="expansionPanel.toggle()">我有话说</button>
-  <span>回复</span>
-</div>
-<md-expansion-panel #expansionPanel>
-  <div>
-    <ez-quill-editor
-      [(ngModel)]="myCommentContent"></ez-quill-editor>
-    <button md-raised-button color="accent"
-      (click)="submitComment()">提交</button>
+<br />
+<div class="level">
+  <div class="level-left">
+    <strong>回复</strong>
   </div>
+  <div class="level-right">
+    <p class="control">
+      <a class="button is-warning width-100"
+        (click)="expansionPanel.toggle()">我有话说</a>
+    </p>
+  </div>
+</div>
+<hr />
+<md-expansion-panel #expansionPanel>
+  <article class="media">
+    <div class="media-content">
+      <div class="field">
+        <p class="control">
+          <textarea class="textarea" placeholder="说点什么……"
+            [(ngModel)]="myCommentContent"></textarea>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+          <a class="button is-link width-100"
+            (click)="submitComment()">提交</a>
+        </p>
+      </div>
+    </div>
+  </article>
 </md-expansion-panel>
 
 <md-list>
