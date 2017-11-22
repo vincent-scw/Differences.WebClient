@@ -6,7 +6,15 @@ import { Category, CategoryGroup } from '../models/category.model';
 
 @Component({
   selector: 'app-category-panel',
-  templateUrl: './category-panel.component.html'
+  template: `
+  <aside class="menu">
+    <div *ngFor="let categoryGroup of categoryGroups">
+      <app-category-group-item
+        [categoryGroup]="categoryGroup">
+      </app-category-group-item>
+    </div>
+  </aside>
+  `
 })
 
 export class CategoryPanelComponent implements OnInit {
@@ -20,9 +28,5 @@ export class CategoryPanelComponent implements OnInit {
   ngOnInit() {
     this.categoryGroups = this.categoryService.categoryGroups;
     this.selectedCategory = this.categoryService.selectedCategory;
-  }
-
-  selectionChange(categoryId: number) {
-    this.categoryService.setSelectedCategory(categoryId);
   }
 }

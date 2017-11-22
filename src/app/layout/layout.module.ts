@@ -9,6 +9,7 @@ import { TopBarComponent } from './top-bar.component';
 import { ScrollableTopBarComponent } from './scrollable-top-bar.component';
 import { SearchBoxComponent } from '../search/search-box.component';
 import { CategoryPanelComponent } from './category-panel.component';
+import { CategoryGroupItemComponent } from './category-group-item.component';
 
 import { LocationService } from '../services/location.service';
 
@@ -23,7 +24,8 @@ import { LocationService } from '../services/location.service';
       SearchBoxComponent,
       TopBarComponent,
       ScrollableTopBarComponent,
-      CategoryPanelComponent
+      CategoryPanelComponent,
+      CategoryGroupItemComponent
     ],
     exports: [
       TopBarComponent,

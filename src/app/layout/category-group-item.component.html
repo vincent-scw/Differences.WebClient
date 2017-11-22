@@ -1,0 +1,20 @@
+<div class="level menu-label">
+  <p class="level-left">
+    {{categoryGroup.name}}
+  </p>
+  <a class="level-right"
+    (click)="isExpanded=!isExpanded">
+    <span class="icon is-small">
+      <i [class]="isExpanded ? 'fa fa-angle-up': 'fa fa-angle-down'"></i>
+    </span>
+  </a>
+</div>
+<ul class="menu-list"
+  [style.display]="isExpanded ? 'block': 'none'">
+  <li *ngFor="let category of categoryGroup.categories">
+    <a (click)="selectionChange(category.id)"
+      [class.is-active]="selectedCategoryId != null && category.id == selectedCategoryId">
+      {{category.name}}
+    </a>
+  </li>
+</ul>
