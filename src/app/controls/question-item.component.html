@@ -1,11 +1,21 @@
-<div class="content">
-  <a class="link" [routerLink]="['/questions', item.id]"
-    [innerHTML]="item.title | title"></a>
-</div>
-<div class="bar">
-  <ngx-avatar [name]="item.user.displayName"
-    size="25"></ngx-avatar>
-  <a [routerLink]="['/users', item.user.id]">{{item.user.displayName}}</a>
-  提问于{{item.createTime | amTimeAgo}}
-  <!-- <div>{{item.categoryId}}</div> -->
-</div>
+<article class="media">
+  <div class="media-content">
+    <div class="content">
+      <a class="subtitle has-text-weight-semibold"
+        [routerLink]="['/questions', item.id]"
+        [innerHTML]="item.title | title"></a>
+    </div>
+
+    <nav class="level has-text-weight-light">
+      <div class="level-left">
+        <small class="level-item">TODO: category here</small>
+      </div>
+      <div class="level-right">
+        <small class="level-item">
+          <a [routerLink]="['/users', item.user.id]">{{item.user.displayName}}</a>
+            提问于{{item.createTime | amTimeAgo}}
+        </small>        
+      </div>
+    </nav>
+  </div>
+</article>

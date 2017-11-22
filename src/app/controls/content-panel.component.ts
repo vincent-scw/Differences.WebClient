@@ -22,7 +22,6 @@ import { User } from '../models/user.model';
 export class ContentPanelComponent implements OnInit, OnChanges {
   @Input() data: any;
   @Input() replyEnabled = true;
-  @Input() showAvatar = true;
   @Input() alwaysShowActionbar = true;
   @Output() onUpdate = new EventEmitter<any>();
   @Output() onReply = new EventEmitter<any>();

@@ -24,7 +24,16 @@
 <nav class="navbar is-fixed-top sub-top is-link">
   <div class="container">
     <div class="navbar-start">
-
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <button md-icon-button (click)="goBack()">
+            <md-icon class="icon-normal icon-large">keyboard_backspace</md-icon>
+          </button>
+          <button md-icon-button (click)="refresh()">
+            <md-icon class="icon-normal icon-large">refresh</md-icon>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="navbar-end">
       <div class="navbar-item">

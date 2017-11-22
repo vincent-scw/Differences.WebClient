@@ -85,20 +85,6 @@
 }
 
 .highlight {
-  color: $accentblue;
+  color: $orange;
   font: bold;
-}
-
-.list-item {  
-  .content {
-    
-  }
-  .bar {
-    float: right;
-    font-size: 11pt;
-  }
-  .bar>ngx-avatar {
-    float: left;
-    padding-right: 5px;
-  }
 }

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Location } from '@angular/common';
 import { NavigationNode } from '../models/navigation.model';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
@@ -30,7 +31,8 @@ export class TopBarComponent {
     }
   ];
 
-  constructor(private dialog: MdDialog) {
+  constructor(private dialog: MdDialog,
+    private location: Location) {
 
   }
 
@@ -45,5 +47,13 @@ export class TopBarComponent {
 
   writeArticle(): void {
     this.dialog.open(WriteArticleComponent, {});
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  refresh(): void {
+
   }
 }

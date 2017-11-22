@@ -1,58 +1,73 @@
-<div class="avatar-div" *ngIf="showAvatar">
-  <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
-</div>
-<div [class]="showAvatar ? 'panel-div' : null"
-  (mouseover)="showStatusBar=true"
-  (mouseout)="showStatusBar=false">
-  <div class="user-div">
-    <div class="time">{{data.createTime | amTimeAgo}}</div>
-    <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
-  </div>
-  <ez-quill-editor
-    [(ngModel)]="newContent"
-    [readOnly]="isReadOnly">
-  </ez-quill-editor>
-  <div class="action-bar" *ngIf="!isReadOnly">
-    <button md-icon-button (click)="onSubmit()">
-      <md-icon class="icon-highlight">check</md-icon>
-    </button>
-    <button md-icon-button (click)="onCancel()">
-      <md-icon class="icon-normal">close</md-icon>
-    </button>
-  </div>
+<article class="media">
+  <figure class="media-left">
+    <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
+  </figure>
+  <div class="media-content">
+    <div class="content"
+      (mouseover)="showStatusBar=true"
+      (mouseout)="showStatusBar=false">
+      <div class="level">
+        <div class="level-left">
+          <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
+        </div>
+        <div class="level-right">{{data.createTime | amTimeAgo}}</div>
+      </div>
+      <ez-quill-editor
+        [(ngModel)]="newContent"
+        [readOnly]="isReadOnly">
+      </ez-quill-editor>
+      <div class="action-bar" *ngIf="!isReadOnly">
+        <button md-icon-button (click)="onSubmit()">
+          <md-icon class="icon-highlight">check</md-icon>
+        </button>
+        <button md-icon-button (click)="onCancel()">
+          <md-icon class="icon-normal">close</md-icon>
+        </button>
+      </div>
 
-  <div *ngIf="data.subReplies != null && data.subReplies.length > 0" 
-    class="sub-replies">
-    <div *ngFor="let sub of data.subReplies">
-      <content-panel [data]="sub" [showAvatar]="false"
-        [alwaysShowActionbar]="false"></content-panel>
+      <div *ngIf="data.subReplies != null && data.subReplies.length > 0" 
+        class="sub-replies">
+        <div *ngFor="let sub of data.subReplies">
+          <content-panel [data]="sub"
+            [alwaysShowActionbar]="false"></content-panel>
+        </div>
+      </div>
+
+      <nav class="level" *ngIf="isReadOnly">
+        <div class="level-left"></div>
+        <div class="level-right"
+          [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'" >
+          <a class="level-item" (click)="onEdit()"
+            *ngIf="currentUser != null && currentUser.id == data.user.id">
+            <span class="icon is-small">
+              <i class="fa fa-edit"></i>
+            </span>
+          </a>
+          <a class="level-item" *ngIf="replyEnabled" (click)="toggleEditPanel()">
+            <span class="icon is-small">
+              <i class="fa fa-reply"></i>
+            </span>
+          </a>
+          <a class="level-item">
+            <span class="icon is-small">
+              <i class="fa fa-heart"></i>
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <div *ngIf="showEditPanel">
+      <ez-quill-editor [(ngModel)]="myReplyContent">
+      </ez-quill-editor>
+      <div class="action-bar">
+        <button md-icon-button (click)="onReplySubmit()">
+          <md-icon class="icon-highlight">check</md-icon>
+        </button>
+        <button md-icon-button (click)="toggleEditPanel()">
+          <md-icon class="icon-normal">close</md-icon>
+        </button>
+      </div>
     </div>
   </div>
-
-  <div class="action-bar" *ngIf="isReadOnly">
-    <div [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'" >
-      <button md-icon-button>
-        <md-icon class="icon-normal">thumb_up</md-icon>
-      </button>
-      <button md-icon-button (click)="onEdit()"
-        *ngIf="currentUser != null && currentUser.id == data.user.id">
-        <md-icon class="icon-normal">edit</md-icon>
-      </button>
-      <button *ngIf="replyEnabled" md-icon-button>
-        <md-icon class="icon-normal" (click)="toggleEditPanel()">reply</md-icon>
-      </button> 
-  </div>
-</div>
-
-<div *ngIf="showEditPanel">
-  <ez-quill-editor [(ngModel)]="myReplyContent">
-  </ez-quill-editor>
-  <div class="action-bar">
-    <button md-icon-button (click)="onReplySubmit()">
-      <md-icon class="icon-highlight">check</md-icon>
-    </button>
-    <button md-icon-button (click)="toggleEditPanel()">
-      <md-icon class="icon-normal">close</md-icon>
-    </button>
-  </div>
-</div>
+</article>

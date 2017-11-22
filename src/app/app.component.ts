@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 
 import { NavigationNode } from './models/navigation.model';
 import { Router,
@@ -22,8 +21,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private intermediaryService: IntermediaryService,
-    private router: Router,
-    private location: Location) {
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -39,13 +37,5 @@ export class AppComponent implements OnInit {
 
   getArticleName(id: string): string {
     return '文章 ' + id;
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  refresh(): void {
-    
   }
 }
