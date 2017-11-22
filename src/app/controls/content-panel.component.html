@@ -25,14 +25,6 @@
         </button>
       </div>
 
-      <div *ngIf="data.subReplies != null && data.subReplies.length > 0" 
-        class="sub-replies">
-        <div *ngFor="let sub of data.subReplies">
-          <content-panel [data]="sub"
-            [alwaysShowActionbar]="false"></content-panel>
-        </div>
-      </div>
-
       <nav class="level" *ngIf="isReadOnly">
         <div class="level-left"></div>
         <div class="level-right"
@@ -55,6 +47,13 @@
           </a>
         </div>
       </nav>
+    </div>
+
+    <div *ngIf="data.subReplies != null && data.subReplies.length > 0">
+      <div *ngFor="let sub of data.subReplies">
+        <content-panel [data]="sub"
+          [alwaysShowActionbar]="false"></content-panel>
+      </div>
     </div>
 
     <div *ngIf="showEditPanel">

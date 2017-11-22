@@ -5,7 +5,7 @@
     </p>
     <ul class="menu-list">
       <li *ngFor="let category of categoryGroup.categories">
-        <a (click)="selectionChange(category)"
+        <a (click)="selectionChange(category.id)"
           [class.is-active]="selectedCategory.value != null && category.id == selectedCategory.value.id">
           {{category.name}}
         </a>

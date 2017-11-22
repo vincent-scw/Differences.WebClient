@@ -22,7 +22,7 @@ export class CategoryPanelComponent implements OnInit {
     this.selectedCategory = this.categoryService.selectedCategory;
   }
 
-  selectionChange(category?: Category) {
-    this.categoryService.setSelectedCategory(category.id);
+  selectionChange(categoryId: number) {
+    this.categoryService.setSelectedCategory(categoryId);
   }
 }

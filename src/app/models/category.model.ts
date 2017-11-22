@@ -5,6 +5,7 @@ export class Category {
 }
 
 export class CategoryGroup {
+  id: number;
   name: string;
   categories: Category[];
 }

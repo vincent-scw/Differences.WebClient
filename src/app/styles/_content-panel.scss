@@ -1,37 +1,9 @@
 content-panel {
-  .avatar-div {
-    padding-right: 16px;
-    float: left;
-  }
-
-  .panel-div {
-    padding-left: 60px;
-  }
-
-  .action-bar {
-    text-align: right;
-  }
-
-  .user-div {
-    margin-bottom: 10px;
-
-    .time {
-      float: right;
-      margin-top: 2px;
-    }
+  .content figure {
+    margin: 0 20px 0 0;
   }
 
   .editor {
     background-color: $offwhite;
-  }
-
-  .sub-replies {
-    border: $lightgray solid thin;
-    padding: 8px;
-    background-color: $backgroundgray;
-
-    &>div:not(:last-child) {
-      border-bottom: 1px solid #dcdcdc;
-    }
   }
 }

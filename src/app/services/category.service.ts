@@ -10,6 +10,7 @@ const selected_category_key = 'selected_category';
 export class CategoryService {
   categoryGroups: CategoryGroup[] = [
     {
+      id: 1,
       name: '技术',
       categories: [
         { id: 101, name: 'IT' },
@@ -19,6 +20,7 @@ export class CategoryService {
       ]
     },
     {
+      id: 2,
       name: '科学与自然',
       categories: [
         { id: 201, name: '科学' },
@@ -26,6 +28,7 @@ export class CategoryService {
       ]
     },
     {
+      id: 3,
       name: '语言',
       categories: [
         { id: 303, name: '英语' },
@@ -33,6 +36,7 @@ export class CategoryService {
       ]
     },
     {
+      id: 4,
       name: '社科',
       categories: [
         { id: 401, name: '历史' },
@@ -40,6 +44,7 @@ export class CategoryService {
       ]
     },
     {
+      id: 5,
       name: '人文',
       categories: [
         { id: 501, name: '名人' },
@@ -47,6 +52,7 @@ export class CategoryService {
       ]
     },
     {
+      id: 6,
       name: '其他',
       categories: [{ id: 999, name: '其他' }]
     }
