@@ -52,6 +52,11 @@ body {
   margin-bottom: 20px !important;
 }
 
+.mat-expansion-panel.clear-spacing>div>div {
+  padding: 0 0 0 0 !important;
+  margin: 0 0 0 0 !important;
+}
+
 .progress-bar-container {
   height: 2px;
   overflow: hidden;

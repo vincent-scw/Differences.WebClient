@@ -9,12 +9,13 @@
     </span>
   </a>
 </div>
-<ul class="menu-list"
-  [style.display]="isExpanded ? 'block': 'none'">
-  <li *ngFor="let category of categoryGroup.categories">
-    <a (click)="selectionChange(category.id)"
-      [class.is-active]="selectedCategoryId != null && category.id == selectedCategoryId">
-      {{category.name}}
-    </a>
-  </li>
-</ul>
+<md-expansion-panel class="clear-spacing" [expanded]="isExpanded">
+  <ul class="menu-list">
+    <li *ngFor="let category of categoryGroup.categories">
+      <a (click)="selectionChange(category.id)"
+        [class.is-active]="selectedCategoryId != null && category.id == selectedCategoryId">
+        {{category.name}}
+      </a>
+    </li>
+  </ul>
+</md-expansion-panel>
