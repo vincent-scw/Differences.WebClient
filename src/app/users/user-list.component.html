@@ -1,8 +1,12 @@
-<md-list>
-  <md-list-item *ngFor="let user of data | async | select: 'topUsers'">
-    <md-card>
-      <ngx-avatar [name]="user.displayName"></ngx-avatar>
-      {{user.displayName}}
-    </md-card>
-  </md-list-item>
-</md-list>
+<div class="card" *ngFor="let user of data | async | select: 'topUsers'">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <ngx-avatar [name]="user.displayName"></ngx-avatar>
+      </div>
+      <div class="media-content">
+        {{user.displayName}}
+      </div>
+    </div>
+  </div>
+</div>

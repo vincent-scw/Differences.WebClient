@@ -1,8 +1,11 @@
+.top {
+  box-shadow: 0 2px $backgroundgray;
+}
+
 .sub-top {
   top: 55px !important;
   height: 30px !important;
   max-height: 30px;
-  box-shadow: 0 2px $backgroundgray;
 }
 
 .home-img {

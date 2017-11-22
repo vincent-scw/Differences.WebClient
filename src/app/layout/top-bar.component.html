@@ -1,4 +1,4 @@
-<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+<nav class="navbar is-fixed-top top" role="navigation" aria-label="main navigation">
   <div class="container">
     <div class="navbar-brand">
       <a class="nav-link" href="/">
@@ -18,36 +18,6 @@
         </app-search-box>
       </div>
       <app-account class="navbar-item"></app-account>
-    </div>
-  </div>
-</nav>
-<nav class="navbar is-fixed-top sub-top is-link">
-  <div class="container">
-    <div class="navbar-start">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <button md-icon-button (click)="goBack()">
-            <md-icon class="icon-normal icon-large">keyboard_backspace</md-icon>
-          </button>
-          <button md-icon-button (click)="refresh()">
-            <md-icon class="icon-normal icon-large">refresh</md-icon>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <p class="control">
-            <a class="button is-warning width-100"
-              (click)="askQuestion()">我要提问</a>
-          </p>
-          <p class="control">
-            <a class="button is-success width-100"
-              (click)="writeArticle()">发表文章</a>
-          </p>
-        </div>
-      </div>
     </div>
   </div>
 </nav>
