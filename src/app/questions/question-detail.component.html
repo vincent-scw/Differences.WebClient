@@ -1,10 +1,9 @@
 <div *ngIf="question">
   <div class="title has-text-weight-semibold" [innerHTML]="question.title | title"></div>
   <div>
-    <content-panel
+    <quill-content-panel
       [data]="question"
-      [replyEnabled]="false"
-      (onUpdate)="onUpdateQuestionContent($event)"></content-panel>
+      (onUpdate)="onUpdateQuestionContent($event)"></quill-content-panel>
   </div>
 </div>
 <br />
@@ -19,7 +18,6 @@
     </p>
   </div>
 </div>
-<hr />
 <md-expansion-panel #expansionPanel>
   <article class="media">
     <div class="media-content">
@@ -38,7 +36,7 @@
     </div>
   </article>
 </md-expansion-panel>
-
+<hr />
 <md-list>
   <div class="item-wrapper"
     *ngFor="let answer of answers | select: 'question_answers'">

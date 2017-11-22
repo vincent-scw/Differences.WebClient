@@ -6,8 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { EasyQuillEditorComponent } from './ez-quill-editor.component';
 import { ContentPanelComponent } from './content-panel.component';
-import { ArticleItemComponent } from './article-item.component';
-import { QuestionItemComponent } from './question-item.component';
+import { QuillContentPanelComponent } from './quill-content-panel.component';
 import { PaginationComponent } from './pagination.component';
 
 @NgModule({
@@ -19,15 +18,13 @@ import { PaginationComponent } from './pagination.component';
   declarations: [
     EasyQuillEditorComponent,
     ContentPanelComponent,
-    ArticleItemComponent,
-    QuestionItemComponent,
+    QuillContentPanelComponent,
     PaginationComponent
   ],
   exports: [
     EasyQuillEditorComponent,
     ContentPanelComponent,
-    ArticleItemComponent,
-    QuestionItemComponent,
+    QuillContentPanelComponent,
     PaginationComponent
   ]
 })

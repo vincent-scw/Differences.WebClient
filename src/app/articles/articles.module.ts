@@ -9,6 +9,7 @@ import { ArticleService } from '../services/article.service';
 import { ArticleListComponent } from './article-list.component';
 import { ArticleDetailComponent } from './article-detail.component';
 import { WriteArticleComponent } from './write-article.component';
+import { ArticleItemComponent } from './article-item.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { WriteArticleComponent } from './write-article.component';
   declarations: [
     ArticleListComponent,
     ArticleDetailComponent,
-    WriteArticleComponent
+    WriteArticleComponent,
+    ArticleItemComponent
   ],
   providers: [
     ArticleService

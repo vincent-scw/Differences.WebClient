@@ -10,6 +10,7 @@ import { QuestionService } from '../services/question.service';
 import { QuestionListComponent } from './question-list.component';
 import { AskQuestionComponent } from './ask-question.component';
 import { QuestionDetailComponent } from './question-detail.component';
+import { QuestionItemComponent } from './question-item.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { QuestionDetailComponent } from './question-detail.component';
   declarations: [
     QuestionDetailComponent,
     QuestionListComponent,
+    QuestionItemComponent,
     AskQuestionComponent
   ],
   providers: [
