@@ -3,3 +3,8 @@ export class Category {
   name: string;
   description?: string;
 }
+
+export class CategoryGroup {
+  name: string;
+  categories: Category[];
+}

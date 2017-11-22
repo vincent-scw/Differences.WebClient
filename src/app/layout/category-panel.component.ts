@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CategoryService } from '../services/category.service';
-import { Category } from '../models/category.model';
+import { Category, CategoryGroup } from '../models/category.model';
 
 @Component({
   selector: 'app-category-panel',
@@ -10,7 +10,7 @@ import { Category } from '../models/category.model';
 })
 
 export class CategoryPanelComponent implements OnInit {
-  categories: Category[];
+  categoryGroups: CategoryGroup[];
   selectedCategory: BehaviorSubject<Category>;
 
   constructor(private categoryService: CategoryService) {
@@ -18,11 +18,11 @@ export class CategoryPanelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categories = this.categoryService.categories;
+    this.categoryGroups = this.categoryService.categoryGroups;
     this.selectedCategory = this.categoryService.selectedCategory;
   }
 
-  selectionChange(category: Category) {
+  selectionChange(category?: Category) {
     this.categoryService.setSelectedCategory(category.id);
   }
 }

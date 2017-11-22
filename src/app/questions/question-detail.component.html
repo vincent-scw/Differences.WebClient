@@ -15,9 +15,9 @@
 </div>
 <md-expansion-panel #expansionPanel>
   <div>
-    <ez-quill-editor
-      [(ngModel)]="myAnswerContent"></ez-quill-editor>
-    <button md-raised-button color="accent"
+    <textarea class="textarea" placeholder="说点什么……"
+      [(ngModel)]="myAnswerContent"></textarea>
+    <button class="button is-info width-100"
       (click)="submitAnswer()">提交</button>
   </div>
 </md-expansion-panel>

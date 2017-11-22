@@ -11,7 +11,7 @@
       <div class="sidenav-container tile is-2 is-child">
         <app-category-panel></app-category-panel>
       </div>
-      <div class="tile is-8 is-child">
+      <div class="tile is-child">
         <button md-icon-button (click)="goBack()">
           <md-icon class="icon-normal icon-large">keyboard_backspace</md-icon>
         </button>
@@ -19,10 +19,6 @@
           <md-icon class="icon-normal icon-large">refresh</md-icon>
         </button> -->
         <router-outlet></router-outlet>
-      </div>
-
-      <div class="tile is-2 is-child">
-        <app-toc></app-toc>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ import { EasyQuillEditorComponent } from './ez-quill-editor.component';
 import { ContentPanelComponent } from './content-panel.component';
 import { ArticleItemComponent } from './article-item.component';
 import { QuestionItemComponent } from './question-item.component';
+import { PaginationComponent } from './pagination.component';
 
 @NgModule({
   imports: [
@@ -19,13 +20,15 @@ import { QuestionItemComponent } from './question-item.component';
     EasyQuillEditorComponent,
     ContentPanelComponent,
     ArticleItemComponent,
-    QuestionItemComponent
+    QuestionItemComponent,
+    PaginationComponent
   ],
   exports: [
     EasyQuillEditorComponent,
     ContentPanelComponent,
     ArticleItemComponent,
-    QuestionItemComponent
+    QuestionItemComponent,
+    PaginationComponent
   ]
 })
 export class ControlsModule {}

@@ -1,9 +1,15 @@
-<md-list>
-  <md-list-item *ngFor="let category of categories">
-    <a class="button is-primary width-100" 
-      (click)="selectionChange(category)"
-      [class.is-info]="selectedCategory.value != null && category.id == selectedCategory.value.id"
-      [class.is-outlined]="selectedCategory.value == null || category.id != selectedCategory.value.id">
-      {{category.name}}</a>
-  </md-list-item>
-</md-list>
+<aside class="menu">
+  <div *ngFor="let categoryGroup of categoryGroups">
+    <p class="menu-label">
+      {{categoryGroup.name}}
+    </p>
+    <ul class="menu-list">
+      <li *ngFor="let category of categoryGroup.categories">
+        <a (click)="selectionChange(category)"
+          [class.is-active]="selectedCategory.value != null && category.id == selectedCategory.value.id">
+          {{category.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

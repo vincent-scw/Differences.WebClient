@@ -7,7 +7,6 @@ import { AccountModule } from '../account/account.module';
 
 import { TopBarComponent } from './top-bar.component';
 import { SearchBoxComponent } from '../search/search-box.component';
-import { TocComponent } from './toc.component';
 import { CategoryPanelComponent } from './category-panel.component';
 
 import { LocationService } from '../services/location.service';
@@ -22,12 +21,10 @@ import { LocationService } from '../services/location.service';
     declarations: [
       SearchBoxComponent,
       TopBarComponent,
-      TocComponent,
       CategoryPanelComponent
     ],
     exports: [
       TopBarComponent,
-      TocComponent,
       CategoryPanelComponent
     ],
     providers: [

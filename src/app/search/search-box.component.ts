@@ -15,14 +15,18 @@ import 'rxjs/add/operator/distinctUntilChanged';
  */
 @Component({
   selector: 'app-search-box',
-  template: `<input #searchBox
-    type="search"
-    aria-label="搜索"
-    placeholder="搜索"
-    (input)="doSearch()"
-    (keyup)="doSearch()"
-    (focus)="doFocus()"
-    (click)="doSearch()">`
+  template: `
+    <div class="control">
+      <input class="input is-small" #searchBox
+      type="search"
+      aria-label="搜索"
+      placeholder="搜索"
+      (input)="doSearch()"
+      (keyup)="doSearch()"
+      (focus)="doFocus()"
+      (click)="doSearch()">
+    </div>
+    `
 })
 export class SearchBoxComponent implements OnInit {
 
