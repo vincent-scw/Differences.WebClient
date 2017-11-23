@@ -1,17 +1,33 @@
 .main {
   margin-top: 80px;
-  height: auto;
+  min-height: 100%;
 }
 
 .sidenav-container {
   width: 150px !important;
-  height: 100%;
   padding-right: 5px;
   box-shadow: 1px 0 $backgroundgray;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .main-content {
   padding-left: 20px;
+  min-height: 100%;
+}
+
+// ******* editor *******
+quill-editor {
+  max-width: 1110px;
+  background-color: $offwhite;
+}
+
+.quill-editor {
+  max-height: 400px;
+  overflow: auto !important;
+}
+
+// ******* content panel ******
+content-panel {
+  .content figure {
+    margin: 0 20px 0 0;
+  }
 }

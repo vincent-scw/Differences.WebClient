@@ -1,14 +1,12 @@
-<div id="top-of-page"></div>
-
 <div *ngIf="isFetching" class="progress-bar-container">
   <md-progress-bar mode="indeterminate" color="warn"></md-progress-bar>
 </div>
 
 <app-top-bar></app-top-bar>
 <app-scrollable-top-bar></app-scrollable-top-bar>
-<div class="container main">
-  <div class="tile is-ancestor">
-    <div class="tile is-parent">
+<div class="container main full-height">
+  <div class="tile is-ancestor full-height">
+    <div class="tile is-parent full-height">
       <div class="sidenav-container tile is-2 is-child">
         <app-category-panel></app-category-panel>
       </div>
