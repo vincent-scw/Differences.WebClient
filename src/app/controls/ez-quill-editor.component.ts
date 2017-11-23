@@ -29,13 +29,19 @@ export class EasyQuillEditorComponent implements OnInit, ControlValueAccessor, O
       toolbar: [
         ['bold', 'italic', 'underline', 'strike'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [{ 'color': [] }, { 'background': [] }],
+        [{ 'indent': '-1'}, { 'indent': '+1' }],
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'color': [] }],
         [{ 'align': [] }],
-        ['link', 'image'],
+        ['link', 'image', 'code-block'],
         ['clean']
       ]
-    }
+    },
+    formats: [
+      'bold', 'code', 'italic', 'link', 'size', 'strike', 'underline',
+      'header', 'indent', 'list', 'align', 'direction', 'code-block',
+      'formula', 'image', 'video'
+    ]
   };
 
   onModelChange: Function = (_: any) => {};
