@@ -3,30 +3,9 @@ import { LocationService } from '../services/location.service';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-/**
- * This component provides a text box to type a search query that will be sent to the SearchService.
- *
- * When you arrive at a page containing this component, it will retrieve the `query` from the browser
- * address bar. If there is a query then this will be made.
- *
- * Focussing on the input box will resend whatever query is there. This can be useful if the search
- * results had been hidden for some reason.
- *
- */
 @Component({
   selector: 'app-search-box',
-  template: `
-    <div class="control">
-      <input class="input is-small" #searchBox
-      type="search"
-      aria-label="搜索"
-      placeholder="搜索"
-      (input)="doSearch()"
-      (keyup)="doSearch()"
-      (focus)="doFocus()"
-      (click)="doSearch()">
-    </div>
-    `
+  templateUrl: './search-box.component.html'
 })
 export class SearchBoxComponent implements OnInit {
 

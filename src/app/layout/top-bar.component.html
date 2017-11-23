@@ -13,8 +13,8 @@
     
     <div class="navbar-end">
       <div class="navbar-item">
-        <app-search-box class="search-container" 
-          #searchBox (onSearch)="doSearch($event)" (onFocus)="doSearch($event)">
+        <app-search-box
+          #searchBox (onSearch)="doSearch($event)">
         </app-search-box>
       </div>
       <app-account class="navbar-item"></app-account>
