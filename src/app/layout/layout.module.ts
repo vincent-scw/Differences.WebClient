@@ -10,6 +10,7 @@ import { ScrollableTopBarComponent } from './scrollable-top-bar.component';
 import { SearchBoxComponent } from '../search/search-box.component';
 import { CategoryPanelComponent } from './category-panel.component';
 import { CategoryGroupItemComponent } from './category-group-item.component';
+import { FooterComponent } from './footer.component';
 
 import { LocationService } from '../services/location.service';
 
@@ -25,12 +26,14 @@ import { LocationService } from '../services/location.service';
       TopBarComponent,
       ScrollableTopBarComponent,
       CategoryPanelComponent,
-      CategoryGroupItemComponent
+      CategoryGroupItemComponent,
+      FooterComponent
     ],
     exports: [
       TopBarComponent,
       ScrollableTopBarComponent,
-      CategoryPanelComponent
+      CategoryPanelComponent,
+      FooterComponent
     ],
     providers: [
       LocationService,

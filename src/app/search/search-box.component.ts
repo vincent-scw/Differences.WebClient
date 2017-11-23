@@ -3,6 +3,9 @@ import { LocationService } from '../services/location.service';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/distinctUntilChanged';
 
+import { CategoryService } from '../services/category.service';
+import { Category, CategoryGroup } from '../models/category.model';
+
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html'
@@ -16,12 +19,14 @@ export class SearchBoxComponent implements OnInit {
   @Output() onSearch = this.searchSubject.distinctUntilChanged(); // .debounceTime(this.searchDebounce);
   @Output() onFocus = new EventEmitter<string>();
 
-  constructor(private locationService: LocationService) { }
+  categoryGroups: CategoryGroup[];
 
-  /**
-   * When we first show this search box we trigger a search if there is a search query in the URL
-   */
+  constructor(private locationService: LocationService,
+    private categoryService: CategoryService) { }
+
   ngOnInit() {
+    this.categoryGroups = this.categoryService.categoryGroups;
+
     const query = this.locationService.search()['search'];
     if (query) {
       this.query = query;
