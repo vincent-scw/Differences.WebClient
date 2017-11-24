@@ -1,0 +1,27 @@
+<div class="field has-addons has-addons-right is-small">
+  
+  <div class="control dropdown">
+    <div class="dropdown-trigger">
+      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+        <span>类目</span>
+        <span class="icon is-small">
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        <app-category-panel></app-category-panel>
+      </div>
+    </div>
+  </div>
+  
+  <p class="control">
+    <input class="input" type="text" placeholder="找什么？" #searchBox>
+  </p>
+  <p class="control">
+    <a class="button is-link" (click)="doSearch()">
+      搜索
+    </a>
+  </p>
+</div>

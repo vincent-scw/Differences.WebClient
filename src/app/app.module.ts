@@ -8,6 +8,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
+import { ControlsModule } from './controls/controls.module';
 import { QuestionsModule } from './questions/questions.module';
 import { ArticlesModule } from './articles/articles.module';
 import { UsersModule } from './users/users.module';
@@ -29,6 +30,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     BrowserAnimationsModule,
     SharedModule,
+    ControlsModule,
     LayoutModule,
     QuestionsModule,
     ArticlesModule,

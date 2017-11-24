@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
-import { ControlsModule } from '../controls/contorls.module';
+import { ControlsModule } from '../controls/controls.module';
 import { UsersRoutingModule } from './users-routing.module';
 
 import { UserService } from '../services/user.service';

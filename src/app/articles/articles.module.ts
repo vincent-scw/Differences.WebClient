@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
-import { ControlsModule } from '../controls/contorls.module';
+import { ControlsModule } from '../controls/controls.module';
 import { ArticlesRoutingModule } from './articles-routing.module';
 
 import { ArticleService } from '../services/article.service';

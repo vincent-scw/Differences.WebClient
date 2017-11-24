@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { CategoryService } from '../services/category.service';
-import { Category, CategoryGroup } from '../models/category.model';
+import { CategoryService } from '../../services/category.service';
+import { Category, CategoryGroup } from '../../models/category.model';
 
 @Component({
   selector: 'app-category-group-item',
