@@ -21,7 +21,6 @@ import { Category, CategoryGroup } from '../../models/category.model';
 
 export class CategoryPanelComponent implements OnInit {
   categoryGroups: CategoryGroup[];
-  selectedCategory: BehaviorSubject<Category>;
 
   constructor(private categoryService: CategoryService) {
 
@@ -29,6 +28,5 @@ export class CategoryPanelComponent implements OnInit {
 
   ngOnInit() {
     this.categoryGroups = this.categoryService.categoryGroups;
-    this.selectedCategory = this.categoryService.selectedCategory;
   }
 }

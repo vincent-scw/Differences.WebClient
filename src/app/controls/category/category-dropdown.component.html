@@ -1,6 +1,6 @@
-<div class="control dropdown"
-  [class.is-active]="isActive"
-  (onBlur)="isActive = false">
+<div class="control dropdown" tabindex="1" 
+  (blur)="isActive = false"
+  [class.is-active]="isActive">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"
       (click)="isActive = !isActive">
