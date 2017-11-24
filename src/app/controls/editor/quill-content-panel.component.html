@@ -12,6 +12,7 @@
         </div>
         <div class="level-right">{{data.createTime | amTimeAgo}}</div>
       </div>
+      <div class="title has-text-weight-semibold" [innerHTML]="data.title | title"></div>
       <ez-quill-editor
         [(ngModel)]="newContent"
         [readOnly]="isReadOnly">

@@ -1,8 +1,7 @@
 <div *ngIf="article">
-  <div class="title has-text-weight-semibold" [innerHTML]="article.title | title"></div>
   <div>
-    <content-panel
-      [data]="article"></content-panel>
+    <quill-content-panel
+      [data]="article"></quill-content-panel>
   </div>
 </div>
 <br />

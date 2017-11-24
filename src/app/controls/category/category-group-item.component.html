@@ -12,7 +12,7 @@
     </div>
   </a>
 </li>
-<md-expansion-panel class="clear-spacing" [expanded]="isExpanded">
+<md-expansion-panel [expanded]="isExpanded">
   <ul class="menu-list">
     <li *ngFor="let category of categoryGroup.categories">
       <a (click)="selectionChange(category.id)"
