@@ -5,13 +5,14 @@ import { CategoryService } from '../../services/category.service';
 import { Category, CategoryGroup } from '../../models/category.model';
 
 @Component({
-  selector: 'app-category-panel',
+  // tslint:disable-next-line:component-selector
+  selector: 'category-panel',
   template: `
   <aside class="menu">
     <div *ngFor="let categoryGroup of categoryGroups">
-      <app-category-group-item
+      <category-group-item
         [categoryGroup]="categoryGroup">
-      </app-category-group-item>
+      </category-group-item>
     </div>
   </aside>
   `

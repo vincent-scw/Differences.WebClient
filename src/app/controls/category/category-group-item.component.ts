@@ -5,7 +5,8 @@ import { CategoryService } from '../../services/category.service';
 import { Category, CategoryGroup } from '../../models/category.model';
 
 @Component({
-  selector: 'app-category-group-item',
+  // tslint:disable-next-line:component-selector
+  selector: 'category-group-item',
   templateUrl: './category-group-item.component.html'
 })
 

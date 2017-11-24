@@ -7,7 +7,8 @@ import { CategoryService } from '../services/category.service';
 import { Category, CategoryGroup } from '../models/category.model';
 
 @Component({
-  selector: 'app-search-box',
+  // tslint:disable-next-line:component-selector
+  selector: 'search-box',
   templateUrl: './search-box.component.html'
 })
 export class SearchBoxComponent implements OnInit {
