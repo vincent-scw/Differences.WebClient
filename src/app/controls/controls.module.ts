@@ -10,6 +10,7 @@ import { QuillContentPanelComponent } from './editor/quill-content-panel.compone
 import { PaginationComponent } from './pagination.component';
 import { CategoryPanelComponent } from './category/category-panel.component';
 import { CategoryGroupItemComponent } from './category/category-group-item.component';
+import { CategoryDropdownComponent } from './category/category-dropdown.component';
 import { SearchBoxComponent } from './search-box.component';
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SearchBoxComponent } from './search-box.component';
     PaginationComponent,
     CategoryPanelComponent,
     CategoryGroupItemComponent,
+    CategoryDropdownComponent,
     SearchBoxComponent
   ],
   exports: [
@@ -34,6 +36,7 @@ import { SearchBoxComponent } from './search-box.component';
     PaginationComponent,
     CategoryPanelComponent,
     CategoryGroupItemComponent,
+    CategoryDropdownComponent,
     SearchBoxComponent
   ]
 })

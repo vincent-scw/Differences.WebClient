@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+import { IKeyValue } from '../models/key-value.interface';
 import { Category, CategoryGroup } from '../models/category.model';
 import { BrowserStorage } from './browser-storage.service';
 
 const selected_category_key = 'selected_category';
+
 @Injectable()
 export class CategoryService {
   categoryGroups: CategoryGroup[] = [
@@ -58,12 +60,13 @@ export class CategoryService {
     }
   ];
 
-  categories: Category[] = [];
+  categories: IKeyValue[] = [];
 
-  selectedCategory = new BehaviorSubject<Category>(this.getSelectedCategory());
+  selectedCategory = new BehaviorSubject<IKeyValue>(this.getSelectedCategory());
 
   constructor(private browserStorage: BrowserStorage) {
     this.categoryGroups.forEach(element => {
+      this.categories.push(element);
       element.categories.forEach(c => {
         this.categories.push(c);
       });
@@ -81,7 +84,7 @@ export class CategoryService {
     this.selectedCategory.next(found);
   }
 
-  getSelectedCategory(): Category {
+  getSelectedCategory(): IKeyValue {
     return this.browserStorage.get(selected_category_key)
       ? JSON.parse(this.browserStorage.get(selected_category_key))
       : this.categories[0];

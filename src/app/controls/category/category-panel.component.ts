@@ -9,11 +9,12 @@ import { Category, CategoryGroup } from '../../models/category.model';
   selector: 'category-panel',
   template: `
   <aside class="menu">
-    <div *ngFor="let categoryGroup of categoryGroups">
+    <ul *ngFor="let categoryGroup of categoryGroups"
+      class="menu-list">
       <category-group-item
         [categoryGroup]="categoryGroup">
       </category-group-item>
-    </div>
+    </ul>
   </aside>
   `
 })

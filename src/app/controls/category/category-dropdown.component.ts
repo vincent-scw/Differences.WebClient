@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './category-dropdown.component.html'
 })
 
-export class CategoryDropDownComponent {
-
+export class CategoryDropdownComponent {
+  isActive: boolean;
 }
