@@ -1,9 +1,10 @@
 <div class="control dropdown"
-  [class.is-active]="isActive">
+  [class.is-active]="isActive"
+  (onBlur)="isActive = false">
   <div class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"
       (click)="isActive = !isActive">
-      <span>类目</span>
+      <span>{{selectedCategory.value == null ? '类目': selectedCategory.value.name}}</span>
       <span class="icon is-small">
         <i [class]="isActive ? 'fa fa-angle-up': 'fa fa-angle-down'" 
           aria-hidden="true"></i>
