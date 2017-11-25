@@ -1,12 +1,14 @@
-<div>
-  <md-list>
-    <div *ngFor="let question of data | async | select: 'questions'">
-      <app-question-item
-        class="list-item"
-        [item]="question"></app-question-item>
-      <hr />
-    </div>
-  </md-list>
-
-  <pagination></pagination>
+<div *ngIf="isEmpty">
+  <no-content></no-content>
 </div>
+
+<md-list>
+  <div *ngFor="let question of data | async | select: 'questions'">
+    <app-question-item
+      class="list-item"
+      [item]="question"></app-question-item>
+    <hr />
+  </div>
+</md-list>
+
+<pagination></pagination>

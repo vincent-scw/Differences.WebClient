@@ -14,6 +14,7 @@ import { CategoryDropdownComponent } from './category/category-dropdown.componen
 import { MdCategoryDropdownComponent } from './category/md-category-dropdown.component';
 import { SearchBoxComponent } from './search-box.component';
 import { TagsEditorComponent } from './editor/tags-editor.component';
+import { NoContentComponent } from './no-content.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { TagsEditorComponent } from './editor/tags-editor.component';
     CategoryDropdownComponent,
     MdCategoryDropdownComponent,
     SearchBoxComponent,
-    TagsEditorComponent
+    TagsEditorComponent,
+    NoContentComponent
   ],
   exports: [
     EasyQuillEditorComponent,
@@ -43,7 +45,8 @@ import { TagsEditorComponent } from './editor/tags-editor.component';
     CategoryDropdownComponent,
     MdCategoryDropdownComponent,
     SearchBoxComponent,
-    TagsEditorComponent
+    TagsEditorComponent,
+    NoContentComponent
   ]
 })
 export class ControlsModule {}

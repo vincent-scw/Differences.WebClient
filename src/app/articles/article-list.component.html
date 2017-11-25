@@ -1,3 +1,7 @@
+<div *ngIf="isEmpty">
+  <no-content></no-content>
+</div>
+
 <md-list>
   <div *ngFor="let article of data | async | select: 'articles'">
     <app-article-item

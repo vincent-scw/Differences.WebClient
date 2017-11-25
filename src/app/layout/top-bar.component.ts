@@ -20,11 +20,11 @@ export class TopBarComponent {
       tooltip: '文章',
       url: 'articles'
     },
-    {
-      title: '大神',
-      tooltip: '大神们',
-      url: 'users'
-    }
+    // {
+    //   title: '大神',
+    //   tooltip: '大神们',
+    //   url: 'users'
+    // }
   ];
 
   constructor(private dialog: MdDialog,
