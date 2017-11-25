@@ -1,7 +1,7 @@
 <div class="control dropdown" tabindex="1" 
   (blur)="isActive = false"
   [class.is-active]="isActive">
-  <div class="dropdown-trigger">
+  <span class="dropdown-trigger">
     <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"
       (click)="isActive = !isActive">
       <span>{{selectedCategory.value == null ? '类目': selectedCategory.value.name}}</span>
@@ -10,7 +10,7 @@
           aria-hidden="true"></i>
       </span>
     </button>
-  </div>
+  </span>
   <div class="dropdown-menu" id="dropdown-menu" role="menu">
     <div class="dropdown-content">
       <category-panel></category-panel>

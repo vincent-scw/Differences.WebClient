@@ -13,7 +13,7 @@ import { ArticleService } from '../services/article.service';
 export class WriteArticleComponent implements OnInit {
   title: string;
   content: string;
-  
+
   constructor(private articleService: ArticleService,
     private router: Router,
     private dialogRef: MdDialogRef<WriteArticleComponent>) {}
