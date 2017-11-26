@@ -1,7 +1,8 @@
-<md-select placeholder="类别" [formControl]="categoryCtrl">
+<md-select placeholder="类别" [formControl]="categoryCtrl"
+  [(ngModel)]="selectedCategory">
   <md-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
     <md-option *ngFor="let category of group.categories"
-      [value]="category.id">
+      [value]="category">
       {{category.name}}
     </md-option>
   </md-optgroup>

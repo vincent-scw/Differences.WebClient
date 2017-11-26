@@ -30,7 +30,7 @@ export class QuestionListComponent implements OnInit {
       categoryId, 0, 100);
     this.data.subscribe(({data}) => {
       this.intermediaryService.onLoaded(defaultLoadedObject());
-      this.isEmpty = data.questions == null || data.question.length === 0;
+      this.isEmpty = data.questions == null || data.questions.length === 0;
     });
   }
 }

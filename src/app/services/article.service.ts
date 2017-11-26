@@ -19,6 +19,7 @@ export class ArticleService {
         id
         title
         content
+        category
         user {
           ...UserInfo
         }
@@ -47,6 +48,7 @@ export class ArticleService {
       article(id: $id) {
         id
         title
+        category
         content
         user {
           ...UserInfo
@@ -62,6 +64,7 @@ export class ArticleService {
       articles(criteria: $criteria){
         id
         title
+        category
         content
         user {
           ...UserInfo

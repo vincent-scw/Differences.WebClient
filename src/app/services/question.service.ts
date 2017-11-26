@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import { AuthService } from '../services/auth.service';
 import { Question } from '../models/question.model';
+import { Category } from '../models/category.model';
 import { fragments } from './fragments';
 
 export interface QuestionQueryResponse {
@@ -20,6 +21,7 @@ export class QuestionService {
         id
         title
         content
+        category
         user {
           ...UserInfo
         }
@@ -49,6 +51,7 @@ export class QuestionService {
         id
         title
         content
+        category
         user {
           ...UserInfo
         }
@@ -64,6 +67,7 @@ export class QuestionService {
         id
         title
         content
+        category
         user {
           ...UserInfo
         }
@@ -99,7 +103,7 @@ export class QuestionService {
     private authService: AuthService) {
   }
 
-  askQuestion(title: string, content: string, categoryId: number) {
+  askQuestion(title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitQuestion,
@@ -107,35 +111,36 @@ export class QuestionService {
         question: {
           title: title,
           content: content,
-          categoryId: categoryId
+          categoryId: category.id
         }
       },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        submitQuestion: {
-          __typename: 'QuestionType',
-          title: title,
-          content: content,
-          createTime: +new Date,
-          user: {
-            __typename: 'UserType',
-            id: user.id,
-            displayName: user.name,
-            avatarUrl: null
-          }
-        }
-      },
-      updateQueries: {
-        questions: (previousResult, { mutationResult }) => {
-          return {
-            questions: [mutationResult.data.submitQuestion, ...previousResult.questions]
-          };
-        }
-      }
+      // optimisticResponse: {
+      //   __typename: 'Mutation',
+      //   submitQuestion: {
+      //     __typename: 'QuestionType',
+      //     title: title,
+      //     content: content,
+      //     category: category.name,
+      //     createTime: +new Date,
+      //     user: {
+      //       __typename: 'UserType',
+      //       id: user.id,
+      //       displayName: user.name,
+      //       avatarUrl: null
+      //     }
+      //   }
+      // },
+      // updateQueries: {
+      //   questions: (previousResult, { mutationResult }) => {
+      //     return {
+      //       questions: [mutationResult.data.submitQuestion, ...previousResult.questions]
+      //     };
+      //   }
+      // }
     });
   }
 
-  updateQuestion(id: number, title: string, content: string, categoryId: number) {
+  updateQuestion(id: number, title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitQuestion,
@@ -144,7 +149,7 @@ export class QuestionService {
           id: id,
           title: title,
           content: content,
-          categoryId: categoryId
+          categoryId: category.id
         }
       },
       optimisticResponse: {
@@ -154,6 +159,7 @@ export class QuestionService {
           id: id,
           title: title,
           content: content,
+          category: category.name,
           createTime: +new Date,
           user: {
             __typename: 'UserType',

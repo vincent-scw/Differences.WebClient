@@ -17,7 +17,8 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   }]
 })
 
-export class EasyQuillEditorComponent implements OnInit, ControlValueAccessor, OnChanges {
+export class EasyQuillEditorComponent implements OnInit,
+  ControlValueAccessor, OnChanges {
   @Input() readOnly: boolean;
 
   private innerValue: string;

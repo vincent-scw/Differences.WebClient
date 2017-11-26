@@ -15,12 +15,12 @@
 
     <nav class="level has-text-weight-light">
       <div class="level-left">
-        <small class="level-item">TODO: category here</small>
+        <small class="level-item">{{item.category}}</small>
       </div>
       <div class="level-right">
         <small class="level-item">
           <a [routerLink]="['/users', item.user.id]">{{item.user.displayName}}</a>
-            提问于{{item.createTime | amTimeAgo}}
+            发表于{{item.createTime | amTimeAgo}}
         </small>        
       </div>
     </nav>

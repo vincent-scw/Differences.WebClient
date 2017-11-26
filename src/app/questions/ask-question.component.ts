@@ -25,7 +25,7 @@ export class AskQuestionComponent implements OnInit {
     this.questionService.askQuestion(
       values.title,
       values.content,
-      1 // TODO: categoryId
+      values.category
     )
     .subscribe(({ data }) => {
       this.router.navigateByUrl('/questions');

@@ -61,11 +61,11 @@ export class QuestionDetailComponent implements OnInit {
 
   onUpdateQuestionContent(data: any): void {
     this.questionService.updateQuestion(data.id, this.question.title,
-      data.content, 1)
+      data.content, {id: 101, name: 'todo'})
       .subscribe((_) => {});
   }
 
   onReply(data: any): void {
-    
+
   }
 }

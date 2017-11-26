@@ -54,7 +54,7 @@ export class CategoryService {
       ]
     },
     {
-      id: 6,
+      id: 9,
       name: '其他',
       categories: [{ id: 999, name: '其他' }]
     }
