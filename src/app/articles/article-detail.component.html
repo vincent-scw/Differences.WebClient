@@ -35,12 +35,17 @@
     </div>
   </article>
 </md-expansion-panel>
-
+<div *ngIf="isEmpty">
+  <no-content></no-content>
+</div>
 <md-list>
   <div class="item-wrapper"
-    *ngFor="let comment of comments | async | select: 'article_comments'">
+    *ngFor="let comment of comments | select: 'article_comments'">
     <content-panel 
       [data]="comment"
       (onUpdate)="onUpdate($event)"></content-panel>
   </div>
 </md-list>
+<div *ngIf="isCommentsLoading" class="spinner">
+  <md-spinner (color)="accent"></md-spinner>
+</div>

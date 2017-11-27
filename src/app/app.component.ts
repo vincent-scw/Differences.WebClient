@@ -36,12 +36,4 @@ export class AppComponent implements OnInit {
       this.snackBar.open(errorMsg);
     });
   }
-
-  getQuestionName(id: string): string {
-    return '问题 ' + id;
-  }
-
-  getArticleName(id: string): string {
-    return '文章 ' + id;
-  }
 }

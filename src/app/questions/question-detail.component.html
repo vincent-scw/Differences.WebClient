@@ -36,6 +36,9 @@
   </article>
 </md-expansion-panel>
 <hr />
+<div *ngIf="isEmpty">
+  <no-content></no-content>
+</div>
 <md-list>
   <div class="item-wrapper"
     *ngFor="let answer of answers | select: 'question_answers'">

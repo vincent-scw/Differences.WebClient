@@ -33,9 +33,10 @@ export abstract class ListComponentBase implements OnInit {
     this.data = this.fetchData(categoryId);
     this.data.subscribe(({data}) => {
       this.intermediaryService.onLoaded(defaultLoadedObject());
-      this.isEmpty = data.articles == null || data.articles.length === 0;
+      this.isEmpty = this.checkIsEmpty(data);
     });
   }
 
+  protected abstract checkIsEmpty(data: any);
   protected abstract fetchData(categoryId: number): ApolloQueryObservable<any>;
 }

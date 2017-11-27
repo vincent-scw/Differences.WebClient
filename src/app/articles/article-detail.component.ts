@@ -18,8 +18,10 @@ import { defaultLoadedObject,
 export class ArticleDetailComponent implements OnInit {
   article: any;
   id: number;
-  comments: ApolloQueryObservable<any>;
+  comments: any;
   myCommentContent: string;
+  isEmpty: boolean;
+  isCommentsLoading = true;
 
   constructor(
     private articleService: ArticleService,
@@ -36,7 +38,13 @@ export class ArticleDetailComponent implements OnInit {
           this.article = data.article;
           this.intermediaryService.onLoaded(defaultLoadedObject());
 
-          this.comments = this.articleService.getArticleAnswers(this.id);
+          this.articleService.getArticleAnswers(this.id)
+            .subscribe((ret) => {
+              this.isCommentsLoading = ret.loading;
+              this.comments = ret.data;
+              this.isEmpty = this.comments.article_comments == null
+                || this.comments.article_comments.length === 0;
+          });
         })
       );
   }

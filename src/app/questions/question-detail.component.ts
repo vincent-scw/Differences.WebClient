@@ -20,6 +20,7 @@ export class QuestionDetailComponent implements OnInit {
   id: number;
 
   isAnswersLoading = true;
+  isEmpty: boolean;
   answers: any;
   myAnswerContent: string;
 
@@ -42,6 +43,8 @@ export class QuestionDetailComponent implements OnInit {
             .subscribe((ret) => {
               this.isAnswersLoading = ret.loading;
               this.answers = ret.data;
+              this.isEmpty = this.answers.question_answers == null
+                || this.answers.question_answers.length === 0;
             });
         })
       );
