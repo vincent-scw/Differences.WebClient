@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.intermediaryService.loadingState().subscribe(
+    this.intermediaryService.loadingState.subscribe(
       (loadingObj: any) => {
         this.isFetching = loadingObj.isLoading;
     });

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
+import { IntermediaryService } from '../services/intermediary.service';
+
 import { AskQuestionComponent } from '../questions/ask-question.component';
 import { WriteArticleComponent } from '../articles/write-article.component';
 
@@ -12,7 +14,8 @@ import { WriteArticleComponent } from '../articles/write-article.component';
 
 export class ScrollableTopBarComponent {
   constructor(private dialog: MdDialog,
-    private location: Location) {
+    private location: Location,
+    private intermediaryService: IntermediaryService) {
 
   }
 
@@ -30,6 +33,6 @@ export class ScrollableTopBarComponent {
   }
 
   refresh(): void {
-
+    this.intermediaryService.onRefresh();
   }
 }

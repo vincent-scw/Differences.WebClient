@@ -23,9 +23,14 @@ export function defaultLoadedObject(): ILoadingObject {
 @Injectable()
 export class IntermediaryService {
   private loadingObj = new Subject();
+  private refreshObj = new Subject();
 
-  loadingState() {
+  get loadingState() {
     return this.loadingObj;
+  }
+
+  get refreshListener() {
+    return this.refreshObj;
   }
 
   onLoaded(loadingObject: ILoadingObject) {
@@ -34,5 +39,9 @@ export class IntermediaryService {
 
   onLoading() {
     this.loadingObj.next({isLoading: true});
+  }
+
+  onRefresh() {
+    this.refreshObj.next();
   }
 }
