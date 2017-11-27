@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 
 import { NavigationNode } from './models/navigation.model';
 import { Router,
@@ -21,13 +22,18 @@ export class AppComponent implements OnInit {
 
   constructor(
     private intermediaryService: IntermediaryService,
-    private router: Router) {
+    private router: Router,
+    private snackBar: MdSnackBar) {
   }
 
   ngOnInit() {
     this.intermediaryService.loadingState.subscribe(
       (loadingObj: any) => {
         this.isFetching = loadingObj.isLoading;
+    });
+
+    this.intermediaryService.error.subscribe((errorMsg: string) => {
+      this.snackBar.open(errorMsg);
     });
   }
 
