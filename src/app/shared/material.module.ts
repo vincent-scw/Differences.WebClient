@@ -32,8 +32,10 @@ import {
     MdTabsModule,
     MdToolbarModule,
     MdTooltipModule,
+    MdPaginatorIntl,
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
+import { CustmizedPaginatorIntl } from './custmized-paginator-intl';
 
 const materialModules: any[] = [
     CdkTableModule,
@@ -73,7 +75,10 @@ const materialModules: any[] = [
 
 @NgModule({
     imports: materialModules,
-    exports: materialModules
+    exports: materialModules,
+    providers: [{
+        provide: MdPaginatorIntl, useClass: CustmizedPaginatorIntl
+    }]
 })
 
 export class MaterialModule { }

@@ -18,8 +18,8 @@ export class QuestionListComponent extends ListComponentBase {
       super(categoryService, intermediaryService);
   }
 
-  checkIsEmpty(data: any) {
-    return data.questions == null || data.questions.length === 0;
+  getCount(data: any) {
+    return data.question_count;
   }
 
   fetchData(categoryId: number) {

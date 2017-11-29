@@ -10,7 +10,7 @@ import { IKeyValue } from '../models/key-value.interface';
 
 export abstract class ListComponentBase implements OnInit {
   data: ApolloQueryObservable<any>;
-  isEmpty: boolean;
+  count: number;
   selectedCategory: BehaviorSubject<IKeyValue>;
 
   constructor(protected categoryService: CategoryService,
@@ -33,10 +33,10 @@ export abstract class ListComponentBase implements OnInit {
     this.data = this.fetchData(categoryId);
     this.data.subscribe(({data}) => {
       this.intermediaryService.onLoaded(defaultLoadedObject());
-      this.isEmpty = this.checkIsEmpty(data);
+      this.count = this.getCount(data);
     });
   }
 
-  protected abstract checkIsEmpty(data: any);
+  protected abstract getCount(data: any): number;
   protected abstract fetchData(categoryId: number): ApolloQueryObservable<any>;
 }

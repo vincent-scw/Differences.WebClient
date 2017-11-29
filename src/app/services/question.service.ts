@@ -73,6 +73,7 @@ export class QuestionService {
         }
         createTime
       }
+      question_count(criteria: $criteria)
     }
     ${fragments.user}
   `;

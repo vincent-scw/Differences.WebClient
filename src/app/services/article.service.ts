@@ -72,6 +72,7 @@ export class ArticleService {
         }
         createTime
       }
+      article_count(criteria: $criteria)
     }
     ${fragments.user}
   `;
