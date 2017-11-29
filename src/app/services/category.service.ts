@@ -33,7 +33,7 @@ export class CategoryService {
       id: 3,
       name: '语言',
       categories: [
-        { id: 303, name: '英语' },
+        { id: 301, name: '英语' },
         { id: 399, name: '其他' }
       ]
     },

@@ -25,7 +25,7 @@ export class WriteArticleComponent implements OnInit {
     this.articleService.submitArticle(
       values.title,
       values.content,
-      1 // TODO: categoryId
+      values.category
     )
     .subscribe(({ data }) => {
       this.router.navigateByUrl('/articles');

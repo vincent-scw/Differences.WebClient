@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { Article } from '../models/article.model';
 import { AuthService } from '../services/auth.service';
 import { fragments } from './fragments';
+import { Category } from '../models/category.model';
 
 export interface ArticleQueryResponse {
   article: any;
@@ -93,7 +94,7 @@ export class ArticleService {
     private authService: AuthService) {
   }
 
-  submitArticle(title: string, content: string, categoryId: number) {
+  submitArticle(title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
       mutation: this.MutationSubmitArticle,
@@ -101,31 +102,31 @@ export class ArticleService {
         article: {
           title: title,
           content: content,
-          categoryId: categoryId
+          categoryId: category.id
         }
       },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        submitArticle: {
-          __typename: 'ArticleType',
-          title: title,
-          content: content,
-          createTime: +new Date,
-          user: {
-            __typename: 'UserType',
-            id: user.id,
-            displayName: user.name,
-            avatarUrl: null
-          }
-        }
-      },
-      updateQueries: {
-        articles: (previousResult, { mutationResult }) => {
-          return {
-            articles: [mutationResult.data.submitArticle, ...previousResult.questions]
-          };
-        }
-      }
+      // optimisticResponse: {
+      //   __typename: 'Mutation',
+      //   submitArticle: {
+      //     __typename: 'ArticleType',
+      //     title: title,
+      //     content: content,
+      //     createTime: +new Date,
+      //     user: {
+      //       __typename: 'UserType',
+      //       id: user.id,
+      //       displayName: user.name,
+      //       avatarUrl: null
+      //     }
+      //   }
+      // },
+      // updateQueries: {
+      //   articles: (previousResult, { mutationResult }) => {
+      //     return {
+      //       articles: [mutationResult.data.submitArticle, ...previousResult.questions]
+      //     };
+      //   }
+      // }
     });
   }
 
