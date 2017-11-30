@@ -23,10 +23,9 @@ export class CategoryPanelComponent implements OnInit {
   categoryGroups: CategoryGroup[];
 
   constructor(private categoryService: CategoryService) {
-
   }
 
   ngOnInit() {
-    this.categoryGroups = this.categoryService.categoryGroups;
+    this.categoryService.categoryGroups.subscribe(data => this.categoryGroups = data);
   }
 }

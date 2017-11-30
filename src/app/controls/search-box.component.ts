@@ -26,7 +26,7 @@ export class SearchBoxComponent implements OnInit {
     private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.categoryGroups = this.categoryService.categoryGroups;
+    this.categoryService.categoryGroups.subscribe(data => this.categoryGroups = data);
 
     const query = this.locationService.search()['search'];
     if (query) {

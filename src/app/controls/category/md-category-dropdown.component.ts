@@ -36,7 +36,7 @@ export class MdCategoryDropdownComponent implements OnInit,
 
   ngOnInit() {
     // this.selectedCategory = this.categoryService.selectedCategory;
-    this.categoryGroups = this.categoryService.categoryGroups;
+    this.categoryService.categoryGroups.subscribe(data => this.categoryGroups = data);
   }
 
   ngOnChanges(changes: SimpleChanges) {

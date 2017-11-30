@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 import { IKeyValue } from '../models/key-value.interface';
 import { Category, CategoryGroup } from '../models/category.model';
@@ -10,67 +12,50 @@ const selected_category_key = 'selected_category';
 
 @Injectable()
 export class CategoryService {
-  categoryGroups: CategoryGroup[] = [
-    {
-      id: 1,
-      name: '技术',
-      categories: [
-        { id: 101, name: 'IT' },
-        { id: 102, name: '机械' },
-        { id: 103, name: '电子' },
-        { id: 199, name: '其他' }
-      ]
-    },
-    {
-      id: 2,
-      name: '科学与自然',
-      categories: [
-        { id: 201, name: '科学' },
-        { id: 202, name: '自然' }
-      ]
-    },
-    {
-      id: 3,
-      name: '语言',
-      categories: [
-        { id: 301, name: '英语' },
-        { id: 399, name: '其他' }
-      ]
-    },
-    {
-      id: 4,
-      name: '社科',
-      categories: [
-        { id: 401, name: '历史' },
-        { id: 499, name: '其他' }
-      ]
-    },
-    {
-      id: 5,
-      name: '人文',
-      categories: [
-        { id: 501, name: '名人' },
-        { id: 599, name: '其他' }
-      ]
-    },
-    {
-      id: 9,
-      name: '其他',
-      categories: [{ id: 999, name: '其他' }]
+  QueryCategoryDefinition = gql`
+    query category_definition {
+      category_definition {
+        id
+        name
+        description
+        categories {
+          id
+          name
+          description
+        }
+      }
     }
-  ];
+  `;
 
+  private cgList: CategoryGroup[];
+  categoryGroups = new BehaviorSubject<CategoryGroup[]>(this.getCategoryGroups());
   categories: IKeyValue[] = [];
 
   selectedCategory = new BehaviorSubject<IKeyValue>(this.getSelectedCategory());
 
-  constructor(private browserStorage: BrowserStorage) {
-    this.categoryGroups.forEach(element => {
-      this.categories.push(element);
-      element.categories.forEach(c => {
-        this.categories.push(c);
+  constructor(private browserStorage: BrowserStorage,
+    private apollo: Apollo) {
+      this.getCategoryDefinition().subscribe(({data}) => {
+        this.cgList = data.category_definition;
+        this.cgList.forEach(element => {
+          this.categories.push(element);
+          element.categories.forEach(c => {
+            this.categories.push(c);
+          });
+        });
+
+        this.categoryGroups.next(data.category_definition);
       });
+  }
+
+  private getCategoryDefinition() {
+    return this.apollo.watchQuery<any>({
+      query: this.QueryCategoryDefinition
     });
+  }
+
+  getCategoryGroups(): CategoryGroup[] {
+    return this.cgList;
   }
 
   setSelectedCategory(categoryId: number) {

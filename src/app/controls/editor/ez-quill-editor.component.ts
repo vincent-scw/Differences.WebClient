@@ -40,7 +40,7 @@ export class EasyQuillEditorComponent implements OnInit,
     },
     formats: [
       'bold', 'code', 'italic', 'link', 'size', 'strike', 'underline',
-      'header', 'indent', 'list', 'align', 'direction', 'code-block',
+      'header', 'indent', 'list', 'align', 'direction', 'code-block', 'color',
       'formula', 'image', 'video'
     ]
   };
