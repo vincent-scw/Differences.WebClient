@@ -12,85 +12,76 @@ export interface ArticleQueryResponse {
   loading: any;
 }
 
+const MutationSubmitArticle = gql`
+  mutation differencesMutation($article: SubjectInput!) {
+    submitArticle(article: $article) {
+      ...ArticleInfo
+      user {
+        ...UserInfo
+      }
+    }
+  }
+  ${fragments.user}
+  ${fragments.article}
+  `;
+
+const MutationSubmitComment = gql`
+  mutation differencesMutation($comment: ReplyInput!) {
+    submitComment(comment: $comment) {
+      id
+      content
+      createTime
+      user {
+        ...UserInfo
+      }
+    }
+  }
+  ${fragments.user}
+  `;
+
+const QueryArticleDetail = gql`
+  query article($id: Int!) {
+    article(id: $id) {
+      ...ArticleInfo
+      user {
+        ...UserInfo
+      }
+    }
+  }
+  ${fragments.user}
+  ${fragments.article}
+  `;
+
+const QueryArticles = gql`
+  query articles($criteria:CriteriaInput!) {
+    articles(criteria: $criteria){
+      ...ArticleInfo
+      user {
+        ...UserInfo
+      }
+    }
+    article_count(criteria: $criteria)
+  }
+  ${fragments.user}
+  ${fragments.article}
+  `;
+
+const QueryArticleComments = gql`
+  query article_comments($articleId: Int!) {
+    article_comments(articleId: $articleId) {
+      id
+      content
+      user {
+        ...UserInfo
+      }
+      createTime
+    }
+  }
+  ${fragments.user}
+  `;
+
 @Injectable()
 export class ArticleService {
-  MutationSubmitArticle = gql`
-    mutation differencesMutation($article: SubjectInput!) {
-      submitArticle(article: $article) {
-        id
-        title
-        content
-        category
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-    }
-    ${fragments.user}
-    `;
-
-  MutationSubmitComment = gql`
-    mutation differencesMutation($comment: ReplyInput!) {
-      submitComment(comment: $comment) {
-        id
-        content
-        createTime
-        user {
-          ...UserInfo
-        }
-      }
-    }
-    ${fragments.user}
-  `;
-
-  QueryArticleDetail = gql`
-    query article($id: Int!) {
-      article(id: $id) {
-        id
-        title
-        category
-        content
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-    }
-    ${fragments.user}
-    `;
-
-  QueryArticles = gql`
-    query articles($criteria:CriteriaInput!) {
-      articles(criteria: $criteria){
-        id
-        title
-        category
-        content
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-      article_count(criteria: $criteria)
-    }
-    ${fragments.user}
-  `;
-
-  QueryArticleComments = gql`
-    query article_comments($articleId: Int!) {
-      article_comments(articleId: $articleId) {
-        id
-        content
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-    }
-    ${fragments.user}
-  `;
-
   constructor(private apollo: Apollo,
     private authService: AuthService) {
   }
@@ -98,7 +89,7 @@ export class ArticleService {
   submitArticle(title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitArticle,
+      mutation: MutationSubmitArticle,
       variables: {
         article: {
           title: title,
@@ -121,20 +112,13 @@ export class ArticleService {
       //     }
       //   }
       // },
-      // updateQueries: {
-      //   articles: (previousResult, { mutationResult }) => {
-      //     return {
-      //       articles: [mutationResult.data.submitArticle, ...previousResult.questions]
-      //     };
-      //   }
-      // }
     });
   }
 
   submitComment(articleId: number, parentId: number, content: string) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitComment,
+      mutation: MutationSubmitComment,
       variables: {
         comment: {
           subjectId: articleId,
@@ -155,20 +139,13 @@ export class ArticleService {
             avatarUrl: null
           }
         }
-      },
-      updateQueries: {
-        article_comments: (previousResult, { mutationResult }) => {
-          return {
-            article_comments: [mutationResult.data.submitComment, ...previousResult.article_comments]
-          };
-        }
       }
     });
   }
 
   getArticle(id: number) {
     return this.apollo.watchQuery<ArticleQueryResponse>({
-      query: this.QueryArticleDetail,
+      query: QueryArticleDetail,
       variables: {
         id: id
       }
@@ -177,7 +154,7 @@ export class ArticleService {
 
   getArticles(categoryId: number, offset: number, limit: number) {
     return this.apollo.watchQuery({
-      query: this.QueryArticles,
+      query: QueryArticles,
       variables: {
          criteria: {
            categoryId: categoryId,
@@ -190,7 +167,7 @@ export class ArticleService {
 
   getArticleAnswers(articleId: number) {
     return this.apollo.watchQuery({
-      query: this.QueryArticleComments,
+      query: QueryArticleComments,
       variables: {
         articleId: articleId
       }

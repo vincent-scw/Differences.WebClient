@@ -15,17 +15,14 @@ export interface QuestionQueryResponse {
 const MutationSubmitQuestion = gql`
   mutation differencesMutation($question: SubjectInput!) {
     submitQuestion(question: $question) {
-      id
-      title
-      content
-      category
+      ...QuestionInfo
       user {
         ...UserInfo
       }
-      createTime
     }
   }
   ${fragments.user}
+  ${fragments.question}
   `;
 
 const MutationSubmitAnswer = gql`
@@ -45,34 +42,28 @@ const MutationSubmitAnswer = gql`
 const QueryQuestionDetail = gql`
   query question($id: Int!) {
     question(id: $id) {
-      id
-      title
-      content
-      category
+      ...QuestionInfo
       user {
         ...UserInfo
       }
-      createTime
     }
   }
   ${fragments.user}
+  ${fragments.question}
   `;
 
 const QueryQuestions = gql`
   query questions($criteria:CriteriaInput!) {
     questions(criteria: $criteria){
-      id
-      title
-      content
-      category
+      ...QuestionInfo
       user {
         ...UserInfo
       }
-      createTime
     }
     question_count(criteria: $criteria)
   }
   ${fragments.user}
+  ${fragments.question}
   `;
 
 const QueryQuestionAnswers = gql`
@@ -132,20 +123,16 @@ export class QuestionService {
       },
       update: (proxy, { data: { submitQuestion } }) => {
         // Read the data from our cache for this query.
-        const data = proxy.readQuery({ query: QueryQuestions });
-        alert(JSON.stringify(data));
+        // const data = proxy.readQuery({ query: QueryQuestions, variables: {criteria: {
+        //   categoryId: category.id,
+        //   offset: 0,
+        //   limit: 100
+        // }} });
         // Add our comment from the mutation to the end.
-        //data.comments.push(submitComment);
+        // data.comments.push(submitComment);
         // Write our data back to the cache.
-        //proxy.writeQuery({ query: CommentAppQuery, data });
+        // proxy.writeQuery({ query: CommentAppQuery, data });
       }
-      // updateQueries: {
-      //   questions: (previousResult, { mutationResult }) => {
-      //     return {
-      //       questions: [mutationResult.data.submitQuestion, ...previousResult.questions]
-      //     };
-      //   }
-      // }
     });
   }
 
