@@ -11,6 +11,7 @@ import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { onError } from 'apollo-link-error';
 
 import { JwtHelper } from 'angular2-jwt';
 
@@ -29,6 +30,7 @@ import { BrowserStorage } from './services/browser-storage.service';
 
 import { AppComponent } from './app.component';
 import { Config } from './config';
+import { from } from 'apollo-link';
 
 @NgModule({
   declarations: [
@@ -59,30 +61,46 @@ import { Config } from './config';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   constructor(
     apollo: Apollo,
-    httpLink: HttpLink
+    httpLink: HttpLink,
+    intermediaryService: IntermediaryService
   ) {
     const http = httpLink.create({uri: Config.GRAPHQL_API_ENDPOINT});
 
     const auth = setContext((_, { headers }) => {
       // get the authentication token from local storage if it exists
-      const token = localStorage.getItem('token');
-      // return the headers to the context so httpLink can read them
-      // in this example we assume headers property exists
-      // and it is an instance of HttpHeaders
+      const token = localStorage.getItem('access_token');
       if (!token) {
         return {};
       } else {
+        if (headers == null) {
+          headers = new HttpHeaders();
+        }
         return {
           headers: headers.append('Authorization', `Bearer ${token}`)
         };
       }
     });
 
+    const errorlink = onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) =>
+          intermediaryService.onError(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+          ),
+        );
+      }
+
+      if (networkError) {
+        intermediaryService.onError(`[Network error]: ${networkError}`);
+      }
+    });
+
     apollo.create({
-      link: auth.concat(http),
+      link: errorlink.concat(auth).concat(http),
       cache: new InMemoryCache()
     });
   }

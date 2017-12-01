@@ -12,94 +12,93 @@ export interface QuestionQueryResponse {
   loading: any;
 }
 
+const MutationSubmitQuestion = gql`
+  mutation differencesMutation($question: SubjectInput!) {
+    submitQuestion(question: $question) {
+      id
+      title
+      content
+      category
+      user {
+        ...UserInfo
+      }
+      createTime
+    }
+  }
+  ${fragments.user}
+  `;
+
+const MutationSubmitAnswer = gql`
+  mutation differencesMutation($answer: ReplyInput!) {
+    submitAnswer(answer: $answer) {
+      id
+      content
+      createTime
+      user {
+        ...UserInfo
+      }
+    }
+  }
+  ${fragments.user}
+  `;
+
+const QueryQuestionDetail = gql`
+  query question($id: Int!) {
+    question(id: $id) {
+      id
+      title
+      content
+      category
+      user {
+        ...UserInfo
+      }
+      createTime
+    }
+  }
+  ${fragments.user}
+  `;
+
+const QueryQuestions = gql`
+  query questions($criteria:CriteriaInput!) {
+    questions(criteria: $criteria){
+      id
+      title
+      content
+      category
+      user {
+        ...UserInfo
+      }
+      createTime
+    }
+    question_count(criteria: $criteria)
+  }
+  ${fragments.user}
+  `;
+
+const QueryQuestionAnswers = gql`
+  query question_answers($questionId: Int!) {
+    question_answers(questionId: $questionId) {
+      id
+      content
+      user {
+        ...UserInfo
+      }
+      createTime
+      subReplies {
+        id
+        content
+        user {
+          ...UserInfo
+        }
+        createTime
+      }
+    }
+  }
+  ${fragments.user}
+  `;
+
 @Injectable()
 export class QuestionService {
-
-  MutationSubmitQuestion = gql`
-    mutation differencesMutation($question: SubjectInput!) {
-      submitQuestion(question: $question) {
-        id
-        title
-        content
-        category
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-    }
-    ${fragments.user}
-    `;
-
-  MutationSubmitAnswer = gql`
-    mutation differencesMutation($answer: ReplyInput!) {
-      submitAnswer(answer: $answer) {
-        id
-        content
-        createTime
-        user {
-          ...UserInfo
-        }
-      }
-    }
-    ${fragments.user}
-  `;
-
-  QueryQuestionDetail = gql`
-    query question($id: Int!) {
-      question(id: $id) {
-        id
-        title
-        content
-        category
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-    }
-    ${fragments.user}
-    `;
-
-  QueryQuestions = gql`
-    query questions($criteria:CriteriaInput!) {
-      questions(criteria: $criteria){
-        id
-        title
-        content
-        category
-        user {
-          ...UserInfo
-        }
-        createTime
-      }
-      question_count(criteria: $criteria)
-    }
-    ${fragments.user}
-  `;
-
-  QueryQuestionAnswers = gql`
-    query question_answers($questionId: Int!) {
-      question_answers(questionId: $questionId) {
-        id
-        content
-        user {
-          ...UserInfo
-        }
-        createTime
-        subReplies {
-          id
-          content
-          user {
-            ...UserInfo
-          }
-          createTime
-        }
-      }
-    }
-    ${fragments.user}
-  `;
-
   constructor(private apollo: Apollo,
     private authService: AuthService) {
   }
@@ -107,7 +106,7 @@ export class QuestionService {
   askQuestion(title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitQuestion,
+      mutation: MutationSubmitQuestion,
       variables: {
         question: {
           title: title,
@@ -115,22 +114,31 @@ export class QuestionService {
           categoryId: category.id
         }
       },
-      // optimisticResponse: {
-      //   __typename: 'Mutation',
-      //   submitQuestion: {
-      //     __typename: 'QuestionType',
-      //     title: title,
-      //     content: content,
-      //     category: category.name,
-      //     createTime: +new Date,
-      //     user: {
-      //       __typename: 'UserType',
-      //       id: user.id,
-      //       displayName: user.name,
-      //       avatarUrl: null
-      //     }
-      //   }
-      // },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitQuestion: {
+          __typename: 'QuestionType',
+          title: title,
+          content: content,
+          category: category.name,
+          createTime: +new Date,
+          user: {
+            __typename: 'UserType',
+            id: user.id,
+            displayName: user.name,
+            avatarUrl: null
+          }
+        }
+      },
+      update: (proxy, { data: { submitQuestion } }) => {
+        // Read the data from our cache for this query.
+        const data = proxy.readQuery({ query: QueryQuestions });
+        alert(JSON.stringify(data));
+        // Add our comment from the mutation to the end.
+        //data.comments.push(submitComment);
+        // Write our data back to the cache.
+        //proxy.writeQuery({ query: CommentAppQuery, data });
+      }
       // updateQueries: {
       //   questions: (previousResult, { mutationResult }) => {
       //     return {
@@ -144,7 +152,7 @@ export class QuestionService {
   updateQuestion(id: number, title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitQuestion,
+      mutation: MutationSubmitQuestion,
       variables: {
         question: {
           id: id,
@@ -176,7 +184,7 @@ export class QuestionService {
   addAnswer(questionId: number, parentId: number, content: string) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitAnswer,
+      mutation: MutationSubmitAnswer,
       variables: {
         answer: {
           subjectId: questionId,
@@ -211,7 +219,7 @@ export class QuestionService {
   updateAnswer(id: number, content: string) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
-      mutation: this.MutationSubmitAnswer,
+      mutation: MutationSubmitAnswer,
       variables: {
         answer: {
           id: id,
@@ -238,7 +246,7 @@ export class QuestionService {
 
   getQuestion(id: number) {
     return this.apollo.watchQuery<QuestionQueryResponse>({
-      query: this.QueryQuestionDetail,
+      query: QueryQuestionDetail,
       variables: {
         id: id
       }
@@ -247,7 +255,7 @@ export class QuestionService {
 
   getQuestions(categoryId: number, offset: number, limit: number) {
     return this.apollo.watchQuery({
-      query: this.QueryQuestions,
+      query: QueryQuestions,
       variables: {
          criteria: {
            categoryId: categoryId,
@@ -260,7 +268,7 @@ export class QuestionService {
 
   getQuestionAnswers(questionId: number) {
     return this.apollo.watchQuery({
-      query: this.QueryQuestionAnswers,
+      query: QueryQuestionAnswers,
       variables: {
         questionId: questionId
       }
