@@ -24,6 +24,6 @@ export class QuestionListComponent extends ListComponentBase {
 
   fetchData(categoryId: number) {
     return this.questionService.getQuestions(
-      categoryId, 0, 100);
+      categoryId, 0, 100).valueChanges;
   }
 }

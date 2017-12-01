@@ -23,6 +23,6 @@ export class ArticleListComponent extends ListComponentBase {
   }
 
   fetchData(categoryId: number) {
-    return this.articleService.getArticles(categoryId, 0, 100);
+    return this.articleService.getArticles(categoryId, 0, 100).valueChanges;
   }
 }

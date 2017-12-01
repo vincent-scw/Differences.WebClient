@@ -12,8 +12,6 @@ import 'moment/min/locales';
 
 import { TitlePipe } from '../utlities/title.pipe';
 
-import { provideClient } from '../services/apollo-client.service';
-
 moment.locale('zh-cn'); // Chinese
 
 @NgModule({
@@ -29,7 +27,7 @@ moment.locale('zh-cn'); // Chinese
         QuillEditorModule,
         AvatarModule,
         MomentModule,
-        ApolloModule.forRoot(provideClient)
+        ApolloModule
     ],
     exports: [
         HttpModule,

@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
-import { ApolloQueryObservable } from 'apollo-angular';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 
 import { CategoryService } from '../services/category.service';
 import { defaultLoadedObject,
@@ -9,7 +9,7 @@ import { defaultLoadedObject,
 import { IKeyValue } from '../models/key-value.interface';
 
 export abstract class ListComponentBase implements OnInit {
-  data: ApolloQueryObservable<any>;
+  data: Observable<any>;
   count: number;
   selectedCategory: BehaviorSubject<IKeyValue>;
 
@@ -38,5 +38,5 @@ export abstract class ListComponentBase implements OnInit {
   }
 
   protected abstract getCount(data: any): number;
-  protected abstract fetchData(categoryId: number): ApolloQueryObservable<any>;
+  protected abstract fetchData(categoryId: number): Observable<any>;
 }

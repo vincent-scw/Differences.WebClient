@@ -35,7 +35,7 @@ export class CategoryService {
 
   constructor(private browserStorage: BrowserStorage,
     private apollo: Apollo) {
-      this.getCategoryDefinition().subscribe(({data}) => {
+      this.getCategoryDefinition().valueChanges.subscribe(({data}) => {
         this.cgList = data.category_definition;
         this.cgList.forEach(element => {
           this.categories.push(element);

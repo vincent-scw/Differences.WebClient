@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { ApolloQueryObservable } from 'apollo-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -35,11 +34,13 @@ export class QuestionDetailComponent implements OnInit {
     this.route.paramMap
       .switchMap((params: Params) => this.id = params.get('id'))
       .subscribe(() => this.questionService.getQuestion(this.id)
+        .valueChanges
         .subscribe(({data}) => {
           this.question = data.question;
           this.intermediaryService.onLoaded(defaultLoadedObject());
 
           this.questionService.getQuestionAnswers(this.id)
+            .valueChanges
             .subscribe((ret) => {
               this.isAnswersLoading = ret.loading;
               this.answers = ret.data;

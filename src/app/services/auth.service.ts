@@ -161,6 +161,7 @@ export class AuthService {
 
     // Check user is stored in DB
     this.userService.checkUserInDb()
+      .valueChanges
       .subscribe((data: any) => {
       },
       (error) => {

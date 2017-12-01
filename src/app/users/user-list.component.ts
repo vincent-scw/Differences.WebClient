@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApolloQueryObservable } from 'apollo-angular';
+import { Observable } from 'rxjs/Observable';
 
 import { UserService } from '../services/user.service';
 
@@ -9,10 +9,10 @@ import { UserService } from '../services/user.service';
 })
 
 export class UserListComponent implements OnInit {
-  data: ApolloQueryObservable<any>;
+  data: Observable<any>;
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.data = this.userService.getUsers(1, 20);
+    this.data = this.userService.getUsers(1, 20).valueChanges;
   }
 }
