@@ -71,7 +71,7 @@ export class AuthService {
     this.browserStorage.remove('user_id');
     this.browserStorage.remove('user_info');
     this.signinStatus.next(false);
-    this.user.next(new User());
+    this.user.next(null);
     // Unschedules the refresh token.
     this.unscheduleRefresh();
   }

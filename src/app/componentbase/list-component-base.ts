@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { QueryRef } from 'apollo-angular';
 
 import { CategoryService } from '../services/category.service';
 import { defaultLoadedObject,
@@ -9,7 +9,8 @@ import { defaultLoadedObject,
 import { IKeyValue } from '../models/key-value.interface';
 
 export abstract class ListComponentBase implements OnInit {
-  data: Observable<any>;
+  query: QueryRef<any>;
+  data: any[];
   count: number;
   selectedCategory: BehaviorSubject<IKeyValue>;
 
@@ -30,13 +31,15 @@ export abstract class ListComponentBase implements OnInit {
 
   refresh(categoryId: number) {
     this.intermediaryService.onLoading();
-    this.data = this.fetchData(categoryId);
-    this.data.subscribe(({data}) => {
+    this.query = this.fetchData(categoryId);
+    this.query.valueChanges.subscribe(({data}) => {
       this.intermediaryService.onLoaded(defaultLoadedObject());
+      this.data = this.getValues(data);
       this.count = this.getCount(data);
     });
   }
 
+  protected abstract getValues(data: any): any[];
   protected abstract getCount(data: any): number;
-  protected abstract fetchData(categoryId: number): Observable<any>;
+  protected abstract fetchData(categoryId: number): QueryRef<any>;
 }

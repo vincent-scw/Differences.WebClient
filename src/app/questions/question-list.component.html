@@ -3,7 +3,7 @@
 </div>
 
 <md-list>
-  <div *ngFor="let question of data | async | select: 'questions'">
+  <div *ngFor="let question of data">
     <app-question-item
       class="list-item"
       [item]="question"></app-question-item>

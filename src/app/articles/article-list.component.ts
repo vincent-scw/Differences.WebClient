@@ -22,7 +22,11 @@ export class ArticleListComponent extends ListComponentBase {
     return data.article_count;
   }
 
+  getValues(data: any) {
+    return data.articles;
+  }
+
   fetchData(categoryId: number) {
-    return this.articleService.getArticles(categoryId, 0, 100).valueChanges;
+    return this.articleService.getArticles(categoryId, 0, 100);
   }
 }

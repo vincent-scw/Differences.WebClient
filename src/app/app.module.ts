@@ -101,7 +101,8 @@ export class AppModule {
 
     apollo.create({
       link: errorlink.concat(auth).concat(http),
-      cache: new InMemoryCache()
+      cache: new InMemoryCache(),
+      ssrMode: true
     });
   }
 }

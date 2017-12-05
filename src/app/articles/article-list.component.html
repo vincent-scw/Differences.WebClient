@@ -3,7 +3,7 @@
 </div>
 
 <md-list>
-  <div *ngFor="let article of data | async | select: 'articles'">
+  <div *ngFor="let article of data">
     <app-article-item
       class="list-item"
       [item]="article"></app-article-item>

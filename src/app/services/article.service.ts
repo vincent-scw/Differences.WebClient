@@ -1,5 +1,5 @@
-import {Component, Injectable} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, Injectable } from '@angular/core';
+import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { Article } from '../models/article.model';
@@ -97,21 +97,22 @@ export class ArticleService {
           categoryId: category.id
         }
       },
-      // optimisticResponse: {
-      //   __typename: 'Mutation',
-      //   submitArticle: {
-      //     __typename: 'ArticleType',
-      //     title: title,
-      //     content: content,
-      //     createTime: +new Date,
-      //     user: {
-      //       __typename: 'UserType',
-      //       id: user.id,
-      //       displayName: user.name,
-      //       avatarUrl: null
-      //     }
-      //   }
-      // },
+      optimisticResponse: {
+        __typename: 'Mutation',
+        submitArticle: {
+          __typename: 'ArticleType',
+          id: -1,
+          title: title,
+          content: content,
+          createTime: +new Date,
+          user: {
+            __typename: 'UserType',
+            id: user.id,
+            displayName: user.name,
+            avatarUrl: null
+          }
+        }
+      },
     });
   }
 
@@ -163,6 +164,21 @@ export class ArticleService {
        }
       }
      });
+  }
+
+  fetchMoreAticles(articleQuery: QueryRef<any>, offset: number, limit: number) {
+    articleQuery.fetchMore({
+      variables: {
+        offset: offset,
+        limit: limit
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) { return prev; }
+        return Object.assign({}, prev, {
+          articles: [...prev.articles, ...fetchMoreResult.articles]
+        });
+      }
+    });
   }
 
   getArticleAnswers(articleId: number) {

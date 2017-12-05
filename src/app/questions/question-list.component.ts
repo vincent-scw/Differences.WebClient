@@ -22,8 +22,11 @@ export class QuestionListComponent extends ListComponentBase {
     return data.question_count;
   }
 
+  getValues(data: any) {
+    return data.questions;
+  }
+
   fetchData(categoryId: number) {
-    return this.questionService.getQuestions(
-      categoryId, 0, 100).valueChanges;
+    return this.questionService.getQuestions(categoryId, 0, 100);
   }
 }
