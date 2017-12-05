@@ -1,4 +1,6 @@
 <md-paginator [length]="totalCount"
-  [pageSize]="15"
-  [pageSizeOptions]="[10, 15, 30, 50]">
+  [pageIndex]="pIndex"
+  [pageSize]="pSize"
+  [pageSizeOptions]="[10, 15, 30, 50]"
+  (page)="onPaging($event)">
 </md-paginator>

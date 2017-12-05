@@ -166,11 +166,14 @@ export class ArticleService {
      });
   }
 
-  fetchMoreAticles(articleQuery: QueryRef<any>, offset: number, limit: number) {
-    articleQuery.fetchMore({
+  fetchMoreAticles(articlesQuery: QueryRef<any>, categoryId: number, offset: number, limit: number) {
+    return articlesQuery.fetchMore({
       variables: {
-        offset: offset,
-        limit: limit
+        criteria: {
+          categoryId: categoryId,
+          offset: offset,
+          limit: limit
+        }
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) { return prev; }

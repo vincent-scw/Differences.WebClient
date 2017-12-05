@@ -11,4 +11,4 @@
   </div>
 </md-list>
 
-<pagination [totalCount]="count"></pagination>
+<pagination [totalCount]="count" (pageChange)="onPaging($event)"></pagination>

@@ -26,7 +26,12 @@ export class QuestionListComponent extends ListComponentBase {
     return data.questions;
   }
 
-  fetchData(categoryId: number) {
-    return this.questionService.getQuestions(categoryId, 0, 100);
+  fetchData() {
+    return this.questionService.getQuestions(this.selectedCategory.value.id, 0, this.pagination.limit);
+  }
+
+  fetchMore() {
+    return this.questionService.fetchMoreQuestions(this.query, this.selectedCategory.value.id,
+      this.queryData.length, this.pagination.limit);
   }
 }

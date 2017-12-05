@@ -1,5 +1,5 @@
-import {Component, Injectable} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, Injectable } from '@angular/core';
+import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { AuthService } from '../services/auth.service';
@@ -251,6 +251,24 @@ export class QuestionService {
        }
       }
      });
+  }
+
+  fetchMoreQuestions(questionsQuery: QueryRef<any>, categoryId: number, offset: number, limit: number) {
+    return questionsQuery.fetchMore({
+      variables: {
+        criteria: {
+          categoryId: categoryId,
+          offset: offset,
+          limit: limit
+        }
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) { return prev; }
+        return Object.assign({}, prev, {
+          questions: [...prev.questions, ...fetchMoreResult.questions]
+        });
+      }
+    });
   }
 
   getQuestionAnswers(questionId: number) {

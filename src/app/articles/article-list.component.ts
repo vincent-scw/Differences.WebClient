@@ -26,7 +26,12 @@ export class ArticleListComponent extends ListComponentBase {
     return data.articles;
   }
 
-  fetchData(categoryId: number) {
-    return this.articleService.getArticles(categoryId, 0, 100);
+  fetchData() {
+    return this.articleService.getArticles(this.selectedCategory.value.id, 0, this.pagination.limit);
+  }
+
+  fetchMore() {
+    return this.articleService.fetchMoreAticles(this.query, this.selectedCategory.value.id,
+      this.queryData.length, this.pagination.limit);
   }
 }

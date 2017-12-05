@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output,
+  EventEmitter } from '@angular/core';
+import { PageEvent } from '@angular/material';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -8,4 +10,33 @@ import { Component, Input } from '@angular/core';
 
 export class PaginationComponent {
   @Input() totalCount: number;
+  @Output() pageChange = new EventEmitter();
+
+  private dataOffset = 0;
+  private pSize = 3;
+  private pIndex = 0;
+
+  get offset() {
+    return this.dataOffset;
+  }
+
+  get limit() {
+    return this.pSize;
+  }
+
+  get pageIndex() {
+    return this.pIndex;
+  }
+
+  reset() {
+    this.dataOffset = 0;
+    this.pIndex = 0;
+    this.pageChange.emit();
+  }
+
+  onPaging(event: PageEvent) {
+    this.dataOffset = event.pageIndex * event.pageSize;
+    this.pIndex = event.pageIndex;
+    this.pageChange.emit();
+  }
 }
