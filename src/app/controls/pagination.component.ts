@@ -13,7 +13,7 @@ export class PaginationComponent {
   @Output() pageChange = new EventEmitter();
 
   private dataOffset = 0;
-  private pSize = 3;
+  private pSize = 15;
   private pIndex = 0;
 
   get offset() {
@@ -37,6 +37,7 @@ export class PaginationComponent {
   onPaging(event: PageEvent) {
     this.dataOffset = event.pageIndex * event.pageSize;
     this.pIndex = event.pageIndex;
+    this.pSize = event.pageSize;
     this.pageChange.emit();
   }
 }
