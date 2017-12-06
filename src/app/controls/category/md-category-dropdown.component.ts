@@ -8,7 +8,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CategoryService } from '../../services/category.service';
 import { Category, CategoryGroup } from '../../models/category.model';
-import { IKeyValue } from '../../models/key-value.interface';
 
 @Component({
   // tslint:disable-next-line:component-selector

@@ -1,13 +1,9 @@
-import { IKeyValue } from '../models/key-value.interface';
+import { IdName } from '../models/id-name.model';
 
-export class Category implements IKeyValue {
-  id: number;
-  name: string;
+export interface Category extends IdName {
   description?: string;
 }
 
-export class CategoryGroup implements IKeyValue {
-  id: number;
-  name: string;
+export interface CategoryGroup extends IdName {
   categories: Category[];
 }

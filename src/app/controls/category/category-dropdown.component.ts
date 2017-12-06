@@ -7,7 +7,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor,
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { CategoryService } from '../../services/category.service';
-import { IKeyValue } from '../../models/key-value.interface';
+import { IdName } from '../../models/id-name.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -23,7 +23,7 @@ import { IKeyValue } from '../../models/key-value.interface';
 export class CategoryDropdownComponent implements OnInit,
   ControlValueAccessor {
   isActive: boolean;
-  selectedCategory: BehaviorSubject<IKeyValue>;
+  selectedCategory: BehaviorSubject<IdName>;
 
   onModelChange: Function = (_: any) => {};
   onModelTouched: Function = () => {};

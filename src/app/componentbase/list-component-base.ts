@@ -5,7 +5,7 @@ import { QueryRef } from 'apollo-angular';
 import { CategoryService } from '../services/category.service';
 import { IntermediaryService } from '../services/intermediary.service';
 
-import { IKeyValue } from '../models/key-value.interface';
+import { IdName } from '../models/id-name.model';
 
 import { PaginationComponent } from '../controls/pagination.component';
 
@@ -13,7 +13,7 @@ export abstract class ListComponentBase implements OnInit {
   query: QueryRef<any>;
   data: any[];
   count: number;
-  selectedCategory: BehaviorSubject<IKeyValue>;
+  selectedCategory: BehaviorSubject<IdName>;
   queryData: any[];
 
   @ViewChild(PaginationComponent) pagination: PaginationComponent;

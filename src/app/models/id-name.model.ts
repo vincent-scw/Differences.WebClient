@@ -1,4 +1,4 @@
-export interface IKeyValue {
+export interface IdName {
   id: number;
   name: string;
 }

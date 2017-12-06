@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-import { IKeyValue } from '../models/key-value.interface';
+import { IdName } from '../models/id-name.model';
 import { Category, CategoryGroup } from '../models/category.model';
 import { BrowserStorage } from './browser-storage.service';
 
@@ -29,9 +29,9 @@ export class CategoryService {
 
   private cgList: CategoryGroup[];
   categoryGroups = new BehaviorSubject<CategoryGroup[]>(this.getCategoryGroups());
-  categories: IKeyValue[] = [];
+  categories: IdName[] = [];
 
-  selectedCategory = new BehaviorSubject<IKeyValue>(this.getSelectedCategory());
+  selectedCategory = new BehaviorSubject<IdName>(this.getSelectedCategory());
 
   constructor(private browserStorage: BrowserStorage,
     private apollo: Apollo) {
@@ -69,7 +69,7 @@ export class CategoryService {
     this.selectedCategory.next(found);
   }
 
-  getSelectedCategory(): IKeyValue {
+  getSelectedCategory(): IdName {
     return this.browserStorage.get(selected_category_key)
       ? JSON.parse(this.browserStorage.get(selected_category_key))
       : this.categories[0];
