@@ -84,8 +84,8 @@ export class QuestionService extends ApolloServiceBase {
           user: {
             __typename: 'UserType',
             id: user.id,
-            displayName: user.name,
-            avatarUrl: null
+            displayName: user.displayName,
+            avatarUrl: user.avatarUrl
           }
         }
       },
@@ -128,8 +128,8 @@ export class QuestionService extends ApolloServiceBase {
           user: {
             __typename: 'UserType',
             id: user.id,
-            displayName: user.name,
-            avatarUrl: null
+            displayName: user.displayName,
+            avatarUrl: user.avatarUrl
           }
         }
       }

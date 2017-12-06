@@ -69,8 +69,8 @@ export class QuestionAnswerService {
           user: {
             __typename: 'UserType',
             id: user.id,
-            displayName: user.name,
-            avatarUrl: null
+            displayName: user.displayName,
+            avatarUrl: user.avatarUrl
           }
         }
       },
@@ -104,8 +104,8 @@ export class QuestionAnswerService {
           user: {
             __typename: 'UserType',
             id: user.id,
-            displayName: user.name,
-            avatarUrl: null
+            displayName: user.displayName,
+            avatarUrl: user.avatarUrl
           }
         }
       }

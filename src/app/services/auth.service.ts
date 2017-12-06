@@ -144,11 +144,12 @@ export class AuthService {
     this.browserStorage.set('access_token', accessToken);
     const fromToken = this.jwtHelper.decodeToken(accessToken);
 
-    const user = new User();
-    user.id = fromToken.oid;
-    user.name = fromToken.name;
-    // user.jobTitle = fromToken.jobTitle;
-    user.emails = fromToken.emails;
+    const user: User = {
+      id: fromToken.oid,
+      displayName: fromToken.name,
+      // jobTitle = fromToken.jobTitle;
+      emails: fromToken.emails
+    };
 
     this.authTime = fromToken.auth_time;
 

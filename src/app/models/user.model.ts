@@ -1,7 +1,8 @@
-export class User {
-  public id: string;
-  public name: string;
-  public jobTitle: string;
-  public emails: string[];
-  public roles?: string[];
+export interface User {
+  id: string;
+  displayName: string;
+  jobTitle?: string;
+  emails: string[];
+  roles?: string[];
+  avatarUrl?: string;
 }
