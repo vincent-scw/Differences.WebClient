@@ -1,13 +1,14 @@
 import { Component, Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
+import { DataProxy } from 'apollo-cache';
 import gql from 'graphql-tag';
 
 import { Article } from '../models/article.model';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 import { fragments } from './fragments';
 import { Category } from '../models/category.model';
 import { ApolloServiceBase } from './apollo-service-base';
-import { DataProxy } from 'apollo-cache';
+import { IntermediaryService } from './intermediary.service';
 
 export interface ArticleQueryResponse {
   article: any;
@@ -59,7 +60,8 @@ export class ArticleService extends ApolloServiceBase {
   private readonly articles_key = 'Articles';
 
   constructor(private apollo: Apollo,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private intermediaryService: IntermediaryService) {
       super();
   }
 
@@ -115,15 +117,20 @@ export class ArticleService extends ApolloServiceBase {
   }
 
   getArticle(id: number) {
-    return this.apollo.watchQuery<ArticleQueryResponse>({
+    this.intermediaryService.onLoading();
+    const retval = this.apollo.watchQuery<ArticleQueryResponse>({
       query: QueryArticleDetail,
       variables: {
         id: id
       }
     });
+
+    retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
+    return retval;
   }
 
   getArticles(categoryId: number, offset: number, limit: number) {
+    this.intermediaryService.onLoading();
     const variables = {
       criteria: {
         categoryId: categoryId,
@@ -132,14 +139,18 @@ export class ArticleService extends ApolloServiceBase {
      }
     };
     this.setQueryVariables(this.articles_key, categoryId, variables);
-    return this.apollo.watchQuery({
+    const retval = this.apollo.watchQuery({
       query: QueryArticles,
       variables: variables
      });
+
+    retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
+    return retval;
   }
 
   fetchMoreAticles(articlesQuery: QueryRef<any>, categoryId: number, offset: number, limit: number) {
-    return articlesQuery.fetchMore({
+    this.intermediaryService.onLoading();
+    const retval = articlesQuery.fetchMore({
       variables: {
         criteria: {
           categoryId: categoryId,
@@ -154,5 +165,8 @@ export class ArticleService extends ApolloServiceBase {
         });
       }
     });
+
+    retval.then((_) => this.intermediaryService.onLoaded());
+    return retval;
   }
 }

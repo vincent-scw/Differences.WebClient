@@ -3,8 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { QueryRef } from 'apollo-angular';
 
 import { CategoryService } from '../services/category.service';
-import { defaultLoadedObject,
-  IntermediaryService } from '../services/intermediary.service';
+import { IntermediaryService } from '../services/intermediary.service';
 
 import { IKeyValue } from '../models/key-value.interface';
 
@@ -36,16 +35,12 @@ export abstract class ListComponentBase implements OnInit {
 
   refresh() {
     this.pagination.reset();
-    this.intermediaryService.onLoading();
-
     this.query.refetch();
   }
 
   fetch() {
-    this.intermediaryService.onLoading();
     this.query = this.fetchData();
     this.query.valueChanges.subscribe(({data}) => {
-      this.intermediaryService.onLoaded(defaultLoadedObject());
       this.queryData = this.getValues(data);
 
       this.data = this.queryData.slice(this.pagination.offset,
@@ -55,8 +50,8 @@ export abstract class ListComponentBase implements OnInit {
   }
 
   onPaging() {
-    if (this.pagination.offset >= this.queryData.length) {
-      this.intermediaryService.onLoading();
+    if (this.pagination.offset + this.pagination.limit >= this.queryData.length
+      && this.pagination.totalCount !== this.queryData.length) {
       this.fetchMore();
     } else {
       this.data = this.queryData.slice(this.pagination.offset,

@@ -7,8 +7,7 @@ import 'rxjs/add/operator/map';
 
 import { ArticleService } from '../services/article.service';
 import { ArticleCommentService } from '../services/article-comment.service';
-import { defaultLoadedObject,
-  IntermediaryService } from '../services/intermediary.service';
+import { IntermediaryService } from '../services/intermediary.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -31,14 +30,12 @@ export class ArticleDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.intermediaryService.onLoading();
     this.route.paramMap
       .switchMap((params: Params) => this.id = params.get('id'))
       .subscribe(() => this.articleService.getArticle(this.id)
         .valueChanges
         .subscribe(({data}) => {
           this.article = data.article;
-          this.intermediaryService.onLoaded(defaultLoadedObject());
 
           this.articleCommentService.getArticleAnswers(this.id)
             .valueChanges

@@ -2,10 +2,12 @@ import { Component, Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 import { Question } from '../models/question.model';
 import { Category } from '../models/category.model';
 import { fragments } from './fragments';
+import { ApolloServiceBase } from './apollo-service-base';
+import { IntermediaryService } from './intermediary.service';
 
 export interface QuestionQueryResponse {
   question: any;
@@ -53,9 +55,11 @@ const QueryQuestions = gql`
   `;
 
 @Injectable()
-export class QuestionService {
+export class QuestionService extends ApolloServiceBase {
   constructor(private apollo: Apollo,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private intermediaryService: IntermediaryService) {
+      super();
   }
 
   askQuestion(title: string, content: string, category: Category) {
@@ -133,16 +137,21 @@ export class QuestionService {
   }
 
   getQuestion(id: number) {
-    return this.apollo.watchQuery<QuestionQueryResponse>({
+    this.intermediaryService.onLoading();
+    const retval = this.apollo.watchQuery<QuestionQueryResponse>({
       query: QueryQuestionDetail,
       variables: {
         id: id
       }
     });
+
+    retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
+    return retval;
   }
 
   getQuestions(categoryId: number, offset: number, limit: number) {
-    return this.apollo.watchQuery({
+    this.intermediaryService.onLoading();
+    const retval = this.apollo.watchQuery({
       query: QueryQuestions,
       variables: {
          criteria: {
@@ -152,10 +161,14 @@ export class QuestionService {
        }
       }
      });
+
+    retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
+    return retval;
   }
 
   fetchMoreQuestions(questionsQuery: QueryRef<any>, categoryId: number, offset: number, limit: number) {
-    return questionsQuery.fetchMore({
+    this.intermediaryService.onLoading();
+    const retval = questionsQuery.fetchMore({
       variables: {
         criteria: {
           categoryId: categoryId,
@@ -170,5 +183,8 @@ export class QuestionService {
         });
       }
     });
+
+    retval.then((_) => this.intermediaryService.onLoaded());
+    return retval;
   }
 }

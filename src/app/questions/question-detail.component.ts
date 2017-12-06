@@ -7,8 +7,7 @@ import 'rxjs/add/operator/map';
 
 import { QuestionService } from '../services/question.service';
 import { QuestionAnswerService } from '../services/question-answer.service';
-import { defaultLoadedObject,
-  IntermediaryService } from '../services/intermediary.service';
+import { IntermediaryService } from '../services/intermediary.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -32,14 +31,12 @@ export class QuestionDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.intermediaryService.onLoading();
     this.route.paramMap
       .switchMap((params: Params) => this.id = params.get('id'))
       .subscribe(() => this.questionService.getQuestion(this.id)
         .valueChanges
         .subscribe(({data}) => {
           this.question = data.question;
-          this.intermediaryService.onLoaded(defaultLoadedObject());
 
           this.questionAnswerService.getQuestionAnswers(this.id)
             .valueChanges
