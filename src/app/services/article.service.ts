@@ -6,6 +6,8 @@ import { Article } from '../models/article.model';
 import { AuthService } from '../services/auth.service';
 import { fragments } from './fragments';
 import { Category } from '../models/category.model';
+import { ApolloServiceBase } from './apollo-service-base';
+import { DataProxy } from 'apollo-cache';
 
 export interface ArticleQueryResponse {
   article: any;
@@ -23,20 +25,6 @@ const MutationSubmitArticle = gql`
   }
   ${fragments.user}
   ${fragments.article}
-  `;
-
-const MutationSubmitComment = gql`
-  mutation differencesMutation($comment: ReplyInput!) {
-    submitComment(comment: $comment) {
-      id
-      content
-      createTime
-      user {
-        ...UserInfo
-      }
-    }
-  }
-  ${fragments.user}
   `;
 
 const QueryArticleDetail = gql`
@@ -66,24 +54,13 @@ const QueryArticles = gql`
   ${fragments.article}
   `;
 
-const QueryArticleComments = gql`
-  query article_comments($articleId: Int!) {
-    article_comments(articleId: $articleId) {
-      id
-      content
-      user {
-        ...UserInfo
-      }
-      createTime
-    }
-  }
-  ${fragments.user}
-  `;
-
 @Injectable()
-export class ArticleService {
+export class ArticleService extends ApolloServiceBase {
+  private readonly articles_key = 'Articles';
+
   constructor(private apollo: Apollo,
     private authService: AuthService) {
+      super();
   }
 
   submitArticle(title: string, content: string, category: Category) {
@@ -104,6 +81,7 @@ export class ArticleService {
           id: -1,
           title: title,
           content: content,
+          category: category.name,
           createTime: +new Date,
           user: {
             __typename: 'UserType',
@@ -113,33 +91,25 @@ export class ArticleService {
           }
         }
       },
+      update: (proxy, { data: { submitArticle }}) => {
+        let queryVariable = this.getQueryVariable(this.articles_key, category.id);
+        this.updateQuery(queryVariable, proxy, submitArticle);
+
+        queryVariable = this.getQueryVariable(this.articles_key, Math.floor(category.id / 100));
+        this.updateQuery(queryVariable, proxy, submitArticle);
+      }
     });
   }
 
-  submitComment(articleId: number, parentId: number, content: string) {
-    const user = this.authService.getUser();
-    return this.apollo.mutate({
-      mutation: MutationSubmitComment,
-      variables: {
-        comment: {
-          subjectId: articleId,
-          content: content,
-          parentId: parentId
-        }
-      },
-      optimisticResponse: {
-        __typename: 'Mutation',
-        submitAnswer: {
-          __typename: 'CommentType',
-          content: content,
-          createTime: +new Date,
-          user: {
-            __typename: 'UserType',
-            id: user.id,
-            displayName: user.name,
-            avatarUrl: null
-          }
-        }
+  private updateQuery(queryVariable: any, proxy: DataProxy, submitArticle: any) {
+    if (queryVariable == null) { return; }
+
+    const q = proxy.readQuery<any>({ query: QueryArticles, variables: queryVariable });
+    const values = q.articles;
+    values.splice(0, 0, submitArticle);
+    proxy.writeQuery({ query: QueryArticles, variables: queryVariable, data: {
+        articles: values,
+        article_count: q.article_count + 1
       }
     });
   }
@@ -154,15 +124,17 @@ export class ArticleService {
   }
 
   getArticles(categoryId: number, offset: number, limit: number) {
+    const variables = {
+      criteria: {
+        categoryId: categoryId,
+        offset: offset,
+        limit: limit
+     }
+    };
+    this.setQueryVariables(this.articles_key, categoryId, variables);
     return this.apollo.watchQuery({
       query: QueryArticles,
-      variables: {
-         criteria: {
-           categoryId: categoryId,
-           offset: offset,
-           limit: limit
-       }
-      }
+      variables: variables
      });
   }
 
@@ -180,15 +152,6 @@ export class ArticleService {
         return Object.assign({}, prev, {
           articles: [...prev.articles, ...fetchMoreResult.articles]
         });
-      }
-    });
-  }
-
-  getArticleAnswers(articleId: number) {
-    return this.apollo.watchQuery({
-      query: QueryArticleComments,
-      variables: {
-        articleId: articleId
       }
     });
   }

@@ -5,6 +5,7 @@ import { ControlsModule } from '../controls/controls.module';
 import { ArticlesRoutingModule } from './articles-routing.module';
 
 import { ArticleService } from '../services/article.service';
+import { ArticleCommentService } from '../services/article-comment.service';
 
 import { ArticleListComponent } from './article-list.component';
 import { ArticleDetailComponent } from './article-detail.component';
@@ -24,7 +25,8 @@ import { ArticleItemComponent } from './article-item.component';
     ArticleItemComponent
   ],
   providers: [
-    ArticleService
+    ArticleService,
+    ArticleCommentService
   ],
   entryComponents: [
     WriteArticleComponent

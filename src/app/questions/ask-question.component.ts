@@ -30,8 +30,6 @@ export class AskQuestionComponent implements OnInit {
     .subscribe(({ data }) => {
       this.router.navigateByUrl('/questions');
       this.dialogRef.close();
-    }, (error) => {
-      console.log('there was an error sending the query', error);
     });
   }
 

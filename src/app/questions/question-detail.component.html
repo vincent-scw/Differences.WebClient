@@ -41,7 +41,7 @@
 </div>
 <md-list>
   <div class="item-wrapper"
-    *ngFor="let answer of answers | select: 'question_answers'">
+    *ngFor="let answer of answers">
     <content-panel 
       [data]="answer"
       (onUpdate)="onUpdateAnswer($event)"

@@ -6,6 +6,7 @@ import { ControlsModule } from '../controls/controls.module';
 import { QuestionsRoutingModule } from './questions-routing.module';
 
 import { QuestionService } from '../services/question.service';
+import { QuestionAnswerService } from '../services/question-answer.service';
 
 import { QuestionListComponent } from './question-list.component';
 import { AskQuestionComponent } from './ask-question.component';
@@ -26,7 +27,8 @@ import { QuestionItemComponent } from './question-item.component';
     AskQuestionComponent
   ],
   providers: [
-    QuestionService
+    QuestionService,
+    QuestionAnswerService
   ],
   entryComponents: [
     AskQuestionComponent

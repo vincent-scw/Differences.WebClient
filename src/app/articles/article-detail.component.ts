@@ -6,6 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
 import { ArticleService } from '../services/article.service';
+import { ArticleCommentService } from '../services/article-comment.service';
 import { defaultLoadedObject,
   IntermediaryService } from '../services/intermediary.service';
 
@@ -24,6 +25,7 @@ export class ArticleDetailComponent implements OnInit {
 
   constructor(
     private articleService: ArticleService,
+    private articleCommentService: ArticleCommentService,
     private intermediaryService: IntermediaryService,
     private route: ActivatedRoute
   ) {}
@@ -38,13 +40,13 @@ export class ArticleDetailComponent implements OnInit {
           this.article = data.article;
           this.intermediaryService.onLoaded(defaultLoadedObject());
 
-          this.articleService.getArticleAnswers(this.id)
+          this.articleCommentService.getArticleAnswers(this.id)
             .valueChanges
             .subscribe((ret) => {
               this.isCommentsLoading = ret.loading;
-              this.comments = ret.data;
-              this.isEmpty = this.comments.article_comments == null
-                || this.comments.article_comments.length === 0;
+              this.comments = ret.data.article_comments;
+              this.isEmpty = this.comments == null
+                || this.comments.length === 0;
           });
         })
       );
@@ -55,7 +57,7 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   submitComment(): void {
-    this.articleService.submitComment(this.id, null, this.myCommentContent)
+    this.articleCommentService.submitComment(this.id, null, this.myCommentContent)
       .subscribe((data) => {
         this.myCommentContent = null;
       });

@@ -40,7 +40,7 @@
 </div>
 <md-list>
   <div class="item-wrapper"
-    *ngFor="let comment of comments | select: 'article_comments'">
+    *ngFor="let comment of comments">
     <content-panel 
       [data]="comment"
       (onUpdate)="onUpdate($event)"></content-panel>

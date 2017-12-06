@@ -6,6 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
 import { QuestionService } from '../services/question.service';
+import { QuestionAnswerService } from '../services/question-answer.service';
 import { defaultLoadedObject,
   IntermediaryService } from '../services/intermediary.service';
 
@@ -25,6 +26,7 @@ export class QuestionDetailComponent implements OnInit {
 
   constructor(
     private questionService: QuestionService,
+    private questionAnswerService: QuestionAnswerService,
     private intermediaryService: IntermediaryService,
     private route: ActivatedRoute
   ) {}
@@ -39,27 +41,27 @@ export class QuestionDetailComponent implements OnInit {
           this.question = data.question;
           this.intermediaryService.onLoaded(defaultLoadedObject());
 
-          this.questionService.getQuestionAnswers(this.id)
+          this.questionAnswerService.getQuestionAnswers(this.id)
             .valueChanges
             .subscribe((ret) => {
               this.isAnswersLoading = ret.loading;
-              this.answers = ret.data;
-              this.isEmpty = this.answers.question_answers == null
-                || this.answers.question_answers.length === 0;
+              this.answers = ret.data.question_answers;
+              this.isEmpty = this.answers == null
+                || this.answers.length === 0;
             });
         })
       );
   }
 
   submitAnswer(): void {
-    this.questionService.addAnswer(this.id, null, this.myAnswerContent)
+    this.questionAnswerService.addAnswer(this.id, null, this.myAnswerContent)
       .subscribe((data) => {
         this.myAnswerContent = null;
       });
   }
 
   onUpdateAnswer(data: any): void {
-    this.questionService.updateAnswer(data.id, data.content)
+    this.questionAnswerService.updateAnswer(data.id, data.content)
       .subscribe((_) => {});
   }
 
