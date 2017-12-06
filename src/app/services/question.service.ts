@@ -3,16 +3,13 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { AuthService } from './auth.service';
-import { Question } from '../models/question.model';
+import { Question,
+  QuestionResponse,
+  QuestionListResponse } from '../models/question.model';
 import { Category } from '../models/category.model';
 import { fragments } from './fragments';
 import { ApolloServiceBase } from './apollo-service-base';
 import { IntermediaryService } from './intermediary.service';
-
-export interface QuestionQueryResponse {
-  question: any;
-  loading: any;
-}
 
 const MutationSubmitQuestion = gql`
   mutation differencesMutation($question: SubjectInput!) {
@@ -138,7 +135,7 @@ export class QuestionService extends ApolloServiceBase {
 
   getQuestion(id: number) {
     this.intermediaryService.onLoading();
-    const retval = this.apollo.watchQuery<QuestionQueryResponse>({
+    const retval = this.apollo.watchQuery<QuestionResponse>({
       query: QueryQuestionDetail,
       variables: {
         id: id
@@ -151,7 +148,7 @@ export class QuestionService extends ApolloServiceBase {
 
   getQuestions(categoryId: number, offset: number, limit: number) {
     this.intermediaryService.onLoading();
-    const retval = this.apollo.watchQuery({
+    const retval = this.apollo.watchQuery<QuestionListResponse>({
       query: QueryQuestions,
       variables: {
          criteria: {
