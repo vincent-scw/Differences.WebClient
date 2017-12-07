@@ -5,7 +5,6 @@ export const fragments = {
     fragment UserInfo on UserType {
       id
       displayName
-      avatarUrl
     }
   `,
 

@@ -15,10 +15,10 @@
       <div *ngIf="isReadOnly == true"
         [innerHTML]="newContent">
       </div>
-      <textarea class="textarea"
+      <ez-quill-editor
         [(ngModel)]="newContent"
         *ngIf="isReadOnly == false">
-      </textarea>
+      </ez-quill-editor>
       <div class="action-bar" *ngIf="!isReadOnly">
         <button md-icon-button (click)="onSubmit()">
           <md-icon class="icon-highlight">check</md-icon>
@@ -43,11 +43,11 @@
               <i class="fa fa-reply"></i>
             </span>
           </a>
-          <a class="level-item">
+          <!-- <a class="level-item">
             <span class="icon is-small">
               <i class="fa fa-heart"></i>
             </span>
-          </a>
+          </a> -->
         </div>
       </nav>
     </div>

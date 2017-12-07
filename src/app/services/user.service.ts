@@ -27,7 +27,7 @@ export class UserService {
   }
 
   getUsers(categoryId: number, count: number) {
-    return this.apollo.watchQuery({ query: QueryUser });
+    return this.apollo.watchQuery<User>({ query: QueryUser });
   }
 
   checkUserInDb() {

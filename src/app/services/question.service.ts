@@ -77,6 +77,7 @@ export class QuestionService extends ApolloServiceBase {
         __typename: 'Mutation',
         submitQuestion: {
           __typename: 'QuestionType',
+          id: -1,
           title: title,
           content: content,
           category: category.name,
@@ -85,21 +86,20 @@ export class QuestionService extends ApolloServiceBase {
             __typename: 'UserType',
             id: user.id,
             displayName: user.displayName,
-            avatarUrl: user.avatarUrl
+            // avatarUrl: user.avatarUrl
           }
         }
       },
       update: (proxy, { data: { submitQuestion } }) => {
-        // Read the data from our cache for this query.
-        // const data = proxy.readQuery({ query: QueryQuestions, variables: {criteria: {
-        //   categoryId: category.id,
-        //   offset: 0,
-        //   limit: 100
-        // }} });
-        // Add our comment from the mutation to the end.
-        // data.comments.push(submitComment);
-        // Write our data back to the cache.
-        // proxy.writeQuery({ query: CommentAppQuery, data });
+        let queryVariable = this.getQueryVariable(this.questions_key, category.id);
+        if (queryVariable != null) {
+          this.updateQuery(queryVariable, proxy, submitQuestion);
+        }
+
+        queryVariable = this.getQueryVariable(this.questions_key, Math.floor(category.id / 100));
+        if (queryVariable != null) {
+          this.updateQuery(queryVariable, proxy, submitQuestion);
+        }
       }
     });
   }
@@ -108,7 +108,7 @@ export class QuestionService extends ApolloServiceBase {
     if (queryVariable == null) { return; }
 
     const q = proxy.readQuery<any>({ query: QueryQuestions, variables: queryVariable });
-    const values = q.articles;
+    const values = q.questions;
     values.splice(0, 0, submitQuestion);
     proxy.writeQuery({ query: QueryQuestions, variables: queryVariable, data: {
         questions: values,
@@ -142,7 +142,7 @@ export class QuestionService extends ApolloServiceBase {
             __typename: 'UserType',
             id: user.id,
             displayName: user.displayName,
-            avatarUrl: user.avatarUrl
+            // avatarUrl: user.avatarUrl
           }
         }
       }
@@ -163,16 +163,18 @@ export class QuestionService extends ApolloServiceBase {
   }
 
   getQuestions(categoryId: number, offset: number, limit: number) {
+    const variables = {
+      criteria: {
+        categoryId: categoryId,
+        offset: offset,
+        limit: limit
+      }
+    };
+    this.setQueryVariables(this.questions_key, categoryId, variables);
     this.intermediaryService.onLoading();
     const retval = this.apollo.watchQuery<QuestionListResponse>({
       query: QueryQuestions,
-      variables: {
-         criteria: {
-           categoryId: categoryId,
-           offset: offset,
-           limit: limit
-       }
-      }
+      variables: variables
      });
 
     retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
