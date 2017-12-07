@@ -1,8 +1,8 @@
 <div *ngIf="question">
   <div>
-    <detail-content-panel
+    <detail-view
       [data]="question"
-      (onUpdate)="onUpdateQuestionContent($event)"></detail-content-panel>
+      (onUpdate)="onUpdateQuestionContent($event)"></detail-view>
   </div>
 </div>
 <br />
