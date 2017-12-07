@@ -31,16 +31,14 @@ export class EasyQuillEditorComponent implements OnInit,
         ['bold', 'italic', 'underline', 'strike'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'indent': '-1'}, { 'indent': '+1' }],
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'color': [] }],
         [{ 'align': [] }],
         ['link', 'image', 'code-block'],
         ['clean']
       ]
     },
     formats: [
-      'bold', 'code', 'italic', 'link', 'size', 'strike', 'underline',
-      'header', 'indent', 'list', 'align', 'direction', 'code-block', 'color',
+      'bold', 'code', 'italic', 'link', 'strike', 'underline',
+      'indent', 'list', 'align', 'direction', 'code-block',
       'formula', 'image', 'video'
     ]
   };

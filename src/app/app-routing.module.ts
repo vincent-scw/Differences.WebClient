@@ -7,7 +7,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 // and Lazy Loading Modules:
 // - https://angular.io/guide/ngmodule#lazy-loading-modules-with-the-router
 const routes: Routes = [
-
+    {path: '', redirectTo: 'questions', pathMatch: 'full'}
 ];
 
 @NgModule({

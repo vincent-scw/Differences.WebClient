@@ -5,7 +5,7 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { IdName } from '../models/id-name.model';
-import { Category, CategoryGroup } from '../models/category.model';
+import { Category, CategoryGroup, CategoryGroupResponse } from '../models/category.model';
 import { BrowserStorage } from './browser-storage.service';
 
 const selected_category_key = 'selected_category';
@@ -49,7 +49,7 @@ export class CategoryService {
   }
 
   private getCategoryDefinition() {
-    return this.apollo.query<any>({
+    return this.apollo.query<CategoryGroupResponse>({
       query: this.QueryCategoryDefinition
     });
   }
