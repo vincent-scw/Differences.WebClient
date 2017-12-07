@@ -25,7 +25,7 @@ export class AccountComponent implements OnInit {
           this.currentUser = user;
           // this.isAdmin = this.authenticationService.isInRole('administrator');
           if (signedIn) {
-            this.snackBar.open('你好，' + user.name + '!', null, {
+            this.snackBar.open('你好，' + user.displayName + '!', null, {
               duration: 2000,
             });
           }

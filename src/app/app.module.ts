@@ -20,7 +20,6 @@ import { LayoutModule } from './layout/layout.module';
 import { SharedModule } from './shared/shared.module';
 import { ControlsModule } from './controls/controls.module';
 import { QuestionsModule } from './questions/questions.module';
-import { ArticlesModule } from './articles/articles.module';
 import { UsersModule } from './users/users.module';
 
 import { AuthService } from './services/auth.service';
@@ -48,7 +47,6 @@ import { from } from 'apollo-link';
     ControlsModule,
     LayoutModule,
     QuestionsModule,
-    ArticlesModule,
     UsersModule
   ],
   providers: [

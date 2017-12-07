@@ -15,11 +15,6 @@ export class TopBarComponent {
       tooltip: '提出与回答问题',
       url: 'questions'
     },
-    {
-      title: '文章',
-      tooltip: '文章',
-      url: 'articles'
-    },
     // {
     //   title: '大神',
     //   tooltip: '大神们',
