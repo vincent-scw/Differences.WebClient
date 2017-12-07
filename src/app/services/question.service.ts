@@ -1,5 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
+import { DataProxy } from 'apollo-cache';
 import gql from 'graphql-tag';
 
 import { AuthService } from './auth.service';
@@ -53,6 +54,8 @@ const QueryQuestions = gql`
 
 @Injectable()
 export class QuestionService extends ApolloServiceBase {
+  private readonly questions_key = 'Questions';
+
   constructor(private apollo: Apollo,
     private authService: AuthService,
     private intermediaryService: IntermediaryService) {
@@ -97,6 +100,19 @@ export class QuestionService extends ApolloServiceBase {
         // data.comments.push(submitComment);
         // Write our data back to the cache.
         // proxy.writeQuery({ query: CommentAppQuery, data });
+      }
+    });
+  }
+
+  private updateQuery(queryVariable: any, proxy: DataProxy, submitQuestion: any) {
+    if (queryVariable == null) { return; }
+
+    const q = proxy.readQuery<any>({ query: QueryQuestions, variables: queryVariable });
+    const values = q.articles;
+    values.splice(0, 0, submitQuestion);
+    proxy.writeQuery({ query: QueryQuestions, variables: queryVariable, data: {
+        questions: values,
+        question_count: q.question_count + 1
       }
     });
   }
@@ -163,7 +179,7 @@ export class QuestionService extends ApolloServiceBase {
     return retval;
   }
 
-  fetchMoreQuestions(questionsQuery: QueryRef<any>, categoryId: number, offset: number, limit: number) {
+  fetchMoreQuestions(questionsQuery: QueryRef<QuestionListResponse>, categoryId: number, offset: number, limit: number) {
     this.intermediaryService.onLoading();
     const retval = questionsQuery.fetchMore({
       variables: {

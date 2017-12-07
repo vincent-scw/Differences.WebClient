@@ -145,7 +145,7 @@ export class ArticleService extends ApolloServiceBase {
     return retval;
   }
 
-  fetchMoreAticles(articlesQuery: QueryRef<any>, categoryId: number, offset: number, limit: number) {
+  fetchMoreAticles(articlesQuery: QueryRef<ArticleListResponse>, categoryId: number, offset: number, limit: number) {
     this.intermediaryService.onLoading();
     const retval = articlesQuery.fetchMore({
       variables: {
