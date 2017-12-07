@@ -1,0 +1,43 @@
+<article class="media">
+  <figure class="media-left">
+    <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
+  </figure>
+  <div class="media-content">
+    <div class="content"
+      (mouseover)="showStatusBar=true"
+      (mouseout)="showStatusBar=false">
+      <div class="level">
+        <div class="level-left">
+          <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
+        </div>
+        <div class="level-right">{{data.createTime | amTimeAgo}}</div>
+      </div>
+      <div class="title has-text-weight-semibold" [innerHTML]="data.title | title"></div>
+      <ez-quill-editor
+        [(ngModel)]="newContent"
+        [readOnly]="isReadOnly">
+      </ez-quill-editor>
+      <div class="action-bar" *ngIf="!isReadOnly">
+        <button md-icon-button (click)="onSubmit()">
+          <md-icon class="icon-highlight">check</md-icon>
+        </button>
+        <button md-icon-button (click)="onCancel()">
+          <md-icon class="icon-normal">close</md-icon>
+        </button>
+      </div>
+
+      <nav class="level" *ngIf="isReadOnly">
+        <div class="level-left"></div>
+        <div class="level-right">
+          <a class="level-item" (click)="onEdit()"
+            *ngIf="currentUser != null && currentUser.id == data.user.id">
+            <span class="icon is-small">
+              <i class="fa fa-edit"></i>
+            </span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</article>
+  
