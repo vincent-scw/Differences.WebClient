@@ -8,16 +8,6 @@ export const fragments = {
     }
   `,
 
-  article: gql`
-    fragment ArticleInfo on ArticleType {
-      id
-      title
-      content
-      category
-      createTime
-    }
-  `,
-
   question: gql`
     fragment QuestionInfo on QuestionType {
       id
@@ -27,4 +17,12 @@ export const fragments = {
       createTime
     }
   `,
+
+  answer: gql`
+    fragment AnswerInfo on AnswerType {
+      id
+      content
+      createTime
+    }
+  `
 };

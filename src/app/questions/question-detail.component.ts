@@ -9,18 +9,21 @@ import { QuestionService } from '../services/question.service';
 import { QuestionAnswerService } from '../services/question-answer.service';
 import { IntermediaryService } from '../services/intermediary.service';
 
+import { Answer } from '../models/answer.model';
+import { Question } from '../models/question.model';
+
 @Component({
   selector: 'app-question-detail',
   templateUrl: './question-detail.component.html'
 })
 
 export class QuestionDetailComponent implements OnInit {
-  question: any;
+  question: Question;
   id: number;
 
   isAnswersLoading = true;
   isEmpty: boolean;
-  answers: any;
+  answers: Answer[];
   myAnswerContent: string;
 
   constructor(
@@ -41,8 +44,9 @@ export class QuestionDetailComponent implements OnInit {
           this.questionAnswerService.getQuestionAnswers(this.id)
             .valueChanges
             .subscribe((ret) => {
-              this.isAnswersLoading = ret.loading;
-              this.answers = ret.data.question_answers;
+              const answersResponse = ret.data;
+              this.isAnswersLoading = answersResponse.loading;
+              this.answers = answersResponse.question_answers;
               this.isEmpty = this.answers == null
                 || this.answers.length === 0;
             });

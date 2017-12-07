@@ -11,26 +11,26 @@ import { fragments } from './fragments';
 const MutationSubmitAnswer = gql`
 mutation differencesMutation($answer: ReplyInput!) {
   submitAnswer(answer: $answer) {
-    id
-    content
-    createTime
+    ...AnswerInfo
     user {
       ...UserInfo
+    }
+    subReplies {
+      id
     }
   }
 }
 ${fragments.user}
+${fragments.answer}
 `;
 
 const QueryQuestionAnswers = gql`
 query question_answers($questionId: Int!) {
   question_answers(questionId: $questionId) {
-    id
-    content
+    ...AnswerInfo
     user {
       ...UserInfo
     }
-    createTime
     subReplies {
       id
       content
@@ -42,6 +42,7 @@ query question_answers($questionId: Int!) {
   }
 }
 ${fragments.user}
+${fragments.answer}
 `;
 
 @Injectable()
@@ -73,7 +74,8 @@ export class QuestionAnswerService {
             id: user.id,
             displayName: user.displayName,
             // avatarUrl: user.avatarUrl
-          }
+          },
+          subReplies: []
         }
       },
       update: (proxy, { data: { submitAnswer } }) => {
