@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { AuthService } from '../services/auth.service';
 import { Question } from '../models/question.model';
 import { Category } from '../models/category.model';
+import { Answer, AnswerListResponse } from '../models/answer.model';
 import { fragments } from './fragments';
 
 const MutationSubmitAnswer = gql`
@@ -64,22 +65,22 @@ export class QuestionAnswerService {
         __typename: 'Mutation',
         submitAnswer: {
           __typename: 'AnswerType',
+          id: -1,
           content: content,
           createTime: +new Date,
           user: {
             __typename: 'UserType',
             id: user.id,
             displayName: user.displayName,
-            avatarUrl: user.avatarUrl
+            // avatarUrl: user.avatarUrl
           }
         }
       },
-      updateQueries: {
-        question_answers: (previousResult, { mutationResult }) => {
-          return {
-            question_answers: [mutationResult.data.submitAnswer, ...previousResult.question_answers]
-          };
-        }
+      update: (proxy, { data: { submitAnswer } }) => {
+        const variables = { questionId: questionId };
+        const data = proxy.readQuery<AnswerListResponse>({ query: QueryQuestionAnswers, variables: variables });
+        data.question_answers.splice(0, 0, submitAnswer);
+        proxy.writeQuery({ query: QueryQuestionAnswers, variables: variables, data });
       }
     });
   }
@@ -105,7 +106,7 @@ export class QuestionAnswerService {
             __typename: 'UserType',
             id: user.id,
             displayName: user.displayName,
-            avatarUrl: user.avatarUrl
+            // avatarUrl: user.avatarUrl
           }
         }
       }
@@ -113,7 +114,7 @@ export class QuestionAnswerService {
   }
 
   getQuestionAnswers(questionId: number) {
-    return this.apollo.watchQuery<any>({
+    return this.apollo.watchQuery<AnswerListResponse>({
       query: QueryQuestionAnswers,
       variables: {
         questionId: questionId

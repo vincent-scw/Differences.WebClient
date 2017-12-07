@@ -4,9 +4,11 @@ import { DataProxy } from 'apollo-cache';
 import gql from 'graphql-tag';
 
 import { AuthService } from './auth.service';
-import { Question,
+import {
+  Question,
   QuestionResponse,
-  QuestionListResponse } from '../models/question.model';
+  QuestionListResponse
+} from '../models/question.model';
 import { Category } from '../models/category.model';
 import { fragments } from './fragments';
 import { ApolloServiceBase } from './apollo-service-base';
@@ -59,9 +61,10 @@ export class QuestionService extends ApolloServiceBase {
   constructor(private apollo: Apollo,
     private authService: AuthService,
     private intermediaryService: IntermediaryService) {
-      super();
+    super();
   }
 
+  //#region mutation
   askQuestion(title: string, content: string, category: Category) {
     const user = this.authService.getUser();
     return this.apollo.mutate({
@@ -92,27 +95,10 @@ export class QuestionService extends ApolloServiceBase {
       },
       update: (proxy, { data: { submitQuestion } }) => {
         let queryVariable = this.getQueryVariable(this.questions_key, category.id);
-        if (queryVariable != null) {
-          this.updateQuery(queryVariable, proxy, submitQuestion);
-        }
+        this.addToQuery(queryVariable, proxy, submitQuestion);
 
         queryVariable = this.getQueryVariable(this.questions_key, Math.floor(category.id / 100));
-        if (queryVariable != null) {
-          this.updateQuery(queryVariable, proxy, submitQuestion);
-        }
-      }
-    });
-  }
-
-  private updateQuery(queryVariable: any, proxy: DataProxy, submitQuestion: any) {
-    if (queryVariable == null) { return; }
-
-    const q = proxy.readQuery<any>({ query: QueryQuestions, variables: queryVariable });
-    const values = q.questions;
-    values.splice(0, 0, submitQuestion);
-    proxy.writeQuery({ query: QueryQuestions, variables: queryVariable, data: {
-        questions: values,
-        question_count: q.question_count + 1
+        this.addToQuery(queryVariable, proxy, submitQuestion);
       }
     });
   }
@@ -145,10 +131,48 @@ export class QuestionService extends ApolloServiceBase {
             // avatarUrl: user.avatarUrl
           }
         }
+      },
+      update: (proxy, { data: { submitQuestion } }) => {
+        let queryVariable = this.getQueryVariable(this.questions_key, category.id);
+        this.updateQuery(queryVariable, proxy, submitQuestion);
+
+        queryVariable = this.getQueryVariable(this.questions_key, Math.floor(category.id / 100));
+        this.updateQuery(queryVariable, proxy, submitQuestion);
       }
     });
   }
 
+  private addToQuery(queryVariable: any, proxy: DataProxy, submitQuestion: any) {
+    if (queryVariable == null) { return; }
+
+    const q = proxy.readQuery<QuestionListResponse>({ query: QueryQuestions, variables: queryVariable });
+    const values = q.questions;
+    values.splice(0, 0, submitQuestion);
+    proxy.writeQuery({
+      query: QueryQuestions, variables: queryVariable, data: {
+        questions: values,
+        question_count: q.question_count + 1
+      }
+    });
+  }
+
+  private updateQuery(queryVariable: any, proxy: DataProxy, submitQuestion: any) {
+    if (queryVariable == null) { return; }
+
+    const q = proxy.readQuery<QuestionListResponse>({ query: QueryQuestions, variables: queryVariable });
+    const values = q.questions;
+    const foundIndex = values.findIndex(x => x.id === submitQuestion.id);
+    values.splice(foundIndex, 1, submitQuestion);
+    proxy.writeQuery({
+      query: QueryQuestions, variables: queryVariable, data: {
+        questions: values,
+        question_count: q.question_count
+      }
+    });
+  }
+  //#endregion
+
+  //#region Fetch
   getQuestion(id: number) {
     this.intermediaryService.onLoading();
     const retval = this.apollo.watchQuery<QuestionResponse>({
@@ -175,7 +199,7 @@ export class QuestionService extends ApolloServiceBase {
     const retval = this.apollo.watchQuery<QuestionListResponse>({
       query: QueryQuestions,
       variables: variables
-     });
+    });
 
     retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
     return retval;
@@ -202,4 +226,5 @@ export class QuestionService extends ApolloServiceBase {
     retval.then((_) => this.intermediaryService.onLoaded());
     return retval;
   }
+  //#endregion
 }
