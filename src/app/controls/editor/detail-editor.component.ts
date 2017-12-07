@@ -15,11 +15,11 @@ import { User } from '../../models/user.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'detail-view',
-  templateUrl: './detail-view.component.html'
+  selector: 'detail-editor',
+  templateUrl: './detail-editor.component.html'
 })
 
-export class DetailViewComponent implements OnInit, OnChanges {
+export class DetailEditorComponent implements OnInit, OnChanges {
   @Input() data: any;
   @Output() onUpdate = new EventEmitter<any>();
 

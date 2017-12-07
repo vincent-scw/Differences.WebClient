@@ -6,7 +6,8 @@ import { SharedModule } from '../shared/shared.module';
 
 import { EasyQuillEditorComponent } from './editor/ez-quill-editor.component';
 import { ContentPanelComponent } from './editor/content-panel.component';
-import { DetailViewComponent } from './editor/detail-view.component';
+import { DetailEditorComponent } from './editor/detail-editor.component';
+import { DetailViewComponent } from './view/detail-view.component';
 import { PaginationComponent } from './pagination.component';
 import { CategoryPanelComponent } from './category/category-panel.component';
 import { CategoryGroupItemComponent } from './category/category-group-item.component';
@@ -25,6 +26,7 @@ import { NoContentComponent } from './no-content.component';
   declarations: [
     EasyQuillEditorComponent,
     ContentPanelComponent,
+    DetailEditorComponent,
     DetailViewComponent,
     PaginationComponent,
     CategoryPanelComponent,
@@ -38,6 +40,7 @@ import { NoContentComponent } from './no-content.component';
   exports: [
     EasyQuillEditorComponent,
     ContentPanelComponent,
+    DetailEditorComponent,
     DetailViewComponent,
     PaginationComponent,
     CategoryPanelComponent,
