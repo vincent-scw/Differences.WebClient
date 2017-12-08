@@ -1,8 +1,6 @@
 <div *ngIf="question">
   <div>
-    <detail-panel
-      [data]="question"
-      (update)="onUpdateQuestionContent($event)"></detail-panel>
+    <detail-panel [data]="question" (update)="onUpdateQuestionContent($event)"></detail-panel>
   </div>
 </div>
 <br />
@@ -11,8 +9,7 @@
   </div>
   <div class="level-right">
     <p class="control">
-      <a class="button is-success width-100"
-        (click)="expansionPanel.toggle()">我来回答</a>
+      <a class="button is-success width-100" (click)="expansionPanel.toggle()">我来回答</a>
     </p>
   </div>
 </div>
@@ -21,14 +18,19 @@
     <div class="media-content">
       <div class="field">
         <p class="control">
-          <ez-quill-editor
-            [(ngModel)]="myAnswerContent"></ez-quill-editor>
+          <ez-quill-editor [(ngModel)]="myAnswerContent"></ez-quill-editor>
         </p>
       </div>
-      <div class="field">
+      <div class="field is-grouped">
         <p class="control">
-          <a class="button is-link width-100"
-            (click)="submitAnswer()">提交</a>
+          <button md-icon-button (click)="submitAnswer()">
+            <md-icon class="icon-highlight">check</md-icon>
+          </button>
+        </p>
+        <p class="control">
+          <a md-icon-button (click)="expansionPanel.toggle()">
+            <md-icon class="icon-normal">close</md-icon>
+          </a>
         </p>
       </div>
     </div>
@@ -39,12 +41,8 @@
   <no-content></no-content>
 </div>
 <md-list>
-  <div class="item-wrapper"
-    *ngFor="let answer of answers">
-    <content-panel 
-      [data]="answer"
-      (onUpdate)="onUpdateAnswer($event)"
-      (onReply)="onReply($event)"></content-panel>
+  <div class="item-wrapper" *ngFor="let answer of answers">
+    <content-panel [data]="answer" (onUpdate)="onUpdateAnswer($event)" (onReply)="onReply($event)"></content-panel>
   </div>
 </md-list>
 <div *ngIf="isAnswersLoading" class="spinner">
