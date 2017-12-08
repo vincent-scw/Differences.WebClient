@@ -38,8 +38,8 @@ export class DetailEditorComponent implements OnInit, OnChanges {
 
   }
 
-  onSubmit() {
-    this.submit.emit();
+  onSubmit(data: any) {
+    this.submit.emit(data);
   }
 
   onCancel() {
