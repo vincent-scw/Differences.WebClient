@@ -28,4 +28,9 @@ export class DetailPanelComponent implements OnInit {
     const currentUser = this.authService.getUser();
     this.isMe = currentUser != null && currentUser.id === this.data.user.id;
   }
+
+  onSubmit(data: any) {
+    this.update.emit(data);
+    this.isReadonly = true;
+  }
 }

@@ -109,7 +109,8 @@ export class QuestionAnswerService {
             id: user.id,
             displayName: user.displayName,
             // avatarUrl: user.avatarUrl
-          }
+          },
+          subReplies: []
         }
       }
     });

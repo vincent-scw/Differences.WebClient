@@ -122,7 +122,8 @@ export class QuestionService extends ApolloServiceBase {
           id: id,
           title: title,
           content: content,
-          category: category.name,
+          categoryId: category.id,
+          categoryName: category.name,
           createTime: +new Date,
           user: {
             __typename: 'UserType',

@@ -93,7 +93,7 @@ export class AppModule {
       }
 
       if (networkError) {
-        intermediaryService.onError(`[Network error]: ${networkError}`);
+        intermediaryService.onError(`[Network error]: ${JSON.stringify(networkError)}`);
       }
     });
 
