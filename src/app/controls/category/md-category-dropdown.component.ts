@@ -25,10 +25,10 @@ export class MdCategoryDropdownComponent implements OnInit,
   categoryCtrl = new FormControl();
   categoryGroups: CategoryGroup[];
 
-  private innerValue: Category;
+  private innerValue: number;
 
-  onModelChange: Function = (_: any) => {};
-  onModelTouched: Function = () => {};
+  private onModelChange: Function = (_: any) => {};
+  private onModelTouched: Function = () => {};
 
   constructor(private categoryService: CategoryService) {
   }
@@ -42,11 +42,11 @@ export class MdCategoryDropdownComponent implements OnInit,
 
   }
 
-  get selectedCategory(): Category {
+  get selectedCategoryId(): number {
     return this.innerValue;
   }
 
-  set selectedCategory(value: Category) {
+  set selectedCategoryId(value: number) {
     if (this.innerValue !== value) {
       this.innerValue = value;
       this.onModelChange(this.innerValue);
@@ -61,7 +61,7 @@ export class MdCategoryDropdownComponent implements OnInit,
     this.onModelChange(this.innerValue);
   }
 
-  writeValue(value: any) {
+  writeValue(value: number) {
     this.innerValue = value;
   }
 

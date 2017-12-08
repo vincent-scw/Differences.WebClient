@@ -13,7 +13,8 @@ export const fragments = {
       id
       title
       content
-      category
+      categoryId
+      categoryName
       createTime
     }
   `,

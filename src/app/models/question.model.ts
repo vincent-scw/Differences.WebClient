@@ -5,7 +5,8 @@ export interface Question {
   id: number;
   title: string;
   content: string;
-  category: string;
+  categoryId: number;
+  categoryName: string;
   createTime: Date;
   user: User;
 }

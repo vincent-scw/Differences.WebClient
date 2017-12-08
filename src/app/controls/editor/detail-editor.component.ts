@@ -25,13 +25,19 @@ export class DetailEditorComponent implements OnInit, OnChanges {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter();
 
-  newContent: string;
+  private title: string;
+  private categoryId: number;
+  private content: string;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
-    this.newContent = this.data.content;
+    if (this.data != null) {
+      this.title = this.data.title;
+      this.categoryId = this.data.categoryId;
+      this.content = this.data.content;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
