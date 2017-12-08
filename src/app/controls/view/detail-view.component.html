@@ -1,18 +1,15 @@
 <div class="title has-text-weight-semibold" [innerHTML]="data.title | title"></div>
 <div>{{data.categoryName}}</div>
-<div class="content"
-  [(innerHTML)]="data.content">
+<div class="content" [(innerHTML)]="data.content">
 </div>
 
 <nav class="level">
   <div class="level-left"></div>
   <div class="level-right">
-    <a class="level-item" (click)="onEdit()"
-      *ngIf="isCurrentUser">
+    <a mdTooltip="编辑" class="level-item" (click)="onEdit()" *ngIf="isCurrentUser">
       <span class="icon is-small">
         <i class="fa fa-edit"></i>
       </span>
     </a>
   </div>
 </nav>
-    

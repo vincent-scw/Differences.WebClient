@@ -32,13 +32,13 @@
         <div class="level-left"></div>
         <div class="level-right"
           [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'" >
-          <a class="level-item" (click)="onEdit()"
+          <a mdTooltip="编辑" class="level-item" (click)="onEdit()"
             *ngIf="currentUser != null && currentUser.id == data.user.id">
             <span class="icon is-small">
               <i class="fa fa-edit"></i>
             </span>
           </a>
-          <a class="level-item" *ngIf="replyEnabled" (click)="toggleEditPanel()">
+          <a mdTooltip="回复" class="level-item" *ngIf="replyEnabled" (click)="toggleEditPanel()">
             <span class="icon is-small">
               <i class="fa fa-reply"></i>
             </span>

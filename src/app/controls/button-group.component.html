@@ -1,0 +1,12 @@
+<div class="field is-grouped">
+  <p class="control">
+    <button md-icon-button mdTooltip="确定" (click)="onSubmit()" [disabled]="!isValid">
+      <md-icon [class.icon-highlight]="isValid" [class.icon-normal]="!isValid">check</md-icon>
+    </button>
+  </p>
+  <p class="control">
+    <a md-icon-button mdTooltip="取消" (click)="onCancel()">
+      <md-icon class="icon-normal">close</md-icon>
+    </a>
+  </p>
+</div>
