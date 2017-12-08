@@ -43,6 +43,7 @@ import { NoContentComponent } from './no-content.component';
     EasyQuillEditorComponent,
     ContentPanelComponent,
     DetailPanelComponent,
+    DetailEditorComponent,
     PaginationComponent,
     CategoryPanelComponent,
     CategoryGroupItemComponent,

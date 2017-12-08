@@ -11,9 +11,6 @@ import { QuestionService } from '../services/question.service';
 })
 
 export class AskQuestionComponent implements OnInit {
-  title: string;
-  content: string;
-
   constructor(private questionService: QuestionService,
     private router: Router,
     private dialogRef: MdDialogRef<AskQuestionComponent>) {}

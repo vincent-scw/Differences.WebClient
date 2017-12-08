@@ -14,7 +14,7 @@
       </div>
       <detail-view *ngIf="isReadonly" [data]="data" [isCurrentUser]="isMe" 
         (edit)="isReadonly=false"></detail-view>
-      <detail-editor *ngIf="!isReadonly" [data]="data" [isCurrentUser]="isMe"
+      <detail-editor *ngIf="!isReadonly" [data]="data"
         (submit)="onSubmit($event)"
         (cancel)="isReadonly=true"></detail-editor>
     </div>
