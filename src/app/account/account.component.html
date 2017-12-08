@@ -1,8 +1,8 @@
-<div *ngIf='currentUser !== undefined'>
-  <button md-button [mdMenuTriggerFor]="menu" *ngIf="!!currentUser.name">
+<div *ngIf="currentUser != null">
+  <button md-button [mdMenuTriggerFor]="menu">
     <div class="account-button">
-      <ngx-avatar [name]="currentUser.name" size="30"></ngx-avatar>
-      {{ currentUser.name }}
+      <ngx-avatar [name]="currentUser.displayName" size="30"></ngx-avatar>
+      {{ currentUser.displayName }}
     </div>
   </button>
   <md-menu #menu="mdMenu">

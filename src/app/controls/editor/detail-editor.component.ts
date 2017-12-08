@@ -21,16 +21,13 @@ import { User } from '../../models/user.model';
 
 export class DetailEditorComponent implements OnInit, OnChanges {
   @Input() data: any;
-  @Output() onUpdate = new EventEmitter<any>();
-
-  isReadOnly = true;
-
-  currentUser: User;
+  @Input() isCurrentUser: boolean;
+  @Output() submit = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter();
 
   newContent: string;
 
   constructor(private authService: AuthService) {
-    this.currentUser = authService.getUser();
   }
 
   ngOnInit() {
@@ -41,19 +38,11 @@ export class DetailEditorComponent implements OnInit, OnChanges {
 
   }
 
-  onEdit() {
-    this.isReadOnly = false;
-  }
-
   onSubmit() {
-    this.onUpdate.emit({
-      id: this.data.id,
-      content: this.newContent});
-    this.isReadOnly = true;
+    this.submit.emit();
   }
 
   onCancel() {
-    this.isReadOnly = true;
-    this.newContent = this.data.content;
+    this.cancel.emit();
   }
 }
