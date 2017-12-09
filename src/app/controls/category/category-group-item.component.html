@@ -1,7 +1,7 @@
 <li>
   <a class="menu-label"
     (click)="selectionChange(categoryGroup.id); isExpanded=!isExpanded"
-    [class.is-active]="selectedCategoryId != null && categoryGroup.id == selectedCategoryId">
+    [class.is-active]="selectedCategoryId != null && categoryGroup.id === selectedCategoryId">
     <div class="level">
       <span class="level-left">
         {{categoryGroup.name}}
@@ -16,7 +16,7 @@
   <ul class="menu-list">
     <li *ngFor="let category of categoryGroup.categories">
       <a (click)="selectionChange(category.id)"
-        [class.is-active]="selectedCategoryId != null && category.id == selectedCategoryId">
+        [class.is-active]="selectedCategoryId != null && category.id === selectedCategoryId">
         {{category.name}}
       </a>
     </li>

@@ -29,7 +29,7 @@ export class CategoryGroupItemComponent implements OnInit,
   selectedCategoryId?: number;
   isExpanded: boolean;
 
-  onModelChange: Function = (_: any) => {};
+  onModelChange: Function = (_: number) => {};
   onModelTouched: Function = () => {};
 
   constructor(private categoryService: CategoryService) {
@@ -50,7 +50,7 @@ export class CategoryGroupItemComponent implements OnInit,
     });
   }
 
-  writeValue(value: any) {
+  writeValue(value: number) {
     this.selectedCategoryId = value;
   }
 
@@ -63,6 +63,7 @@ export class CategoryGroupItemComponent implements OnInit,
   }
 
   selectionChange(categoryId: number) {
+    this.categoryService.setSelectedCategory(categoryId);
     this.onModelChange(categoryId);
   }
 }
