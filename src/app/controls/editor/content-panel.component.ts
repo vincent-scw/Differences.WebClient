@@ -23,8 +23,8 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   @Input() data: any;
   @Input() replyEnabled = true;
   @Input() alwaysShowActionbar = true;
-  @Output() onUpdate = new EventEmitter<any>();
-  @Output() onReply = new EventEmitter<any>();
+  @Output() update = new EventEmitter<any>();
+  @Output() reply = new EventEmitter<any>();
 
   showStatusBar: boolean;
   showEditPanel: boolean;
@@ -52,7 +52,7 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    this.onUpdate.emit({
+    this.update.emit({
       id: this.data.id,
       content: this.newContent});
     this.isReadOnly = true;
@@ -64,7 +64,7 @@ export class ContentPanelComponent implements OnInit, OnChanges {
   }
 
   onReplySubmit() {
-    this.onReply.emit({
+    this.reply.emit({
       parentId: this.data.id,
       content: this.myReplyContent
     });

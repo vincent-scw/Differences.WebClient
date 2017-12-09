@@ -31,7 +31,7 @@
 </div>
 <md-list>
   <div class="item-wrapper" *ngFor="let answer of answers">
-    <content-panel [data]="answer" (onUpdate)="onUpdateAnswer($event)" (onReply)="onReply($event)"></content-panel>
+    <content-panel [data]="answer" (update)="onUpdateAnswer($event)" (reply)="onReply($event)"></content-panel>
   </div>
 </md-list>
 <div *ngIf="isAnswersLoading" class="spinner">

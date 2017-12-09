@@ -73,6 +73,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   onReply(data: any): void {
-
+    this.questionAnswerService.addAnswer(this.id, data.parentId, data.content)
+      .subscribe((_) => {});
   }
 }
