@@ -13,7 +13,6 @@ import { PaginationComponent } from './pagination.component';
 import { CategoryPanelComponent } from './category/category-panel.component';
 import { CategoryGroupItemComponent } from './category/category-group-item.component';
 import { CategoryDropdownComponent } from './category/category-dropdown.component';
-import { MdCategoryDropdownComponent } from './category/md-category-dropdown.component';
 import { SearchBoxComponent } from './search-box.component';
 import { TagsEditorComponent } from './editor/tags-editor.component';
 import { NoContentComponent } from './no-content.component';
@@ -35,7 +34,6 @@ import { ButtonGroupComponent } from './button-group.component';
     CategoryPanelComponent,
     CategoryGroupItemComponent,
     CategoryDropdownComponent,
-    MdCategoryDropdownComponent,
     SearchBoxComponent,
     TagsEditorComponent,
     NoContentComponent,
@@ -50,7 +48,6 @@ import { ButtonGroupComponent } from './button-group.component';
     CategoryPanelComponent,
     CategoryGroupItemComponent,
     CategoryDropdownComponent,
-    MdCategoryDropdownComponent,
     SearchBoxComponent,
     TagsEditorComponent,
     NoContentComponent,

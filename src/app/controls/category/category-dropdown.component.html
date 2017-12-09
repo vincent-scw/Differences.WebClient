@@ -1,19 +1,9 @@
-<div class="control dropdown" tabindex="1" 
-  (blur)="isActive = false"
-  [class.is-active]="isActive">
-  <span class="dropdown-trigger">
-    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"
-      (click)="isActive = !isActive">
-      <span>{{selectedCategory.value == null ? '类目': selectedCategory.value.name}}</span>
-      <span class="icon is-small">
-        <i [class]="isActive ? 'fa fa-angle-up': 'fa fa-angle-down'" 
-          aria-hidden="true"></i>
-      </span>
-    </button>
-  </span>
-  <div class="dropdown-menu" id="dropdown-menu" role="menu">
-    <div class="dropdown-content">
-      <category-panel></category-panel>
-    </div>
-  </div>
-</div>
+<md-select placeholder="类别" [formControl]="categoryCtrl"
+  [(value)]="selectedCategoryId">
+  <md-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
+    <md-option *ngFor="let category of group.categories"
+      [value]="category.id">
+      {{category.name}}
+    </md-option>
+  </md-optgroup>
+</md-select>
