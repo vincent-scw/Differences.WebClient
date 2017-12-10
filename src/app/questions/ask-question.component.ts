@@ -22,7 +22,7 @@ export class AskQuestionComponent implements OnInit {
     this.questionService.askQuestion(
       values.title,
       values.content,
-      values.category
+      { id: values.categoryId, name: ''}
     )
     .subscribe(({ data }) => {
       this.router.navigateByUrl('/questions');

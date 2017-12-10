@@ -66,7 +66,7 @@ export class QuestionDetailComponent implements OnInit {
       .subscribe((_) => {});
   }
 
-  onUpdateQuestionContent(data: any): void {
+  onUpdateQuestion(data: any): void {
     this.questionService.updateQuestion(data.id, data.title,
       data.content, {id: data.categoryId, name: ''})
       .subscribe((_) => {});

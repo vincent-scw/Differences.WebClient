@@ -1,8 +1,8 @@
 <div class="field is-grouped">
   <p class="control">
-    <button md-icon-button mdTooltip="确定" (click)="onSubmit()" [disabled]="!isValid">
+    <a md-icon-button mdTooltip="确定" (click)="onSubmit()" [disabled]="!isValid">
       <md-icon [class.icon-highlight]="isValid" [class.icon-normal]="!isValid">check</md-icon>
-    </button>
+    </a>
   </p>
   <p class="control">
     <a md-icon-button mdTooltip="取消" (click)="onCancel()">

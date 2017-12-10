@@ -3,9 +3,7 @@
     <ngx-avatar [name]="data.user.displayName" size="40"></ngx-avatar>
   </figure>
   <div class="media-content">
-    <div class="content"
-      (mouseover)="showStatusBar=true"
-      (mouseout)="showStatusBar=false">
+    <div class="content">
       <div class="level">
         <div class="level-left">
           <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
