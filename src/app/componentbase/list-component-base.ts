@@ -49,7 +49,7 @@ export abstract class ListComponentBase implements OnInit {
     });
   }
 
-  onPaging() {
+  onPaging(data: any) {
     if (this.pagination.offset + this.pagination.limit >= this.queryData.length
       && this.pagination.totalCount !== this.queryData.length) {
       this.fetchMore();

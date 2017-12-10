@@ -21,10 +21,10 @@ export class DetailEditorComponent implements OnInit, OnChanges {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter();
 
-  private id: number;
-  private title: string;
-  private categoryId: number;
-  private content: string;
+  id: number;
+  title: string;
+  categoryId: number;
+  content: string;
 
   constructor() {
   }

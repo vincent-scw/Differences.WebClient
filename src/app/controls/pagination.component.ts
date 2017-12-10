@@ -12,9 +12,9 @@ export class PaginationComponent {
   @Input() totalCount: number;
   @Output() pageChange = new EventEmitter();
 
-  private dataOffset = 0;
-  private pSize = 15;
-  private pIndex = 0;
+  dataOffset = 0;
+  pSize = 15;
+  pIndex = 0;
 
   get offset() {
     return this.dataOffset;
