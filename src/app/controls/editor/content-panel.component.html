@@ -20,11 +20,11 @@
         *ngIf="isReadOnly == false">
       </ez-quill-editor>
       <div class="action-bar" *ngIf="!isReadOnly">
-        <button md-icon-button (click)="onSubmit()">
-          <md-icon class="icon-highlight">check</md-icon>
+        <button mat-icon-button (click)="onSubmit()">
+          <mat-icon class="icon-highlight">check</mat-icon>
         </button>
-        <button md-icon-button (click)="onCancel()">
-          <md-icon class="icon-normal">close</md-icon>
+        <button mat-icon-button (click)="onCancel()">
+          <mat-icon class="icon-normal">close</mat-icon>
         </button>
       </div>
 
@@ -64,11 +64,11 @@
         [(ngModel)]="myReplyContent">
       </textarea>
       <div class="action-bar">
-        <button md-icon-button (click)="onReplySubmit()">
-          <md-icon class="icon-highlight">check</md-icon>
+        <button mat-icon-button (click)="onReplySubmit()">
+          <mat-icon class="icon-highlight">check</mat-icon>
         </button>
-        <button md-icon-button (click)="toggleEditPanel()">
-          <md-icon class="icon-normal">close</md-icon>
+        <button mat-icon-button (click)="toggleEditPanel()">
+          <mat-icon class="icon-normal">close</mat-icon>
         </button>
       </div>
     </div>

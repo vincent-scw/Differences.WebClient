@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationNode } from '../models/navigation.model';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-top-bar',
@@ -22,7 +22,7 @@ export class TopBarComponent {
     // }
   ];
 
-  constructor(private dialog: MdDialog,
+  constructor(private dialog: MatDialog,
     private location: Location) {
 
   }

@@ -1,14 +1,14 @@
-<md-form-field class="full-width">
-  <md-chip-list #chipList>
-    <md-chip *ngFor="let tag of tags" [selectable]="selectable"
+<mat-form-field class="full-width">
+  <mat-chip-list #chipList>
+    <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
       [removable]="removable" (remove)="remove(tag)">
       {{tag.name}}
-      <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
-    </md-chip>
-    <input placeholder="标签" mdInput
-      [mdChipInputFor]="chipList"
-      [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [mdChipInputAddOnBlur]="addOnBlur"
-      (mdChipInputTokenEnd)="add($event)" />
-  </md-chip-list>
-</md-form-field>
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+    <input placeholder="标签" matInput
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)" />
+  </mat-chip-list>
+</mat-form-field>

@@ -1,6 +1,6 @@
-import { MdPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material';
 
-export class CustmizedPaginatorIntl extends MdPaginatorIntl {
+export class CustmizedPaginatorIntl extends MatPaginatorIntl {
   itemsPerPageLabel = '每页显示数';
   nextPageLabel = '下一页';
   previousPageLabel = '上一页';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -34,7 +34,7 @@ export class AccountComponent implements OnInit {
   }
 
   constructor(
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private authService: AuthService) {}
 
   onSignClicked(): void {

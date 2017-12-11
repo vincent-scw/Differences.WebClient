@@ -2,11 +2,11 @@
   <input hidden name="id" [(ngModel)]="id">
   <div class="field">
     <div class="control">
-      <md-form-field class="full-width form-control">
-        <input mdInput required #inputTitle name="title" maxlength="100" [(ngModel)]="title" placeholder="标题（用大括号标记比对项）">
-        <md-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}我{{ '}' }}之间有什么不同？</md-hint>
-        <md-hint align="end">{{inputTitle.value?.length || 0}} / 100</md-hint>
-      </md-form-field>
+      <mat-form-field class="full-width form-control">
+        <input matInput required #inputTitle name="title" maxlength="100" [(ngModel)]="title" placeholder="标题（用大括号标记比对项）">
+        <mat-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}我{{ '}' }}之间有什么不同？</mat-hint>
+        <mat-hint align="end">{{inputTitle.value?.length || 0}} / 100</mat-hint>
+      </mat-form-field>
     </div>
   </div>
   <br />

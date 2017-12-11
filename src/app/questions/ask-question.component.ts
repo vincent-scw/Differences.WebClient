@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 import { QuestionService } from '../services/question.service';
 
@@ -13,7 +13,7 @@ import { QuestionService } from '../services/question.service';
 export class AskQuestionComponent implements OnInit {
   constructor(private questionService: QuestionService,
     private router: Router,
-    private dialogRef: MdDialogRef<AskQuestionComponent>) {}
+    private dialogRef: MatDialogRef<AskQuestionComponent>) {}
 
   ngOnInit() {
   }

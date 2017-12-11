@@ -1,5 +1,11 @@
 {
   "compileOnSave": false,
+  "include": [
+    "src/**/*",
+    "node_modules/ngx-quill-editor/quillEditor.component.ts",
+    "node_modules/ngx-quill-editor/quillEditor.module.ts",
+    "node_modules/ngx-quill-editor/index.ts"
+  ],
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

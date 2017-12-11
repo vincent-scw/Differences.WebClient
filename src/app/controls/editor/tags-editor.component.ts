@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MdChipInputEvent } from '@angular/material';
-import { ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,13 +15,13 @@ export class TagsEditorComponent {
   addOnBlur = true;
 
   // Enter, --comma
-  separatorKeysCodes = [ENTER];
+  separatorKeysCodes = [ENTER, COMMA];
 
   tags = [
   ];
 
 
-  add(event: MdChipInputEvent): void {
+  add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 

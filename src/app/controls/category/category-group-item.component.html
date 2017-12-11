@@ -12,7 +12,7 @@
     </div>
   </a>
 </li>
-<md-expansion-panel [expanded]="isExpanded">
+<mat-expansion-panel [expanded]="isExpanded">
   <ul class="menu-list">
     <li *ngFor="let category of categoryGroup.categories">
       <a (click)="selectionChange(category.id)"
@@ -21,4 +21,4 @@
       </a>
     </li>
   </ul>
-</md-expansion-panel>
+</mat-expansion-panel>

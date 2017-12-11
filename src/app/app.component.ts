@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 import { NavigationNode } from './models/navigation.model';
 import { Router,
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   constructor(
     private intermediaryService: IntermediaryService,
     private router: Router,
-    private snackBar: MdSnackBar) {
+    private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {

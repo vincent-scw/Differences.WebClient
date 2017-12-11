@@ -13,7 +13,7 @@
     </p>
   </div>
 </div>
-<md-expansion-panel #expansionPanel>
+<mat-expansion-panel #expansionPanel>
   <article class="media">
     <div class="media-content">
       <div class="field">
@@ -24,16 +24,16 @@
       <button-group (submit)="submitAnswer()" (cancel)="expansionPanel.toggle()" [isValid]="true"></button-group>
     </div>
   </article>
-</md-expansion-panel>
+</mat-expansion-panel>
 <hr />
 <div *ngIf="isEmpty">
   <no-content></no-content>
 </div>
-<md-list>
+<mat-list>
   <div class="item-wrapper" *ngFor="let answer of answers">
     <content-panel [data]="answer" (update)="onUpdateAnswer($event)" (reply)="onReply($event)"></content-panel>
   </div>
-</md-list>
+</mat-list>
 <div *ngIf="isAnswersLoading" class="spinner">
-  <md-spinner (color)="accent"></md-spinner>
+  <mat-spinner (color)="accent"></mat-spinner>
 </div>

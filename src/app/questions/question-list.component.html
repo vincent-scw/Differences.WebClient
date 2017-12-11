@@ -2,13 +2,13 @@
   <no-content></no-content>
 </div>
 
-<md-list>
+<mat-list>
   <div *ngFor="let question of data">
     <app-question-item
       class="list-item"
       [item]="question"></app-question-item>
     <hr />
   </div>
-</md-list>
+</mat-list>
 
 <pagination [totalCount]="count" (pageChange)="onPaging($event)"></pagination>
