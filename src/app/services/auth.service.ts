@@ -1,4 +1,4 @@
-///<reference path="../../../node_modules/msal/out/msal.d.ts" />
+import { UserAgentApplication } from 'msal';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -39,7 +39,7 @@ export class AuthService {
   /*
     * B2C SignIn SignUp Policy Configuration
     */
-  clientApplication = new Msal.UserAgentApplication(
+  clientApplication = new UserAgentApplication(
     this.authSettings.clientId, this.authority,
     function (errorDesc: any, token: any, error: any, tokenType: any) {
         // Called after loginRedirect or acquireTokenPopup
