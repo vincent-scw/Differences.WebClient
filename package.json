@@ -65,12 +65,7 @@
     "karma-jasmine": "^1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-remap-istanbul": "^0.6.0",
-    "lite-server": "^2.3.0",
     "protractor": "~5.2.1",
-    "rollup": "^0.52.1",
-    "rollup-plugin-commonjs": "^8.2.1",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^2.0.1",
     "ts-node": "~4.0.1",
     "tslint": "~5.8.0",
     "typescript": "^2.5.2"
