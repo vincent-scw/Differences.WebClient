@@ -99,7 +99,14 @@ export class AppModule {
 
     apollo.create({
       link: errorlink.concat(auth).concat(http),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        dataIdFromObject: object => {
+          const o = object as any;
+          if (o.__typename != null && o.id != null) {
+            return `${o.__typename}_${o.id}`;
+          }
+        }
+      }),
       ssrMode: true
     });
   }

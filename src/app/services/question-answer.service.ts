@@ -16,7 +16,10 @@ mutation differencesMutation($answer: ReplyInput!) {
       ...UserInfo
     }
     subReplies {
-      id
+      ...AnswerInfo
+      user {
+        ...UserInfo
+      }
     }
   }
 }
@@ -32,12 +35,10 @@ query question_answers($questionId: Int!) {
       ...UserInfo
     }
     subReplies {
-      id
-      content
+      ...AnswerInfo
       user {
         ...UserInfo
       }
-      createTime
     }
   }
 }
@@ -67,6 +68,7 @@ export class QuestionAnswerService {
         submitAnswer: {
           __typename: 'AnswerType',
           id: -1,
+          parentId: parentId,
           content: content,
           createTime: +new Date,
           user: {
@@ -79,10 +81,31 @@ export class QuestionAnswerService {
         }
       },
       update: (proxy, { data: { submitAnswer } }) => {
-        const variables = { questionId: questionId };
-        const data = proxy.readQuery<AnswerListResponse>({ query: QueryQuestionAnswers, variables: variables });
-        data.question_answers.splice(0, 0, submitAnswer);
-        proxy.writeQuery({ query: QueryQuestionAnswers, variables: variables, data });
+        if (parentId != null) {
+          const key = 'AnswerType_' + parentId.toString();
+          const fm = gql`fragment answer on AnswerType {
+            subReplies {
+              id
+              content
+              createTime
+            }
+          }`;
+
+          const found = proxy.readFragment<any>({ id: key, fragment: fm });
+          if (found != null) {
+            proxy.writeFragment({
+              id: key, fragment: fm, data: {
+                __typename: 'AnswerType',
+                subReplies: [...found.subReplies, submitAnswer]
+              }
+            });
+          }
+        } else {
+          const variables = { questionId: questionId };
+          const data = proxy.readQuery<AnswerListResponse>({ query: QueryQuestionAnswers, variables: variables });
+          data.question_answers.splice(0, 0, submitAnswer);
+          proxy.writeQuery({ query: QueryQuestionAnswers, variables: variables, data });
+        }
       }
     });
   }
