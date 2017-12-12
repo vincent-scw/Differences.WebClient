@@ -26,12 +26,12 @@
       <nav class="level" *ngIf="isReadOnly">
         <div class="level-left"></div>
         <div class="level-right" [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'">
-          <a mdTooltip="编辑" class="level-item" (click)="onEdit()" *ngIf="currentUser != null && currentUser.id == data.user.id">
+          <a matTooltip="编辑" class="level-item" (click)="onEdit()" *ngIf="currentUser != null && currentUser.id == data.user.id">
             <span class="icon is-small">
               <i class="fa fa-edit"></i>
             </span>
           </a>
-          <a mdTooltip="回复" class="level-item" *ngIf="replyEnabled" (click)="toggleEditPanel()">
+          <a matTooltip="回复" class="level-item" *ngIf="replyEnabled" (click)="toggleEditPanel()">
             <span class="icon is-small">
               <i class="fa fa-reply"></i>
             </span>
@@ -45,13 +45,14 @@
       </nav>
     </div>
 
-    <div *ngIf="data.subReplies != null && data.subReplies.length > 0">
-      <div *ngFor="let sub of data.subReplies">
-        <div class="level item-wrapper">
-          <div class="level-left">
-            <a [routerLink]="['/users', sub.user.id]">{{sub.user.displayName}}</a>：
-            <div class="content" [(innerHTML)]="sub.content">
-            </div>
+    <div *ngIf="data.subReplies != null && data.subReplies.length > 0" class="box">
+      <div *ngFor="let sub of data.subReplies" class="level">
+        <div class="level-left">
+          <span class="icon is-small sub-item-icon">
+            <i class="far fa-hand-point-right"></i>
+          </span>
+          <a [routerLink]="['/users', sub.user.id]">{{sub.user.displayName}}</a>：
+          <div class="content" [(innerHTML)]="sub.content">
           </div>
         </div>
       </div>

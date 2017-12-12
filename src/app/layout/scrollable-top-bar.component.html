@@ -3,10 +3,13 @@
     <div class="navbar-start">
       <div class="navbar-item">
         <div class="field is-grouped">
-          <a mat-icon-button mdTooltip="后退" (click)="goBack()">
+          <a mat-icon-button matTooltip="主页" (click)="home()">
+            <mat-icon>home</mat-icon>
+          </a>
+          <a mat-icon-button matTooltip="后退" (click)="goBack()">
             <mat-icon>arrow_back</mat-icon>
           </a>
-          <a mat-icon-button mdTooltip="刷新" (click)="refresh()">
+          <a mat-icon-button matTooltip="刷新" (click)="refresh()">
             <mat-icon>refresh</mat-icon>
           </a>
         </div>

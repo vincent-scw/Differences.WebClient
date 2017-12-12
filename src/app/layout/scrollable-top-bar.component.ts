@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 import { IntermediaryService } from '../services/intermediary.service';
 
@@ -14,13 +15,18 @@ import { AskQuestionComponent } from '../questions/ask-question.component';
 export class ScrollableTopBarComponent {
   constructor(private dialog: MatDialog,
     private location: Location,
-    private intermediaryService: IntermediaryService) {
+    private intermediaryService: IntermediaryService,
+    private router: Router) {
 
   }
 
   askQuestion(): void {
     this.dialog.open(AskQuestionComponent, {
     });
+  }
+
+  home(): void {
+    this.router.navigateByUrl('/questions');
   }
 
   goBack(): void {
