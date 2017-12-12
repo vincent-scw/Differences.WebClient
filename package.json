@@ -10,9 +10,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build:aot": "ngc -p tsconfig-aot.json && rollup -c rollup-config.js",
-    "serve:aot": "lite-server -c bs-config.aot.json"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
