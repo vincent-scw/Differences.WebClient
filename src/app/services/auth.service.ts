@@ -31,8 +31,8 @@ export class AuthService {
    * Scheduling of the refresh token.
    */
   private refreshSubscription: any;
+  private isRefreshingToken: boolean;
 
-  isAuthenticated = false;
   authSettings = Config.AUTH_SETTINGS;
 
   authority: string = 'https://login.microsoftonline.com/tfp/'
@@ -68,6 +68,9 @@ export class AuthService {
         };
         this.storeUser(user);
         this.user.next(user);
+        if (!this.isRefreshingToken) {
+          this.refreshToken();
+        }
       }, (error: any) => {
         this.intermediaryService.onError('登录发生错误:\n' + error);
       });
@@ -108,11 +111,13 @@ export class AuthService {
   }
 
   private refreshToken(): void {
+    if (this.isRefreshingToken) { return; }
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
       (accessToken: any) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
         this.checkUserInDb();
         this.scheduleRefresh();
+        this.isRefreshingToken = false;
       }, (error: any) => {
         console.warn(error);
         this.clientApplication.acquireTokenPopup(this.authSettings.scopes).then(
@@ -120,14 +125,29 @@ export class AuthService {
             localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
             this.checkUserInDb();
             this.scheduleRefresh();
+            this.isRefreshingToken = false;
           }, (ex: any) => {
-            this.intermediaryService.onError('未能打开登录弹出窗口:\n' + ex);
+            this.intermediaryService.onError('无法成功获取访问权限:\n' + ex);
           });
       });
   }
 
   public isValid(): boolean {
     return this.tokenNotExpired();
+  }
+
+  public isAuthenticated(role?: string): boolean {
+    const userInfo = localStorage.getItem(USER_INFO_KEY);
+    return userInfo != null && this.isValid();
+  }
+
+  public forceAuthenticated(role?: string): boolean {
+    if (!this.isAuthenticated(role)) {
+      this.login();
+      return false;
+    }
+
+    return true;
   }
 
   /**

@@ -9,6 +9,7 @@ import { QueryRef } from 'apollo-angular';
 import { QuestionService } from '../services/question.service';
 import { QuestionAnswerService } from '../services/question-answer.service';
 import { IntermediaryService } from '../services/intermediary.service';
+import { AuthService } from '../services/auth.service';
 
 import { Answer } from '../models/answer.model';
 import { Question } from '../models/question.model';
@@ -34,6 +35,7 @@ export class QuestionDetailComponent implements OnInit {
     private questionService: QuestionService,
     private questionAnswerService: QuestionAnswerService,
     private intermediaryService: IntermediaryService,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) { }
 
@@ -65,6 +67,7 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   submitAnswer(): void {
+    if (!this.authService.forceAuthenticated()) { return; }
     this.questionAnswerService.addAnswer(this.id, null, this.myAnswerContent)
       .subscribe((data) => {
         this.myAnswerContent = null;
@@ -72,16 +75,19 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   onUpdateAnswer(data: any): void {
+    if (!this.authService.forceAuthenticated()) { return; }
     this.questionAnswerService.updateAnswer(data.id, data.content).toPromise();
   }
 
   onUpdateQuestion(data: any): void {
+    if (!this.authService.forceAuthenticated()) { return; }
     this.questionService.updateQuestion(data.id, data.title,
       data.content, { id: data.categoryId, name: '' })
       .toPromise();
   }
 
   onReply(data: any): void {
+    if (!this.authService.forceAuthenticated()) { return; }
     this.questionAnswerService.addAnswer(this.id, data.parentId, data.content)
       .toPromise();
   }

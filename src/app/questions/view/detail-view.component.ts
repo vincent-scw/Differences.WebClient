@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { Question } from '../../models/question.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -10,7 +11,7 @@ import { User } from '../../models/user.model';
 })
 
 export class DetailViewComponent implements OnInit {
-  @Input() data: any;
+  @Input() data: Question;
   @Input() isCurrentUser: boolean;
   @Output() edit = new EventEmitter<any>();
 

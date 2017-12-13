@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { IntermediaryService } from '../services/intermediary.service';
+import { AuthService } from '../services/auth.service';
 
 import { AskQuestionComponent } from '../questions/ask-question.component';
 
@@ -16,11 +17,13 @@ export class ScrollableTopBarComponent {
   constructor(private dialog: MatDialog,
     private location: Location,
     private intermediaryService: IntermediaryService,
+    private authService: AuthService,
     private router: Router) {
 
   }
 
   askQuestion(): void {
+    if (!this.authService.forceAuthenticated()) { return; }
     this.dialog.open(AskQuestionComponent, {
     });
   }
