@@ -6,6 +6,7 @@ import { Component,
 
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { Question } from '../../models/question.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,8 +15,8 @@ import { User } from '../../models/user.model';
 })
 
 export class DetailPanelComponent implements OnInit {
-  @Input() data: any;
-  @Output() update = new EventEmitter<any>();
+  @Input() data: Question;
+  @Output() update = new EventEmitter<Question>();
 
   isReadonly = true;
   isMe: boolean;
@@ -29,7 +30,7 @@ export class DetailPanelComponent implements OnInit {
     this.isMe = currentUser != null && currentUser.id === this.data.user.id;
   }
 
-  onSubmit(data: any) {
+  onSubmit(data: Question) {
     this.update.emit(data);
     this.isReadonly = true;
   }

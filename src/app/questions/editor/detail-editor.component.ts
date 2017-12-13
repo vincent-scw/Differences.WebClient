@@ -9,6 +9,7 @@ import { Component,
   ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Question } from '../../models/question.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,8 +18,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 })
 
 export class DetailEditorComponent implements OnInit, OnChanges {
-  @Input() data: any;
-  @Output() submit = new EventEmitter<any>();
+  @Input() data: Question;
+  @Output() submit = new EventEmitter<Question>();
   @Output() cancel = new EventEmitter();
 
   id: number;
@@ -42,7 +43,7 @@ export class DetailEditorComponent implements OnInit, OnChanges {
 
   }
 
-  onSubmit(data: any) {
+  onSubmit(data: Question) {
     this.submit.emit(data);
   }
 

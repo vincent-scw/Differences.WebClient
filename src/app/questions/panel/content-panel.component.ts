@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
+import { Question } from '../../models/question.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -20,7 +21,7 @@ import { User } from '../../models/user.model';
 })
 
 export class ContentPanelComponent implements OnInit, OnChanges {
-  @Input() data: any;
+  @Input() data: Question;
   @Input() replyEnabled = true;
   @Input() alwaysShowActionbar = true;
   @Output() update = new EventEmitter<any>();
