@@ -6,9 +6,8 @@ import gql from 'graphql-tag';
 
 import { IdName } from '../models/id-name.model';
 import { Category, CategoryGroup, CategoryGroupResponse } from '../models/category.model';
-import { BrowserStorage } from './browser-storage.service';
 
-const selected_category_key = 'selected_category';
+const SELECTED_CATEGORY_KEY = 'selected_category';
 
 @Injectable()
 export class CategoryService {
@@ -33,7 +32,7 @@ export class CategoryService {
 
   selectedCategory = new BehaviorSubject<IdName>(this.getSelectedCategory());
 
-  constructor(private browserStorage: BrowserStorage,
+  constructor(
     private apollo: Apollo) {
       this.getCategoryDefinition().subscribe(({data}) => {
         this.cgList = data.category_definition;
@@ -61,17 +60,18 @@ export class CategoryService {
   setSelectedCategory(categoryId: number) {
     const found = this.categories.find(obj => obj.id === categoryId);
     if (found === undefined) {
-      console.log('Category cannot be found');
+      console.error('Category cannot be found');
       return;
     }
 
-    this.browserStorage.set(selected_category_key, JSON.stringify(found));
+    localStorage.setItem(SELECTED_CATEGORY_KEY, JSON.stringify(found));
     this.selectedCategory.next(found);
   }
 
   getSelectedCategory(): IdName {
-    return this.browserStorage.get(selected_category_key)
-      ? JSON.parse(this.browserStorage.get(selected_category_key))
-      : this.categories[0];
+    const localCategory = localStorage.getItem(SELECTED_CATEGORY_KEY);
+    return localCategory == null
+      ? this.categories[0]
+      : JSON.parse(localCategory);
   }
 }

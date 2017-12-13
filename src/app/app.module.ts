@@ -13,7 +13,7 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
 
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './layout/layout.module';
@@ -25,7 +25,6 @@ import { UsersModule } from './users/users.module';
 import { AuthService } from './services/auth.service';
 import { IntermediaryService } from './services/intermediary.service';
 import { CategoryService } from './services/category.service';
-import { BrowserStorage } from './services/browser-storage.service';
 
 import { AppComponent } from './app.component';
 import { Config } from './config';
@@ -54,8 +53,7 @@ import { from } from 'apollo-link';
     JwtHelper,
     AuthService,
     IntermediaryService,
-    CategoryService,
-    BrowserStorage
+    CategoryService
   ],
   bootstrap: [AppComponent]
 })
@@ -71,7 +69,7 @@ export class AppModule {
     const auth = setContext((_, { headers }) => {
       // get the authentication token from local storage if it exists
       const token = localStorage.getItem('access_token');
-      if (!token) {
+      if (!token || !tokenNotExpired(null, token)) {
         return {};
       } else {
         if (headers == null) {

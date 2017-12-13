@@ -2,21 +2,24 @@ import { UserAgentApplication } from 'msal';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
 
 import { Config } from '../config';
 import { User } from '../models/user.model';
-import { BrowserStorage } from './browser-storage.service';
 import { UserService } from './user.service';
+import { IntermediaryService } from './intermediary.service';
+
+const ACCESS_TOKEN_KEY = 'access_token';
+const USER_INFO_KEY = 'user_info';
+const USER_ID_KEY = 'user_id';
+const MSAL_ID_TOKEN_KEY = 'msal.idtoken';
 
 @Injectable()
 export class AuthService {
-  signinStatus = new BehaviorSubject<boolean>(this.tokenNotExpired());
   user = new BehaviorSubject<User>(this.getUser());
-
   /**
    * Token info.
    */
@@ -41,46 +44,55 @@ export class AuthService {
     */
   clientApplication = new UserAgentApplication(
     this.authSettings.clientId, this.authority,
-    function (errorDesc: any, token: any, error: any, tokenType: any) {
-        // Called after loginRedirect or acquireTokenPopup
+    (errorDesc: any, token: any, error: any, tokenType: any) => {
+      // Called after loginRedirect or acquireTokenPopup
     }
   );
 
-  constructor(private browserStorage: BrowserStorage,
+  constructor(
     private jwtHelper: JwtHelper,
-    private userService: UserService) {
+    private userService: UserService,
+    private intermediaryService: IntermediaryService) {
 
   }
 
   public login(): void {
-    const _this = this;
     this.clientApplication.loginPopup(this.authSettings.scopes)
-      .then(function (idToken: any) {
-        console.log(JSON.stringify(idToken));
-        const fromToken = _this.jwtHelper.decodeToken(idToken);
-
-        _this.interval = fromToken.exp - fromToken.auth_time - 60;
-        _this.scheduleRefresh();
-      }, function (error: any) {
-        console.log('Error during login:\n' + error);
-    });
+      .then((idToken: any) => {
+        const fromToken = this.jwtHelper.decodeToken(idToken);
+        const user: User = {
+          id: fromToken.oid,
+          displayName: fromToken.name,
+          // jobTitle = fromToken.jobTitle;
+          emails: fromToken.emails
+        };
+        this.storeUser(user);
+        this.user.next(user);
+      }, (error: any) => {
+        this.intermediaryService.onError('登录发生错误:\n' + error);
+      });
   }
 
   public logout() {
     this.clientApplication.logout();
-    this.browserStorage.remove('user_id');
-    this.browserStorage.remove('user_info');
-    this.signinStatus.next(false);
+    localStorage.removeItem(USER_ID_KEY);
+    localStorage.removeItem(USER_INFO_KEY);
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.user.next(null);
     // Unschedules the refresh token.
     this.unscheduleRefresh();
   }
 
   public scheduleRefresh(): void {
-    const expires = this.getExpiry();
+    // No user logged in, return
+    if (this.getUser() == null) { return; }
+
+    const expireDate = this.getExpiryDate();
+    const expires = expireDate == null ? 0 : expireDate.getTime();
     const dateNow = Date.now();
-    let diff = expires < dateNow ? 0 : expires - dateNow;
-    if (this.getUser() === undefined) { diff = 0; }
+    // If the token is expired, refresh it now
+    // Otherwise schedule refresh untill one min before expire
+    const diff = expires < dateNow ? 0 : expires - dateNow - 60000;
 
     this.refreshSubscription = Observable.timer(diff)
       .subscribe(() => this.refreshToken());
@@ -90,102 +102,70 @@ export class AuthService {
    * Unsubscribes from the scheduling of the refresh token.
    */
   public unscheduleRefresh(): void {
-      if (this.refreshSubscription) {
-          this.refreshSubscription.unsubscribe();
-      }
+    if (this.refreshSubscription) {
+      this.refreshSubscription.unsubscribe();
+    }
   }
 
   private refreshToken(): void {
-    const _this = this;
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
-        function (accessToken: any) {
-          _this.storeToken(accessToken);
-          _this.scheduleRefresh();
-        }, function (error: any) {
-          console.log(error);
-          _this.clientApplication.acquireTokenPopup(_this.authSettings.scopes).then(
-            function (accessToken: any) {
-              _this.storeToken(accessToken);
-              _this.scheduleRefresh();
-            }, function (ex: any) {
-                console.log('Error acquiring the popup:\n' + ex);
-            });
-        });
+      (accessToken: any) => {
+        localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+        this.checkUserInDb();
+        this.scheduleRefresh();
+      }, (error: any) => {
+        console.warn(error);
+        this.clientApplication.acquireTokenPopup(this.authSettings.scopes).then(
+          (accessToken: any) => {
+            localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+            this.checkUserInDb();
+            this.scheduleRefresh();
+          }, (ex: any) => {
+            this.intermediaryService.onError('未能打开登录弹出窗口:\n' + ex);
+          });
+      });
   }
 
-  /**
-   * Checks if user is signed in.
-   */
-  public isSignedIn(): BehaviorSubject<boolean> {
-      return this.signinStatus;
-  }
-
-  private setAuthenticated(accessToken: string) {
-    // Update the UI.
-    this.isAuthenticated = true;
-
-    // this.identity = Msal.Utils.extractIdToken(accessToken) as AuthIdentity;
-    // this.identity.displayName = this.identity.given_name + ' ' + this.identity.family_name;
+  public isValid(): boolean {
+    return this.tokenNotExpired();
   }
 
   /**
    * Checks for presence of token and that token hasn't expired.
    */
   private tokenNotExpired(): boolean {
-    const user = this.getUser();
-    const token: string = this.browserStorage.get('access_token');
-    return token != null && user !== undefined && (this.getExpiry() > new Date().valueOf());
+    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
+    return tokenNotExpired(null, token);
   }
 
-  /**
-   * Stores access token & refresh token.
-   */
-  private storeToken(accessToken: string): void {
-    this.browserStorage.set('access_token', accessToken);
-    const fromToken = this.jwtHelper.decodeToken(accessToken);
+  private getExpiryDate(): Date {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    if (token == null) { return null; }
+    return this.jwtHelper.getTokenExpirationDate(token);
+  }
 
-    const user: User = {
-      id: fromToken.oid,
-      displayName: fromToken.name,
-      // jobTitle = fromToken.jobTitle;
-      emails: fromToken.emails
-    };
+  public getUser(): User {
+    const userInfo = localStorage.getItem(USER_INFO_KEY);
+    return userInfo == null ? null : JSON.parse(userInfo);
+  }
 
-    this.authTime = fromToken.auth_time;
+  private storeUser(user: User): void {
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
+  }
 
-    this.expiresIn = fromToken.exp * 1000;
-    this.storeExpiry(this.expiresIn);
-
-    this.storeUser(user);
-    this.user.next(user);
-    this.signinStatus.next(true);
+  private checkUserInDb() {
+    const userInDb = localStorage.getItem(USER_ID_KEY);
+    const currentUser = this.getUser();
+    if (userInDb != null && userInDb === currentUser.id) { return; }
 
     // Check user is stored in DB
     this.userService.checkUserInDb()
       .valueChanges
       .subscribe((data: any) => {
+        localStorage.set(USER_ID_KEY, data.id);
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       });
-  }
-
-  /**
-   * Returns token expiration in milliseconds.
-   */
-  private getExpiry(): number {
-      return parseInt(this.browserStorage.get('expires'), 0);
-  }
-
-  private storeExpiry(exp: number): void {
-      this.browserStorage.set('expires', exp.toString());
-  }
-
-  public getUser(): User {
-      return this.browserStorage.get('user_info') ? JSON.parse(this.browserStorage.get('user_info')) : undefined;
-  }
-
-  private storeUser(user: User): void {
-      this.browserStorage.set('user_info', JSON.stringify(user));
   }
 }

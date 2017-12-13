@@ -12,30 +12,30 @@ import { User } from '../models/user.model';
 })
 
 export class AccountComponent implements OnInit {
-  isSignedIn: BehaviorSubject<boolean>;
   currentUser: User;
   isAdmin: boolean;
 
   ngOnInit() {
-    this.isSignedIn = this.authService.isSignedIn();
+    this.authService.user.subscribe(
+      (user: User) => {
+        // this.isAdmin = this.authenticationService.isInRole('administrator');
+        if (user == null) {
+          this.authService.unscheduleRefresh();
+          return;
+        }
 
-    this.isSignedIn.subscribe(
-      (signedIn: boolean) => {
-          // this.isAdmin = this.authenticationService.isInRole('administrator');
-          if (signedIn) {
-            const user = this.authService.getUser();
-            this.currentUser = user;
-            this.snackBar.open('你好，' + user.displayName + '!', null, {
-              duration: 2000,
-            });
-          }
-          this.authService.scheduleRefresh();
+        this.currentUser = user;
+        this.snackBar.open('你好，' + user.displayName + '!', null, {
+          duration: 2000,
+        });
+
+        this.authService.scheduleRefresh();
       });
   }
 
   constructor(
     private snackBar: MatSnackBar,
-    private authService: AuthService) {}
+    private authService: AuthService) { }
 
   onSignClicked(): void {
     this.authService.login();
