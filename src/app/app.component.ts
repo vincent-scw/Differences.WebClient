@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     });
 
     this.intermediaryService.error.subscribe((errorMsg: string) => {
-      this.snackBar.open(errorMsg);
+      this.snackBar.open(errorMsg, 'OK');
     });
   }
 }
