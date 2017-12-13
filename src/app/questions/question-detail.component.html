@@ -4,31 +4,32 @@
   </div>
 </div>
 <br />
-<div class="level">
-  <div class="level-left">
-    <!-- <span class="icon is-warning">
-      <i class="fa fa-comments"></i>
-    </span> -->
-  </div>
-  <div class="level-right">
-    <p class="control">
-      <a class="button is-success width-100" (click)="expansionPanel.toggle()">我来回答</a>
-    </p>
-  </div>
-</div>
-<mat-expansion-panel #expansionPanel>
-  <article class="media">
-    <div class="media-content">
-      <div class="field">
-        <p class="control">
-          <ez-quill-editor [(ngModel)]="myAnswerContent"></ez-quill-editor>
-        </p>
-      </div>
-      <button-group (submit)="submitAnswer()" (cancel)="expansionPanel.toggle()" [isValid]="true"></button-group>
+<div class="underline">
+  <div class="level">
+    <div class="level-left">
+      <span class="icon">
+        <i class="fa fa-comments fa-lg"></i>
+      </span>
     </div>
-  </article>
-</mat-expansion-panel>
-<hr />
+    <div class="level-right">
+      <p class="control">
+        <a class="button is-success width-100" (click)="expansionPanel.toggle()">我来回答</a>
+      </p>
+    </div>
+  </div>
+  <mat-expansion-panel #expansionPanel>
+    <article class="media">
+      <div class="media-content">
+        <div class="field">
+          <p class="control">
+            <ez-quill-editor [(ngModel)]="myAnswerContent"></ez-quill-editor>
+          </p>
+        </div>
+        <button-group (submit)="submitAnswer()" (cancel)="expansionPanel.toggle()" [isValid]="true"></button-group>
+      </div>
+    </article>
+  </mat-expansion-panel>
+</div>
 <div *ngIf="isEmpty">
   <no-content></no-content>
 </div>
