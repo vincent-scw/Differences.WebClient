@@ -31,14 +31,13 @@ export class EasyQuillEditorComponent implements OnInit,
         ['bold', 'italic', 'underline', 'strike'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ 'indent': '-1'}, { 'indent': '+1' }],
-        [{ 'align': [] }],
         ['link', 'image', 'code-block'],
         ['clean']
       ]
     },
     formats: [
       'bold', 'code', 'italic', 'link', 'strike', 'underline',
-      'indent', 'list', 'align', 'direction', 'code-block',
+      'indent', 'list', 'direction', 'code-block',
       'formula', 'image', 'video'
     ]
   };

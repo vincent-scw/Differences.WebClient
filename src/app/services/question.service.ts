@@ -132,13 +132,6 @@ export class QuestionService extends ApolloServiceBase {
             // avatarUrl: user.avatarUrl
           }
         }
-      },
-      update: (proxy, { data: { submitQuestion } }) => {
-        let queryVariable = this.getQueryVariable(this.questions_key, category.id);
-        this.updateQuery(queryVariable, proxy, submitQuestion);
-
-        queryVariable = this.getQueryVariable(this.questions_key, Math.floor(category.id / 100));
-        this.updateQuery(queryVariable, proxy, submitQuestion);
       }
     });
   }
@@ -153,21 +146,6 @@ export class QuestionService extends ApolloServiceBase {
       query: QueryQuestions, variables: queryVariable, data: {
         questions: values,
         question_count: q.question_count + 1
-      }
-    });
-  }
-
-  private updateQuery(queryVariable: any, proxy: DataProxy, submitQuestion: any) {
-    if (queryVariable == null) { return; }
-
-    const q = proxy.readQuery<QuestionListResponse>({ query: QueryQuestions, variables: queryVariable });
-    const values = q.questions;
-    const foundIndex = values.findIndex(x => x.id === submitQuestion.id);
-    values.splice(foundIndex, 1, submitQuestion);
-    proxy.writeQuery({
-      query: QueryQuestions, variables: queryVariable, data: {
-        questions: values,
-        question_count: q.question_count
       }
     });
   }
