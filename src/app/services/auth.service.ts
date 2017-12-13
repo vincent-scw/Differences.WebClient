@@ -134,7 +134,7 @@ export class AuthService {
    * Checks for presence of token and that token hasn't expired.
    */
   private tokenNotExpired(): boolean {
-    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY); // window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
     return tokenNotExpired(null, token);
   }
 
