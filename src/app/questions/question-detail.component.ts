@@ -45,7 +45,8 @@ export class QuestionDetailComponent implements OnInit {
       .subscribe(() => this.fetch());
 
     this.intermediaryService.refreshListener.subscribe(() => {
-      this.questionQuery.refetch(); this.answerQuery.refetch(); });
+      this.questionQuery.refetch(); this.answerQuery.refetch();
+    });
   }
 
   private fetch(): void {
@@ -67,28 +68,29 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   submitAnswer(): void {
-    if (!this.authService.forceAuthenticated()) { return; }
-    this.questionAnswerService.addAnswer(this.id, null, this.myAnswerContent)
-      .subscribe((data) => {
-        this.myAnswerContent = null;
-      });
+    this.authService.forceAuthenticated(() =>
+      this.questionAnswerService.addAnswer(this.id, null, this.myAnswerContent)
+        .subscribe((data) => {
+          this.myAnswerContent = null;
+        })
+    );
   }
 
   onUpdateAnswer(data: any): void {
-    if (!this.authService.forceAuthenticated()) { return; }
-    this.questionAnswerService.updateAnswer(data.id, data.content).toPromise();
+    this.authService.forceAuthenticated(() =>
+      this.questionAnswerService.updateAnswer(data.id, data.content).toPromise());
   }
 
   onUpdateQuestion(data: any): void {
-    if (!this.authService.forceAuthenticated()) { return; }
-    this.questionService.updateQuestion(data.id, data.title,
-      data.content, { id: data.categoryId, name: '' })
-      .toPromise();
+    this.authService.forceAuthenticated(() =>
+      this.questionService.updateQuestion(data.id, data.title,
+        data.content, { id: data.categoryId, name: '' })
+        .toPromise());
   }
 
   onReply(data: any): void {
-    if (!this.authService.forceAuthenticated()) { return; }
-    this.questionAnswerService.addAnswer(this.id, data.parentId, data.content)
-      .toPromise();
+    this.authService.forceAuthenticated(() =>
+      this.questionAnswerService.addAnswer(this.id, data.parentId, data.content)
+        .toPromise());
   }
 }

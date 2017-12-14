@@ -20,6 +20,7 @@ const MSAL_ID_TOKEN_KEY = 'msal.idtoken';
 @Injectable()
 export class AuthService {
   user = new BehaviorSubject<User>(this.getUser());
+  refreshingToken = new BehaviorSubject<boolean>(false);
   /**
    * Token info.
    */
@@ -31,7 +32,6 @@ export class AuthService {
    * Scheduling of the refresh token.
    */
   private refreshSubscription: any;
-  private isRefreshingToken: boolean;
 
   authSettings = Config.AUTH_SETTINGS;
 
@@ -68,7 +68,7 @@ export class AuthService {
         };
         this.storeUser(user);
         this.user.next(user);
-        if (!this.isRefreshingToken) {
+        if (this.refreshingToken.getValue() === false) {
           this.refreshToken();
         }
       }, (error: any) => {
@@ -111,13 +111,15 @@ export class AuthService {
   }
 
   private refreshToken(): void {
-    if (this.isRefreshingToken) { return; }
+    if (this.refreshingToken.getValue()) { return; }
+
+    this.refreshingToken.next(true);
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
       (accessToken: any) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
         this.checkUserInDb();
         this.scheduleRefresh();
-        this.isRefreshingToken = false;
+        this.refreshingToken.next(false);
       }, (error: any) => {
         console.warn(error);
         this.clientApplication.acquireTokenPopup(this.authSettings.scopes).then(
@@ -125,7 +127,7 @@ export class AuthService {
             localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
             this.checkUserInDb();
             this.scheduleRefresh();
-            this.isRefreshingToken = false;
+            this.refreshingToken.next(false);
           }, (ex: any) => {
             this.intermediaryService.onError('无法成功获取访问权限:\n' + ex);
           });
@@ -136,18 +138,32 @@ export class AuthService {
     return this.tokenNotExpired();
   }
 
-  public isAuthenticated(role?: string): boolean {
+  private async isAuthenticated(role?: string): Promise<boolean> {
+    if (this.refreshingToken.getValue()) {
+      await this.refreshingToken.toPromise();
+    }
     const userInfo = localStorage.getItem(USER_INFO_KEY);
-    return userInfo != null && this.isValid();
+    if (userInfo != null && this.isValid()) { return true; }
+
+    this.login();
+    return false;
   }
 
-  public forceAuthenticated(role?: string): boolean {
-    if (!this.isAuthenticated(role)) {
-      this.login();
-      return false;
-    }
+  public forceAuthenticated(funcAfterAuth: () => void, role?: string): void {
+    this.isAuthenticated().then(data => {
+      if (data === true) {
+        funcAfterAuth();
+      }
+    });
+  }
 
-    return true;
+  public getUser(): User {
+    const userInfo = localStorage.getItem(USER_INFO_KEY);
+    return userInfo == null ? null : JSON.parse(userInfo);
+  }
+
+  private storeUser(user: User): void {
+    localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
   }
 
   /**
@@ -162,15 +178,6 @@ export class AuthService {
     const token = localStorage.getItem(ACCESS_TOKEN_KEY);
     if (token == null) { return null; }
     return this.jwtHelper.getTokenExpirationDate(token);
-  }
-
-  public getUser(): User {
-    const userInfo = localStorage.getItem(USER_INFO_KEY);
-    return userInfo == null ? null : JSON.parse(userInfo);
-  }
-
-  private storeUser(user: User): void {
-    localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
   }
 
   private checkUserInDb() {

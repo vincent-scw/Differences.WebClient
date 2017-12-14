@@ -23,9 +23,7 @@ export class ScrollableTopBarComponent {
   }
 
   askQuestion(): void {
-    if (!this.authService.forceAuthenticated()) { return; }
-    this.dialog.open(AskQuestionComponent, {
-    });
+    this.authService.forceAuthenticated(() => this.dialog.open(AskQuestionComponent, {}));
   }
 
   home(): void {
