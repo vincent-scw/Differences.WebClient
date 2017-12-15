@@ -1,9 +1,11 @@
-<mat-select placeholder="类别" [formControl]="categoryCtrl"
-  [(value)]="selectedCategoryId">
-  <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
-    <mat-option *ngFor="let category of group.categories"
-      [value]="category.id">
-      {{category.name}}
-    </mat-option>
-  </mat-optgroup>
-</mat-select>
+<mat-form-field>
+  <mat-select placeholder="类别" name="selectedCategoryId" [(ngModel)]="selectedCategoryId" required>
+    <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
+      <mat-option *ngFor="let category of group.categories" [value]="category.id">
+        {{category.name}}
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+  <!-- <mat-error *ngIf="categoryCtrl.hasError('required')">类别是必选项</mat-error> -->
+  <mat-hint>请选择类别</mat-hint>
+</mat-form-field>

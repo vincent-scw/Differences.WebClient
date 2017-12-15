@@ -4,7 +4,7 @@
     <div class="control">
       <mat-form-field class="full-width form-control">
         <input matInput required #inputTitle name="title" maxlength="100" [(ngModel)]="title" placeholder="标题（用大括号标记比对项）">
-        <mat-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}我{{ '}' }}之间有什么不同？</mat-hint>
+        <mat-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}您{{ '}' }}之间有什么不同？</mat-hint>
         <mat-hint align="end">{{inputTitle.value?.length || 0}} / 100</mat-hint>
       </mat-form-field>
     </div>
@@ -12,7 +12,17 @@
   <br />
   <div class="field">
     <div class="control">
-      <category-dropdown name="categoryId" [(ngModel)]="categoryId"></category-dropdown>
+      <mat-form-field>
+        <mat-select placeholder="类别" name="categoryId" [(ngModel)]="categoryId" required>
+          <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
+            <mat-option *ngFor="let category of group.categories" [value]="category.id">
+              {{category.name}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <mat-error *ngIf="categoryId === 0 || categoryId == null">类别是必选项</mat-error>
+        <mat-hint>请选择类别</mat-hint>
+      </mat-form-field>
     </div>
   </div>
   <br />
