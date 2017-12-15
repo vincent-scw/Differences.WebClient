@@ -9,6 +9,7 @@ export interface Question {
   categoryName: string;
   createTime: Date;
   user: User;
+  subReplies?: Question[];
 }
 
 export interface QuestionResponse extends ResponseBase {
