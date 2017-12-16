@@ -44,9 +44,13 @@ export class AuthService {
     */
   clientApplication = new UserAgentApplication(
     this.authSettings.clientId, this.authority,
-    (errorDesc: any, token: any, error: any, tokenType: any) => {
+    (errorDesc: string, token: string, error: string, tokenType: string) => {
       // Called after loginRedirect or acquireTokenPopup
-    }
+      if (error != null && error !== '') {
+        this.intermediaryService.onError(error);
+      }
+    },
+    { redirectUri: Config.DEFAULT_REDIRECT_URL}
   );
 
   constructor(
@@ -72,7 +76,8 @@ export class AuthService {
           this.refreshToken();
         }
       }, (error: any) => {
-        this.intermediaryService.onError('登录发生错误:\n' + error);
+        this.intermediaryService.onError('未能成功登录');
+        console.error(error);
       });
   }
 
@@ -129,7 +134,8 @@ export class AuthService {
             this.scheduleRefresh();
             this.refreshingToken.next(false);
           }, (ex: any) => {
-            this.intermediaryService.onError('无法成功获取访问权限:\n' + ex);
+            this.intermediaryService.onError('获取令牌失败');
+            console.error(ex);
           });
       });
   }

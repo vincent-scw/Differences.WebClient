@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  selfUrl: 'https://www.ysmbt.cn',
   apiServerUrl: '',
   authSettings: {
     tenantName: 'DifferencesB2CTenant.onmicrosoft.com',

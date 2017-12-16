@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  selfUrl: 'http://localhost:4200',
   // apiServerUrl: 'https://differencesapi.azurewebsites.net',
   apiServerUrl: 'http://localhost:5022',
   authSettings: {
