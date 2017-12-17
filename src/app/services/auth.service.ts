@@ -73,9 +73,8 @@ export class AuthService {
         };
         this.storeUser(user);
         this.user.next(user);
-        if (this.refreshingToken.getValue() === false) {
-          this.refreshAccessToken();
-        }
+        // acquire access token right after signin
+        this.acquireAccessToken().then();
       }, (error: any) => {
         this.intermediaryService.onError('未能成功登录');
         console.error(error);
@@ -88,88 +87,44 @@ export class AuthService {
     localStorage.removeItem(USER_INFO_KEY);
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     this.user.next(null);
-    // Unschedules the refresh token.
-    this.unscheduleRefresh();
   }
 
-  public scheduleRefresh(): void {
-    // No user logged in, return
-    if (this.getUser() == null) { return; }
-
-    const expireDate = this.getExpiryDate();
-    const expires = expireDate == null ? 0 : expireDate.getTime();
-    const dateNow = Date.now();
-    // If the token is expired, refresh it now
-    // Otherwise schedule refresh untill one min before expire
-    const diff = expires < dateNow ? 0 : expires - dateNow - 60000;
-
-    this.refreshSubscription = Observable.timer(10000)
-      .subscribe(() => this.refreshToken());
-  }
-
-  /**
-   * Unsubscribes from the scheduling of the refresh token.
-   */
-  public unscheduleRefresh(): void {
-    if (this.refreshSubscription) {
-      this.refreshSubscription.unsubscribe();
+  public async tryGetTokens(): Promise<void> {
+    if (this.getUser() == null) {
+      this.intermediaryService.onWarning('请先登录。');
+      return;
     }
-  }
 
-  private refreshToken(): void {
-    this.refreshIdToken();
-    this.refreshAccessToken();
-  }
-
-  private refreshIdToken(): void {
-    this.clientApplication.acquireTokenSilent([this.authSettings.clientId]).then(
-      (idToken: any) => {
-        console.warn('idtoken    ' + idToken);
-      }, (error: any) => {
-        console.warn(error);
-        this.clientApplication.acquireTokenPopup([this.authSettings.clientId]).then(
-          (idToken: any) => {
-          }, (ex: any) => {
-            this.intermediaryService.onError('获取令牌失败');
-            console.error(ex);
-          });
-      });
-  }
-
-  private refreshAccessToken(): void {
-    if (this.refreshingToken.getValue()) { return; }
-
-    this.refreshingToken.next(true);
-    this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
-      (accessToken: any) => {
-        console.warn('accesstoken      ' + accessToken);
-        localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    await this.acquireIdToken();
+    this.acquireAccessToken().then(
+      (token: string) => {
         this.checkUserInDb();
-        this.refreshingToken.next(false);
+        localStorage.setItem(ACCESS_TOKEN_KEY, token);
       }, (error: any) => {
-        console.warn(error);
-        this.clientApplication.acquireTokenPopup(this.authSettings.scopes).then(
-          (accessToken: any) => {
-            localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-            this.checkUserInDb();
-            this.refreshingToken.next(false);
-          }, (ex: any) => {
-            this.intermediaryService.onError('获取令牌失败');
-            console.error(ex);
-          });
+        localStorage.removeItem(USER_ID_KEY);
+        localStorage.removeItem(USER_INFO_KEY);
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        this.user.next(null);
+        this.intermediaryService.onWarning('会话过期，请重新登录。');
       });
   }
 
-  public isValid(): boolean {
+  private acquireIdToken() {
+    return this.clientApplication.acquireTokenSilent([this.authSettings.clientId]);
+  }
+
+  private acquireAccessToken() {
+    return this.clientApplication.acquireTokenSilent(this.authSettings.scopes);
+  }
+
+  private isValid(): boolean {
     return this.tokenNotExpired();
   }
 
   private async isAuthenticated(role?: string): Promise<boolean> {
-    if (this.refreshingToken.getValue()) {
-      await this.refreshingToken.toPromise();
-    }
-    const userInfo = localStorage.getItem(USER_INFO_KEY);
-    if (userInfo != null && this.isValid()) { return true; }
+    await this.tryGetTokens();
+
+    if (this.getUser() != null && this.isValid()) { return true; }
 
     this.login();
     return false;
@@ -196,7 +151,7 @@ export class AuthService {
    * Checks for presence of token and that token hasn't expired.
    */
   private tokenNotExpired(): boolean {
-    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY); // window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
     return tokenNotExpired(null, token);
   }
 

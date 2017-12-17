@@ -20,7 +20,6 @@ export class AccountComponent implements OnInit {
       (user: User) => {
         // this.isAdmin = this.authenticationService.isInRole('administrator');
         if (user == null) {
-          this.authService.unscheduleRefresh();
           return;
         }
 
@@ -28,8 +27,6 @@ export class AccountComponent implements OnInit {
         this.snackBar.open('你好，' + user.displayName + '!', null, {
           duration: 2000,
         });
-
-        this.authService.scheduleRefresh();
       });
   }
 

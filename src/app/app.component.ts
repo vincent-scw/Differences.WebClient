@@ -35,5 +35,9 @@ export class AppComponent implements OnInit {
     this.intermediaryService.error.subscribe((errorMsg: string) => {
       this.snackBar.open(errorMsg, 'OK');
     });
+
+    this.intermediaryService.warning.subscribe((warning: string) => {
+      this.snackBar.open(warning, null, { duration: 2000 });
+    });
   }
 }

@@ -71,7 +71,7 @@ export class CategoryService {
   getSelectedCategory(): IdName {
     const localCategory = localStorage.getItem(SELECTED_CATEGORY_KEY);
     return localCategory == null
-      ? this.categories[0]
+      ? this.categories.length === 0 ? {id: 1} : this.categories[0]
       : JSON.parse(localCategory);
   }
 }
