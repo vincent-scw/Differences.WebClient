@@ -74,7 +74,7 @@ export class AuthService {
         this.storeUser(user);
         this.user.next(user);
         // acquire access token right after signin
-        this.acquireAccessToken().then();
+        this.acquireAccessToken();
       }, (error: any) => {
         this.intermediaryService.onError('未能成功登录');
         console.error(error);
@@ -89,14 +89,28 @@ export class AuthService {
     this.user.next(null);
   }
 
-  public async tryGetTokens(): Promise<void> {
+  public tryGetTokens(forceAcquire?: boolean): void {
     if (this.getUser() == null) {
       this.intermediaryService.onWarning('请先登录。');
       return;
     }
 
-    await this.acquireIdToken();
-    this.acquireAccessToken().then(
+    if (!this.idTokenNotExpired() || forceAcquire) {
+      this.acquireIdToken();
+    }
+    if (!this.accessTokenNotExpired() || forceAcquire) {
+      this.acquireAccessToken();
+    }
+  }
+
+  private acquireIdToken() {
+    this.clientApplication.acquireTokenSilent([this.authSettings.clientId])
+      .then();
+  }
+
+  private acquireAccessToken() {
+    this.clientApplication.acquireTokenSilent(this.authSettings.scopes)
+      .then(
       (token: string) => {
         this.checkUserInDb();
         localStorage.setItem(ACCESS_TOKEN_KEY, token);
@@ -109,20 +123,12 @@ export class AuthService {
       });
   }
 
-  private acquireIdToken() {
-    return this.clientApplication.acquireTokenSilent([this.authSettings.clientId]);
-  }
-
-  private acquireAccessToken() {
-    return this.clientApplication.acquireTokenSilent(this.authSettings.scopes);
-  }
-
   private isValid(): boolean {
-    return this.tokenNotExpired();
+    return this.accessTokenNotExpired();
   }
 
   private async isAuthenticated(role?: string): Promise<boolean> {
-    await this.tryGetTokens();
+    this.tryGetTokens();
 
     if (this.getUser() != null && this.isValid()) { return true; }
 
@@ -150,8 +156,13 @@ export class AuthService {
   /**
    * Checks for presence of token and that token hasn't expired.
    */
-  private tokenNotExpired(): boolean {
+  private accessTokenNotExpired(): boolean {
     const token = localStorage.getItem(ACCESS_TOKEN_KEY); // window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
+    return tokenNotExpired(null, token);
+  }
+
+  private idTokenNotExpired(): boolean {
+    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
     return tokenNotExpired(null, token);
   }
 

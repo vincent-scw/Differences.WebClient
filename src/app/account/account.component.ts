@@ -20,6 +20,7 @@ export class AccountComponent implements OnInit {
       (user: User) => {
         // this.isAdmin = this.authenticationService.isInRole('administrator');
         if (user == null) {
+          this.currentUser = null;
           return;
         }
 
