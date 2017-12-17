@@ -74,7 +74,7 @@ export class AuthService {
         this.storeUser(user);
         this.user.next(user);
         // acquire access token right after signin
-        this.acquireAccessToken();
+        this.tryGetTokens().then();
       }, (error: any) => {
         this.intermediaryService.onError('未能成功登录');
         console.error(error);
@@ -89,18 +89,24 @@ export class AuthService {
     this.user.next(null);
   }
 
-  public tryGetTokens(forceAcquire?: boolean): void {
+  public async tryGetTokens(forceAcquire?: boolean): Promise<void> {
     if (this.getUser() == null) {
       this.intermediaryService.onWarning('请先登录。');
       return;
     }
 
+    if (this.refreshingToken.getValue() === true) {
+      await this.refreshingToken.toPromise();
+    }
+
+    this.refreshingToken.next(true);
     if (!this.idTokenNotExpired() || forceAcquire) {
       this.acquireIdToken();
     }
     if (!this.accessTokenNotExpired() || forceAcquire) {
       this.acquireAccessToken();
     }
+    this.refreshingToken.next(false);
   }
 
   private acquireIdToken() {
@@ -128,7 +134,7 @@ export class AuthService {
   }
 
   private async isAuthenticated(role?: string): Promise<boolean> {
-    this.tryGetTokens();
+    await this.tryGetTokens();
 
     if (this.getUser() != null && this.isValid()) { return true; }
 
