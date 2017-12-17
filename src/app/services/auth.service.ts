@@ -36,8 +36,8 @@ export class AuthService {
   authSettings = Config.AUTH_SETTINGS;
 
   authority: string = 'https://login.microsoftonline.com/tfp/'
-    + this.authSettings.tenantName + '/'
-    + this.authSettings.policyName;
+  + this.authSettings.tenantName + '/'
+  + this.authSettings.policyName;
 
   /*
     * B2C SignIn SignUp Policy Configuration
@@ -45,12 +45,13 @@ export class AuthService {
   clientApplication = new UserAgentApplication(
     this.authSettings.clientId, this.authority,
     (errorDesc: string, token: string, error: string, tokenType: string) => {
+      console.warn(tokenType);
       // Called after loginRedirect or acquireTokenPopup
       if (error != null && error !== '') {
         this.intermediaryService.onError(error);
       }
     },
-    { redirectUri: Config.DEFAULT_REDIRECT_URL}
+    { redirectUri: Config.DEFAULT_REDIRECT_URL }
   );
 
   constructor(
@@ -73,7 +74,7 @@ export class AuthService {
         this.storeUser(user);
         this.user.next(user);
         if (this.refreshingToken.getValue() === false) {
-          this.refreshToken();
+          this.refreshAccessToken();
         }
       }, (error: any) => {
         this.intermediaryService.onError('未能成功登录');
@@ -102,7 +103,7 @@ export class AuthService {
     // Otherwise schedule refresh untill one min before expire
     const diff = expires < dateNow ? 0 : expires - dateNow - 60000;
 
-    this.refreshSubscription = Observable.timer(diff)
+    this.refreshSubscription = Observable.timer(10000)
       .subscribe(() => this.refreshToken());
   }
 
@@ -116,14 +117,34 @@ export class AuthService {
   }
 
   private refreshToken(): void {
+    this.refreshIdToken();
+    this.refreshAccessToken();
+  }
+
+  private refreshIdToken(): void {
+    this.clientApplication.acquireTokenSilent([this.authSettings.clientId]).then(
+      (idToken: any) => {
+        console.warn('idtoken    ' + idToken);
+      }, (error: any) => {
+        console.warn(error);
+        this.clientApplication.acquireTokenPopup([this.authSettings.clientId]).then(
+          (idToken: any) => {
+          }, (ex: any) => {
+            this.intermediaryService.onError('获取令牌失败');
+            console.error(ex);
+          });
+      });
+  }
+
+  private refreshAccessToken(): void {
     if (this.refreshingToken.getValue()) { return; }
 
     this.refreshingToken.next(true);
     this.clientApplication.acquireTokenSilent(this.authSettings.scopes).then(
       (accessToken: any) => {
+        console.warn('accesstoken      ' + accessToken);
         localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
         this.checkUserInDb();
-        this.scheduleRefresh();
         this.refreshingToken.next(false);
       }, (error: any) => {
         console.warn(error);
@@ -131,7 +152,6 @@ export class AuthService {
           (accessToken: any) => {
             localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
             this.checkUserInDb();
-            this.scheduleRefresh();
             this.refreshingToken.next(false);
           }, (ex: any) => {
             this.intermediaryService.onError('获取令牌失败');
@@ -176,12 +196,14 @@ export class AuthService {
    * Checks for presence of token and that token hasn't expired.
    */
   private tokenNotExpired(): boolean {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY); // window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
+    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
     return tokenNotExpired(null, token);
   }
 
   private getExpiryDate(): Date {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    // check id token is enougth,
+    // because it will try to refresh accesstoken after
+    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
     if (token == null) { return null; }
     return this.jwtHelper.getTokenExpirationDate(token);
   }
@@ -195,7 +217,7 @@ export class AuthService {
     this.userService.checkUserInDb()
       .valueChanges
       .subscribe((data: any) => {
-        localStorage.set(USER_ID_KEY, data.id);
+        localStorage.setItem(USER_ID_KEY, data.id);
       },
       (error) => {
         console.error(error);
