@@ -95,7 +95,7 @@ export class AuthService {
       return;
     }
 
-    if (this.refreshingToken.getValue() === true) {
+    while (this.refreshingToken.getValue() === true) {
       await this.refreshingToken.toPromise();
     }
 
@@ -138,7 +138,7 @@ export class AuthService {
 
     if (this.getUser() != null && this.isValid()) { return true; }
 
-    this.login();
+    // this.login();
     return false;
   }
 
