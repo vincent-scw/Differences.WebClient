@@ -7,12 +7,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class ButtonGroupComponent {
-  @Input() isValid;
+  @Input() isValid = false;
   @Output() submit = new EventEmitter();
   @Output() cancel = new EventEmitter();
 
   onSubmit() {
-    this.submit.emit();
+    if (this.isValid) {
+      this.submit.emit();
+    }
   }
 
   onCancel() {
