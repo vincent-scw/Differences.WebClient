@@ -84,9 +84,7 @@ export class AppModule {
     const errorlink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
-          intermediaryService.onError(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-          ),
+          intermediaryService.onError(message),
         );
       }
 
