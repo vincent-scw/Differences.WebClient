@@ -7,6 +7,7 @@ import { Component,
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { Question } from '../../models/question.model';
+import { Mode, ModeToggleableBase } from '../../componentbase/mode-toggleable-base';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,15 +15,14 @@ import { Question } from '../../models/question.model';
   templateUrl: './detail-panel.component.html'
 })
 
-export class DetailPanelComponent implements OnInit {
+export class DetailPanelComponent extends ModeToggleableBase implements OnInit {
   @Input() data: Question;
   @Output() update = new EventEmitter<Question>();
 
-  isReadonly = true;
   isMe: boolean;
 
   constructor(private authService: AuthService) {
-
+    super();
   }
 
   ngOnInit() {
@@ -32,6 +32,14 @@ export class DetailPanelComponent implements OnInit {
 
   onSubmit(data: Question) {
     this.update.emit(data);
-    this.isReadonly = true;
+    this.toggleMode(Mode.view);
+  }
+
+  onEdit() {
+    this.toggleMode(Mode.edit);
+  }
+
+  onCancel() {
+    this.toggleMode(Mode.view);
   }
 }

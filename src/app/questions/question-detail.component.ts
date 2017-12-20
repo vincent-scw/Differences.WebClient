@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
@@ -10,9 +10,11 @@ import { QuestionService } from '../services/question.service';
 import { QuestionAnswerService } from '../services/question-answer.service';
 import { IntermediaryService } from '../services/intermediary.service';
 import { AuthService } from '../services/auth.service';
+import { CategoryService } from '../services/category.service';
 
 import { Answer } from '../models/answer.model';
 import { Question } from '../models/question.model';
+import { from } from 'apollo-link';
 
 @Component({
   selector: 'app-question-detail',
@@ -28,6 +30,8 @@ export class QuestionDetailComponent implements OnInit {
   answers: Answer[];
   myAnswerContent: string;
 
+  private isInitiating = true;
+
   private questionQuery: QueryRef<any>;
   private answerQuery: QueryRef<any>;
 
@@ -36,17 +40,27 @@ export class QuestionDetailComponent implements OnInit {
     private questionAnswerService: QuestionAnswerService,
     private intermediaryService: IntermediaryService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private categoryService: CategoryService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap
+    this.activatedRoute.paramMap
       .switchMap((params: Params) => this.id = params.get('id'))
       .subscribe(() => this.fetch());
 
     this.intermediaryService.refreshListener.subscribe(() => {
       this.questionQuery.refetch(); this.answerQuery.refetch();
     });
+
+    this.categoryService.selectedCategory.subscribe(data => {
+      if (!this.isInitiating) {
+        this.router.navigateByUrl('/questions');
+      }
+    });
+
+    this.isInitiating = false;
   }
 
   private fetch(): void {

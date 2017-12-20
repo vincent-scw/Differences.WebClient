@@ -10,11 +10,11 @@
         </div>
         <div class="level-right">{{data.createTime | amTimeAgo}}</div>
       </div>
-      <div *ngIf="isReadOnly == true" [innerHTML]="newContent">
+      <div *ngIf="isReadonly === true" [innerHTML]="newContent">
       </div>
-      <ez-quill-editor [(ngModel)]="newContent" *ngIf="isReadOnly == false">
+      <ez-quill-editor [(ngModel)]="newContent" *ngIf="isReadonly === false">
       </ez-quill-editor>
-      <div class="action-bar" *ngIf="!isReadOnly">
+      <div class="action-bar" *ngIf="isReadonly === false">
         <button mat-icon-button (click)="onSubmit()">
           <mat-icon class="icon-highlight">check</mat-icon>
         </button>
@@ -23,7 +23,7 @@
         </button>
       </div>
 
-      <nav class="level" *ngIf="isReadOnly">
+      <nav class="level" *ngIf="isReadonly === true">
         <div class="level-left"></div>
         <div class="level-right" [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'">
           <a matTooltip="编辑" class="level-item" (click)="onEdit()" *ngIf="currentUser != null && currentUser.id == data.user.id">
