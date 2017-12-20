@@ -11,11 +11,11 @@ export abstract class ModeToggleableBase {
   isReadonly = true;
 
   toggleMode(mode: Mode) {
-    this.modeToggled.emit(mode);
     if (mode === Mode.edit) {
       this.isReadonly = false;
     } else {
       this.isReadonly = true;
     }
+    this.modeToggled.emit(mode);
   }
 }

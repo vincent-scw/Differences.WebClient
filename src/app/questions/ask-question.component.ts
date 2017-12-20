@@ -13,7 +13,7 @@ import { QuestionService } from '../services/question.service';
 export class AskQuestionComponent implements OnInit {
   constructor(private questionService: QuestionService,
     private router: Router,
-    private dialogRef: MatDialogRef<AskQuestionComponent>) {}
+    private dialogRef: MatDialogRef<AskQuestionComponent>) { }
 
   ngOnInit() {
   }
@@ -22,12 +22,11 @@ export class AskQuestionComponent implements OnInit {
     this.questionService.askQuestion(
       values.title,
       values.content,
-      { id: values.categoryId, name: ''}
-    )
-    .subscribe(({ data }) => {
-      this.router.navigateByUrl('/questions');
-      this.dialogRef.close();
-    });
+      { id: values.categoryId, name: '' }
+    );
+
+    this.router.navigateByUrl('/questions');
+    this.dialogRef.close();
   }
 
   onCancel(): void {

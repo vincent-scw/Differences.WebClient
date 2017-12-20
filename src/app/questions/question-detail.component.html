@@ -1,6 +1,8 @@
 <div *ngIf="question">
   <div>
-    <detail-panel [data]="question" (update)="onUpdateQuestion($event)"></detail-panel>
+    <detail-panel [data]="question" 
+      (update)="onUpdateQuestion($event)"
+      (modeToggled)="modeToggled($event)"></detail-panel>
   </div>
 </div>
 <br />
@@ -35,7 +37,10 @@
 </div>
 <mat-list>
   <div class="item-wrapper" *ngFor="let answer of answers">
-    <content-panel [data]="answer" (update)="onUpdateAnswer($event)" (reply)="onReply($event)"></content-panel>
+    <content-panel [data]="answer" 
+      (update)="onUpdateAnswer($event)" 
+      (reply)="onReply($event)"
+      (modeToggled)="modeToggled($event)"></content-panel>
   </div>
 </mat-list>
 <div *ngIf="isAnswersLoading" class="spinner">

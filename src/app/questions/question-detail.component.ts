@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { QueryRef } from 'apollo-angular';
@@ -12,16 +13,19 @@ import { IntermediaryService } from '../services/intermediary.service';
 import { AuthService } from '../services/auth.service';
 import { CategoryService } from '../services/category.service';
 
+import { Mode } from '../componentbase/mode-toggleable-base';
+
 import { Answer } from '../models/answer.model';
 import { Question } from '../models/question.model';
 import { from } from 'apollo-link';
+import { ParamMap } from '@angular/router/src/shared';
 
 @Component({
   selector: 'app-question-detail',
   templateUrl: './question-detail.component.html'
 })
 
-export class QuestionDetailComponent implements OnInit {
+export class QuestionDetailComponent implements OnInit, OnDestroy {
   question: Question;
   id: number;
 
@@ -35,6 +39,12 @@ export class QuestionDetailComponent implements OnInit {
   private questionQuery: QueryRef<any>;
   private answerQuery: QueryRef<any>;
 
+  private paramMapSubscription: Observable<ParamMap>;
+  private intermidiarySubscription: Subscription;
+  private categorySubscription: Subscription;
+
+  private childrenInEditMode = 0;
+
   constructor(
     private questionService: QuestionService,
     private questionAnswerService: QuestionAnswerService,
@@ -46,21 +56,26 @@ export class QuestionDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap
-      .switchMap((params: Params) => this.id = params.get('id'))
-      .subscribe(() => this.fetch());
+    this.paramMapSubscription = this.activatedRoute.paramMap
+      .switchMap((params: Params) => this.id = params.get('id'));
+    this.paramMapSubscription.subscribe(() => this.fetch());
 
-    this.intermediaryService.refreshListener.subscribe(() => {
+    this.intermidiarySubscription = this.intermediaryService.refreshListener.subscribe(() => {
       this.questionQuery.refetch(); this.answerQuery.refetch();
     });
 
-    this.categoryService.selectedCategory.subscribe(data => {
-      if (!this.isInitiating) {
+    this.categorySubscription = this.categoryService.selectedCategory.subscribe(data => {
+      if (!this.isInitiating && this.childrenInEditMode === 0) {
         this.router.navigateByUrl('/questions');
       }
     });
 
     this.isInitiating = false;
+  }
+
+  ngOnDestroy(): void {
+    if (!!this.intermidiarySubscription) { this.intermidiarySubscription.unsubscribe(); }
+    if (!!this.categorySubscription) { this.categorySubscription.unsubscribe(); }
   }
 
   private fetch(): void {
@@ -106,5 +121,13 @@ export class QuestionDetailComponent implements OnInit {
     this.authService.forceAuthenticated(() =>
       this.questionAnswerService.addAnswer(this.id, data.parentId, data.content)
         .toPromise());
+  }
+
+  modeToggled(mode: Mode) {
+    if (mode === Mode.edit) {
+      this.childrenInEditMode++;
+    } else {
+      this.childrenInEditMode--;
+    }
   }
 }

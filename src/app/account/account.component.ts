@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../services/auth.service';
@@ -11,12 +12,14 @@ import { User } from '../models/user.model';
   templateUrl: './account.component.html'
 })
 
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
   currentUser: User;
   isAdmin: boolean;
 
+  private authSubscription: Subscription;
+
   ngOnInit() {
-    this.authService.user.subscribe(
+    this.authSubscription = this.authService.user.subscribe(
       (user: User) => {
         // this.isAdmin = this.authenticationService.isInRole('administrator');
         if (user == null) {
@@ -29,6 +32,10 @@ export class AccountComponent implements OnInit {
           duration: 2000,
         });
       });
+  }
+
+  ngOnDestroy() {
+    if (!!this.authSubscription) { this.authSubscription.unsubscribe(); }
   }
 
   constructor(

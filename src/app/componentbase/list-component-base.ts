@@ -1,5 +1,6 @@
-import { OnInit, ViewChild } from '@angular/core';
+import { OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 import { QueryRef } from 'apollo-angular';
 
 import { CategoryService } from '../services/category.service';
@@ -9,12 +10,15 @@ import { IdName } from '../models/id-name.model';
 
 import { PaginationComponent } from '../controls/pagination.component';
 
-export abstract class ListComponentBase implements OnInit {
+export abstract class ListComponentBase implements OnInit, OnDestroy {
   query: QueryRef<any>;
   data: any[];
   count: number;
   selectedCategory: BehaviorSubject<IdName>;
   queryData: any[];
+
+  private selectedCategorySubscription: Subscription;
+  private intermediarySubscription: Subscription;
 
   @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
@@ -25,12 +29,19 @@ export abstract class ListComponentBase implements OnInit {
 
   ngOnInit() {
     this.selectedCategory = this.categoryService.selectedCategory;
-    this.selectedCategory.subscribe(category => {
+    this.selectedCategorySubscription = this.selectedCategory.subscribe(category => {
       this.fetch();
     });
-    this.intermediaryService.refreshListener.subscribe(() => {
+    this.intermediarySubscription = this.intermediaryService.refreshListener.subscribe(() => {
       this.refresh();
     });
+  }
+
+  ngOnDestroy() {
+    if (!!this.intermediarySubscription) { this.intermediarySubscription.unsubscribe(); }
+    if (!!this.selectedCategorySubscription) {
+      this.selectedCategorySubscription.unsubscribe();
+    }
   }
 
   refresh() {
