@@ -23,7 +23,7 @@ export class AskQuestionComponent implements OnInit {
       values.title,
       values.content,
       { id: values.categoryId, name: '' }
-    );
+    ).subscribe();
 
     this.router.navigateByUrl('/questions');
     this.dialogRef.close();
