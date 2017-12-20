@@ -13,6 +13,7 @@ import { CategoryDropdownComponent } from './category/category-dropdown.componen
 import { SearchBoxComponent } from './search-box.component';
 import { NoContentComponent } from './no-content.component';
 import { ButtonGroupComponent } from './button-group.component';
+import { ConfirmDialogComponent } from './confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { ButtonGroupComponent } from './button-group.component';
     CategoryDropdownComponent,
     SearchBoxComponent,
     NoContentComponent,
-    ButtonGroupComponent
+    ButtonGroupComponent,
+    ConfirmDialogComponent
   ],
   exports: [
     EasyQuillEditorComponent,
@@ -38,7 +40,11 @@ import { ButtonGroupComponent } from './button-group.component';
     CategoryDropdownComponent,
     SearchBoxComponent,
     NoContentComponent,
-    ButtonGroupComponent
+    ButtonGroupComponent,
+    ConfirmDialogComponent
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ]
 })
 export class ControlsModule {}

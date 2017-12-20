@@ -19,6 +19,8 @@ import { Answer } from '../models/answer.model';
 import { Question } from '../models/question.model';
 import { from } from 'apollo-link';
 import { ParamMap } from '@angular/router/src/shared';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../controls/confirm-dialog.component';
 
 @Component({
   selector: 'app-question-detail',
@@ -42,6 +44,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   private paramMapSubscription: Observable<ParamMap>;
   private intermidiarySubscription: Subscription;
   private categorySubscription: Subscription;
+  private dialogSubscription: Subscription;
 
   private childrenInEditMode = 0;
 
@@ -52,7 +55,8 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +71,13 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     this.categorySubscription = this.categoryService.selectedCategory.subscribe(data => {
       if (!this.isInitiating && this.childrenInEditMode === 0) {
         this.router.navigateByUrl('/questions');
+      } else if (this.childrenInEditMode > 0) {
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: { content: '您有未提交的修改，要放弃修改吗？', result: false }
+        });
+
+        this.dialogSubscription = dialogRef.componentInstance.ok.subscribe(() =>
+          this.router.navigateByUrl('/questions'));
       }
     });
 
@@ -76,6 +87,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (!!this.intermidiarySubscription) { this.intermidiarySubscription.unsubscribe(); }
     if (!!this.categorySubscription) { this.categorySubscription.unsubscribe(); }
+    if (!!this.dialogSubscription) { this.dialogSubscription.unsubscribe(); }
   }
 
   private fetch(): void {
