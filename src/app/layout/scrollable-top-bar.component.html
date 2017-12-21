@@ -1,20 +1,18 @@
 <nav class="navbar sub-top">
   <div class="container">
     <div class="navbar-start">
-
-          <a mat-icon-button matTooltip="主页" (click)="home()">
-            <mat-icon>home</mat-icon>
-          </a>
-          <a mat-icon-button matTooltip="后退" (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-          </a>
-          <a mat-icon-button matTooltip="刷新" (click)="refresh()">
-            <mat-icon>refresh</mat-icon>
-          </a>
+      <a mat-icon-button matTooltip="切换" (click)="onToggleSidenav()">
+        <mat-icon>star_half</mat-icon>
+      </a>
+      <a mat-icon-button matTooltip="后退" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+      <a mat-icon-button matTooltip="刷新" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </a>
     </div>
     <div>
-      <a class="btn btn-warning btn-sm waves-light font-size-0x8" mdbRippleRadius
-        (click)="askQuestion()">
+      <a class="btn btn-warning btn-sm waves-light font-size-0x8" mdbRippleRadius (click)="askQuestion()">
         <i class="fa fa-hand-paper mr-1"></i>我要提问
       </a>
     </div>
