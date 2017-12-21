@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -32,6 +32,9 @@ import { LocationService } from '../services/location.service';
     ],
     providers: [
       LocationService,
+    ],
+    schemas: [
+      NO_ERRORS_SCHEMA
     ]
 })
 export class LayoutModule { }

@@ -1,8 +1,7 @@
-<nav class="navbar sub-top is-link">
+<nav class="navbar sub-top">
   <div class="container">
     <div class="navbar-start">
-      <div class="navbar-item">
-        <div class="field is-grouped">
+
           <a mat-icon-button matTooltip="主页" (click)="home()">
             <mat-icon>home</mat-icon>
           </a>
@@ -12,17 +11,12 @@
           <a mat-icon-button matTooltip="刷新" (click)="refresh()">
             <mat-icon>refresh</mat-icon>
           </a>
-        </div>
-      </div>
     </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <p class="control">
-            <a class="button is-warning width-100" (click)="askQuestion()">我要提问</a>
-          </p>
-        </div>
-      </div>
+    <div>
+      <a class="btn btn-warning btn-sm waves-light font-size-0x8" mdbRippleRadius
+        (click)="askQuestion()">
+        <i class="fa fa-hand-paper mr-1"></i>我要提问
+      </a>
     </div>
   </div>
 </nav>
