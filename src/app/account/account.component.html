@@ -1,15 +1,13 @@
-<div *ngIf="currentUser != null">
-  <button mat-button [matMenuTriggerFor]="menu">
-    <div class="account-button">
-      <ngx-avatar [name]="currentUser.displayName" size="30"></ngx-avatar>
-      {{ currentUser.displayName }}
-    </div>
-  </button>
-  <mat-menu #menu="matMenu">
-    <!-- <button mat-menu-item (click)='onAccountClicked()'>账户</button> -->
-    <button mat-menu-item (click)='onSignoutClicked()'>登出</button>
-  </mat-menu>
+<div class="dropdown show" *ngIf="currentUser != null">
+  <a class="btn dropdown-toggle text-dark" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <ngx-avatar [name]="currentUser.displayName" size="30" class="header-avatar"></ngx-avatar>
+    {{ currentUser.displayName }}
+  </a>
+  <div class="dropdown-menu" aria-labelledby="userDropdown">
+    <!-- <a class="dropdown-item" (click)="onAccountClicked()">个人信息</a> -->
+    <a class="dropdown-item" (click)="onSignoutClicked()">登出</a>
+  </div>
 </div>
 <div *ngIf='currentUser == null'>
-  <button mat-button (click)='onSignClicked()'>登录 / 注册</button>
+  <a class="btn text-light" (click)='onSignClicked()' role="button">登录 / 注册</a>
 </div>

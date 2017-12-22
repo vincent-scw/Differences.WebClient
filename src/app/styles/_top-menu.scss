@@ -3,9 +3,8 @@
 }
 
 .sub-top {
-  top: 55px !important;
-  height: 30px !important;
-  max-height: 30px;
+  height: 50px !important;
+  max-height: 50px;
 }
 
 .home-img {
@@ -13,10 +12,8 @@
   padding: 8px 0 0 15px;
 }
 
-.account-button {
-  display: flex;
-
-  ngx-avatar {
-    padding-right: 5px
-  }
+.header-avatar {
+  display: inline-block;
+  padding-right: 5px
 }
+

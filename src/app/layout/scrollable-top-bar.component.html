@@ -1,28 +1,18 @@
-<nav class="navbar sub-top is-link">
+<nav class="navbar bg-light sub-top">
   <div class="container">
-    <div class="navbar-start">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <a mat-icon-button matTooltip="主页" (click)="home()">
-            <mat-icon>home</mat-icon>
-          </a>
-          <a mat-icon-button matTooltip="后退" (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-          </a>
-          <a mat-icon-button matTooltip="刷新" (click)="refresh()">
-            <mat-icon>refresh</mat-icon>
-          </a>
-        </div>
-      </div>
+    <div class="navbar-item">
+      <a mat-icon-button matTooltip="主页" (click)="home()">
+        <mat-icon>home</mat-icon>
+      </a>
+      <a mat-icon-button matTooltip="后退" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </a>
+      <a mat-icon-button matTooltip="刷新" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </a>
     </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <p class="control">
-            <a class="button is-warning width-100" (click)="askQuestion()">我要提问</a>
-          </p>
-        </div>
-      </div>
+    <div class="navbar-item">
+      <a class="btn btn-primary text-white width-100" role="button" (click)="askQuestion()">我要提问</a>
     </div>
   </div>
 </nav>
