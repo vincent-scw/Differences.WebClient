@@ -2,7 +2,7 @@
   <a class="menu-label"
     (click)="selectionChange(categoryGroup.id); isExpanded=!isExpanded"
     [class.is-active]="selectedCategoryId != null && categoryGroup.id === selectedCategoryId">
-    <div class="level">
+    <div class="level is-mobile">
       <span class="level-left">
         {{categoryGroup.name}}
       </span>
