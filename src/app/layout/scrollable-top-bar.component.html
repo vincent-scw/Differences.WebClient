@@ -1,27 +1,23 @@
-<nav class="navbar sub-top is-light">
-  <div class="container">
-    <div class="navbar-start">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-          <a mat-icon-button matTooltip="打开/隐藏侧边栏" (click)="onToggleSidenav()">
-            <mat-icon>menu</mat-icon>
-          </a>
-          <a mat-icon-button matTooltip="后退" (click)="goBack()">
-            <mat-icon>arrow_back</mat-icon>
-          </a>
-          <a mat-icon-button matTooltip="刷新" (click)="refresh()">
-            <mat-icon>refresh</mat-icon>
-          </a>
-        </div>
+<nav class="sub-top is-light">
+  <div class="container level is-mobile">
+    <div class="level-left">
+      <div class="field is-grouped">
+        <a mat-icon-button matTooltip="打开/隐藏侧边栏" (click)="onToggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </a>
+        <a mat-icon-button matTooltip="后退" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </a>
+        <a mat-icon-button matTooltip="刷新" (click)="refresh()">
+          <mat-icon>refresh</mat-icon>
+        </a>
       </div>
     </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="field">
-          <p class="control">
-            <a class="button is-warning width-100" (click)="askQuestion()">我要提问</a>
-          </p>
-        </div>
+    <div class="level-right">
+      <div class="field">
+        <p class="control">
+          <a class="button is-warning width-100" (click)="askQuestion()">我要提问</a>
+        </p>
       </div>
     </div>
   </div>
