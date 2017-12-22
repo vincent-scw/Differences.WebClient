@@ -3,18 +3,16 @@
 </div>
 
 <app-top-bar></app-top-bar>
-<app-scrollable-top-bar></app-scrollable-top-bar>
+<app-scrollable-top-bar (toggleSidenav)="sidenav.toggle()"></app-scrollable-top-bar>
 <div class="container main full-height">
-  <div class="tile is-ancestor full-height">
-    <div class="tile is-parent full-height">
-      <div class="sidenav-container tile is-2 is-child">
-        <category-panel></category-panel>
-      </div>
-      <div class="main-content tile is-child">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-  </div>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="opened">
+      <category-panel></category-panel>
+    </mat-sidenav>
+    <section class="sidenav-content">
+      <router-outlet></router-outlet>
+    </section>
+  </mat-sidenav-container>
 </div>
 
 <footer class="footer">
