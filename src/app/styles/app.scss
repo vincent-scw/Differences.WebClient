@@ -7,6 +7,11 @@ app-root {
   min-height: 100vh;
 }
 
+mat-sidenav-content {
+  background-color: white;
+  padding-left: 10px;
+}
+
 a {
   cursor: pointer;
 }
