@@ -4,12 +4,10 @@
   </figure>
   <div class="media-content">
     <div class="content" (mouseover)="showStatusBar=true" (mouseout)="showStatusBar=false">
-      <div class="level">
-        <div class="level-left">
-          <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
-        </div>
-        <div class="level-right">{{data.createTime | amTimeAgo}}</div>
-      </div>
+      <p>
+        <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
+        <small>发表于{{data.createTime | amTimeAgo}}</small>
+      </p>
       <div *ngIf="isReadonly === true" [innerHTML]="newContent">
       </div>
       <ez-quill-editor [(ngModel)]="newContent" *ngIf="isReadonly === false">
@@ -23,7 +21,7 @@
         </button>
       </div>
 
-      <nav class="level" *ngIf="isReadonly === true">
+      <nav class="level is-mobile" *ngIf="isReadonly === true">
         <div class="level-left"></div>
         <div class="level-right" [style.visibility]="alwaysShowActionbar || showStatusBar ? 'visible': 'hidden'">
           <a matTooltip="编辑" class="level-item" (click)="onEdit()" *ngIf="currentUser != null && currentUser.id == data.user.id">
@@ -64,8 +62,7 @@
         </textarea>
         <mat-hint align="end">{{myReplyContent?.length || 0}} / 200</mat-hint>
       </mat-form-field>
-      <button-group (submit)="onReplySubmit()"
-        (cancel)="toggleEditPanel()" [isValid]="true"></button-group>
+      <button-group (submit)="onReplySubmit()" (cancel)="toggleEditPanel()" [isValid]="true"></button-group>
     </div>
   </div>
 </article>

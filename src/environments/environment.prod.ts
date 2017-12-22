@@ -3,9 +3,9 @@ export const environment = {
   selfUrl: 'https://www.ysmbt.cn',
   apiServerUrl: '',
   authSettings: {
-    tenantName: 'DifferencesB2CTenant.onmicrosoft.com',
-    clientId: '8c73e2ca-6062-4793-ae08-42723068a8e2',
-    scopes: ['https://DifferencesB2CTenant.onmicrosoft.com/api/read openid offline_access'],
-    policyName: 'B2C_1_Sign',
+    tenantName: 'ysmbt.onmicrosoft.com',
+    clientId: 'a8c77bd9-5891-4889-9597-d652cfbdefb3',
+    scopes: ['https://ysmbt.onmicrosoft.com/api/read openid offline_access'],
+    policyName: 'B2C_1_ysmbt_sign',
   }
 };

@@ -4,18 +4,12 @@
   </figure>
   <div class="media-content">
     <div class="content">
-      <div class="level">
-        <div class="level-left">
-          <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
-        </div>
-        <div class="level-right">{{data.createTime | amTimeAgo}}</div>
-      </div>
-      <detail-view *ngIf="isReadonly" [data]="data" [isCurrentUser]="isMe" 
-        (edit)="onEdit()"></detail-view>
-      <detail-editor *ngIf="!isReadonly" [data]="data"
-        (submit)="onSubmit($event)"
-        (cancel)="onCancel()"></detail-editor>
+      <p>
+        <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
+        <small>发表于{{data.createTime | amTimeAgo}}</small>
+      </p>
+      <detail-view *ngIf="isReadonly" [data]="data" [isCurrentUser]="isMe" (edit)="onEdit()"></detail-view>
+      <detail-editor *ngIf="!isReadonly" [data]="data" (submit)="onSubmit($event)" (cancel)="onCancel()"></detail-editor>
     </div>
   </div>
 </article>
-    
