@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
@@ -14,8 +14,6 @@ import { AskQuestionComponent } from '../questions/ask-question.component';
 })
 
 export class ScrollableTopBarComponent {
-  @Output() toggleSidenav = new EventEmitter<void>();
-
   constructor(private dialog: MatDialog,
     private location: Location,
     private intermediaryService: IntermediaryService,
@@ -28,8 +26,8 @@ export class ScrollableTopBarComponent {
     this.authService.forceAuthenticated(() => this.dialog.open(AskQuestionComponent, {}));
   }
 
-  onToggleSidenav(): void {
-    this.toggleSidenav.emit();
+  home(): void {
+    this.router.navigateByUrl('/questions');
   }
 
   goBack(): void {
