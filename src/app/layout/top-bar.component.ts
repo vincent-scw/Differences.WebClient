@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output,
+import {
+  Component, EventEmitter, Output,
   AfterViewInit, Renderer, HostListener,
-  ViewChild, ElementRef } from '@angular/core';
+  ViewChild, ElementRef
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationNode } from '../models/navigation.model';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { transform } from 'async';
 
 @Component({
   selector: 'app-top-bar',
