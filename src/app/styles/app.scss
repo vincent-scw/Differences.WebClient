@@ -6,6 +6,10 @@ app-root {
   display: block;
 }
 
+mat-sidenav-container {
+  min-height: calc(100vh - 57px - 52px - 168px - 10px);
+}
+
 mat-sidenav-content {
   background-color: white;
   padding-left: 10px;
