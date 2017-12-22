@@ -1,28 +1,29 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light top">
-  <div class="container" [ngStyle]="{'display': displayStyle}" #container>
-    <a class="navbar-brand" href="/">
-      <img class="d-inline-block align-top" width="30" height="30" src="../../assets/logo@x.png"> 有什么不同？
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="toggle($event)">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" #collapseNav
-      [ngClass]="{'collapse': collapse, 'show': showClass, 'collapsing': collapsing}">
-      <ul class="navbar-nav mr-auto">
-        <li *ngFor="let node of topMenuNodes" class="navbar-item active"> <!-- need to set active later -->
-          <a class="nav-link" [routerLink]="node.url" [title]="node.title">
-            {{ node.title }}
-          </a>
-        </li>
-      </ul>
+<nav class="navbar is-fixed-top is-dark top-navbar" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="nav-item" href="/">
+        <img class="home-img" src="../../assets/logo-nav@2x.png">
+      </a>
+      <div class="navbar-burger burger" 
+        data-target="navbarCollapsable" (click)="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div id="navbarCollapsable" class="navbar-menu" [class.is-active]="isMenuActive">
+      <div class="navbar-start">
+        <a *ngFor="let node of topMenuNodes" class="navbar-item" [routerLink]="node.url" [title]="node.title">{{ node.title }}
+        </a>
+      </div>
 
-      <div class="">
+      <div class="navbar-end">
         <!-- <div class="navbar-item">
           <search-box
             #searchBox (onSearch)="doSearch($event)">
           </search-box>
         </div> -->
-        <app-account></app-account>
+        <app-account class="navbar-item"></app-account>
       </div>
     </div>
   </div>
