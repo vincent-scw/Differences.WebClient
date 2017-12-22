@@ -1,14 +1,15 @@
-<div class="btn-group" dropdown *ngIf="currentUser != null">
-  <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle waves-light user-btn" mdbRippleRadius>
-    {{ currentUser.displayName }}
+<div *ngIf="currentUser != null">
+  <button mat-button [matMenuTriggerFor]="menu">
+    <div class="account-button">
+      <ngx-avatar [name]="currentUser.displayName" size="30"></ngx-avatar>
+      {{ currentUser.displayName }}
+    </div>
   </button>
-
-  <div class="dropdown-menu dropdown-primary">
-    <a class="dropdown-item" (click)='onSignoutClicked()'>登出</a>
-  </div>
+  <mat-menu #menu="matMenu">
+    <!-- <button mat-menu-item (click)='onAccountClicked()'>账户</button> -->
+    <button mat-menu-item (click)='onSignoutClicked()'>登出</button>
+  </mat-menu>
 </div>
 <div *ngIf='currentUser == null'>
-  <button type="button" class="btn btn-primary waves-light user-btn" (click)='onSignClicked()'>
-    登录 / 注册
-  </button>
+  <button mat-button (click)='onSignClicked()'>登录 / 注册</button>
 </div>

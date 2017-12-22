@@ -1,17 +1,22 @@
-.top-navbar {
+.top {
   box-shadow: 0 2px $backgroundgray;
 }
 
 .sub-top {
-  height: 38px !important;
-  max-height: 38px;
+  top: 55px !important;
+  height: 30px !important;
+  max-height: 30px;
 }
 
-.user-avatar {
-  display: inline-block;
-  padding-right: 5px
+.home-img {
+  height: 50px;
+  padding: 8px 0 0 15px;
 }
 
-.user-btn {
-  padding: 0.5rem 1rem;
+.account-button {
+  display: flex;
+
+  ngx-avatar {
+    padding-right: 5px
+  }
 }
