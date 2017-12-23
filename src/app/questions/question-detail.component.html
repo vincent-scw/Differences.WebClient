@@ -24,7 +24,8 @@
             <ez-quill-editor [(ngModel)]="myAnswerContent"></ez-quill-editor>
           </p>
         </div>
-        <button-group (submit)="submitAnswer()" (cancel)="expansionPanel.toggle()" [isValid]="true"></button-group>
+        <button-group (submit)="submitAnswer()" 
+          (cancel)="expansionPanel.toggle()" [isValid]="true"></button-group>
       </div>
     </article>
   </mat-expansion-panel>

@@ -58,7 +58,7 @@
 
     <div *ngIf="showEditPanel">
       <mat-form-field class="full-width">
-        <textarea matInput #replyTextarea class="textarea" minlength="5" maxlength="200" [(ngModel)]="myReplyContent">
+        <textarea matInput #replyTextarea minlength="5" maxlength="200" [(ngModel)]="myReplyContent">
         </textarea>
         <mat-hint align="end">{{myReplyContent?.length || 0}} / 200</mat-hint>
       </mat-form-field>

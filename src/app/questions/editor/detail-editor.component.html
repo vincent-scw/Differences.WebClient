@@ -3,11 +3,11 @@
   <div class="field">
     <div class="control">
       <mat-form-field class="full-width form-control">
-        <input matInput required #inputTitle name="title" minlength="5" maxlength="100" 
+        <input matInput required #inputTitle name="title" minlength="5" maxlength="60" 
           [(ngModel)]="title" placeholder="标题（可以用大括号圈出重点哦！）">
         <mat-error *ngIf="title == null || title.length <= 5">多写一点吧</mat-error>
         <mat-hint align="start">例：{{ '{' }}你{{ '}' }}和{{ '{' }}您{{ '}' }}之间有什么不同？</mat-hint>
-        <mat-hint align="end">{{inputTitle.value?.length || 0}} / 100</mat-hint>
+        <mat-hint align="end">{{inputTitle.value?.length || 0}} / 60</mat-hint>
       </mat-form-field>
     </div>
   </div>
@@ -30,12 +30,12 @@
   <br />
   <div class="field">
     <mat-form-field class="full-width">
-      <textarea matInput class="textarea" required
+      <textarea matInput required
         placeholder="简单描述一下您的问题……"
-        minlength="5" maxlength="400" 
+        minlength="5" maxlength="200" 
         name="content" [(ngModel)]="content"></textarea>
       <mat-error *ngIf="content == null || content.length <= 5">多写一点吧</mat-error>
-      <mat-hint align="end">{{content?.length || 0}} / 400</mat-hint>
+      <mat-hint align="end">{{content?.length || 0}} / 200</mat-hint>
     </mat-form-field>
   </div>
   <button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
