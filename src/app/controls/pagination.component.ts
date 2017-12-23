@@ -13,7 +13,7 @@ export class PaginationComponent {
   @Output() pageChange = new EventEmitter();
 
   dataOffset = 0;
-  pSize = 15;
+  pSize = 10;
   pIndex = 0;
 
   get offset() {
