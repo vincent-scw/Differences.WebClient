@@ -16,6 +16,7 @@ export const fragments = {
       categoryId
       categoryName
       createTime
+      answerCount
     }
   `,
 

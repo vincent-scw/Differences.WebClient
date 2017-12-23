@@ -1,23 +1,24 @@
 <article class="media">
+  <figure class="media-left">
+    <div class="icon" [ngStyle]="{'color':getColor()}">
+      <i class="far fa-lightbulb fa-lg"></i>
+    </div>
+  </figure>
   <div class="media-content">
     <div class="content">
-      <span class="icon">
-        <i class="far fa-lightbulb"></i>
-      </span>
-      <a class="subtitle has-text-weight-semibold"
-        [routerLink]="['/questions', item.id]"
-        [innerHTML]="item.title | title"></a>
+      <a class="subtitle has-text-weight-semibold" [routerLink]="['/questions', item.id]" [innerHTML]="item.title | title"></a>
     </div>
 
     <nav class="level is-mobile has-text-weight-light">
       <div class="level-left">
         <small class="level-item">{{item.categoryName}}</small>
+        <small class="level-item">{{item.answerCount}}条回复</small>
       </div>
       <div class="level-right">
         <small class="level-item">
           <a [routerLink]="['/users', item.user.id]">{{item.user.displayName}}</a>
-            提问于{{item.createTime | amTimeAgo}}
-        </small>        
+          提问于{{item.createTime | amTimeAgo}}
+        </small>
       </div>
     </nav>
   </div>

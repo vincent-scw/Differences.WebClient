@@ -29,6 +29,7 @@ import { CategoryService } from './services/category.service';
 import { AppComponent } from './app.component';
 import { Config } from './config';
 import { from } from 'apollo-link';
+import { toIdValue } from 'apollo-utilities';
 
 @NgModule({
   declarations: [
@@ -93,16 +94,23 @@ export class AppModule {
       }
     });
 
+    const cache = new InMemoryCache({
+      dataIdFromObject: object => {
+        const o = object as any;
+        if (o.__typename != null && o.id != null) {
+          return `${o.__typename}_${o.id}`;
+        }
+      },
+      cacheResolvers: {
+        Query: {
+          question: (_, args) => toIdValue(cache.config.dataIdFromObject({__typename: 'QuestionType', id: args.id})),
+        }
+      }
+    });
+
     apollo.create({
       link: errorlink.concat(auth).concat(http),
-      cache: new InMemoryCache({
-        dataIdFromObject: object => {
-          const o = object as any;
-          if (o.__typename != null && o.id != null) {
-            return `${o.__typename}_${o.id}`;
-          }
-        }
-      }),
+      cache: cache,
       ssrMode: true
     });
   }

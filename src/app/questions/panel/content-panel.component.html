@@ -50,8 +50,9 @@
             <i class="far fa-hand-point-right"></i>
           </span>
           <a [routerLink]="['/users', sub.user.id]">{{sub.user.displayName}}</a>：
-          <div class="content" [(innerHTML)]="sub.content">
-          </div>
+          <span class="content">
+            {{sub.content}}
+          </span>
         </div>
       </div>
     </div>
