@@ -6,7 +6,8 @@
   </figure>
   <div class="media-content">
     <div class="content">
-      <a class="subtitle has-text-weight-semibold" [routerLink]="['/questions', item.id]" [innerHTML]="item.title | title"></a>
+      <a class="subtitle has-text-weight-semibold" 
+      [routerLink]="['/questions', item.id, item.title | normalizeTitle]" [innerHTML]="item.title | title"></a>
     </div>
 
     <nav class="level is-mobile has-text-weight-light">

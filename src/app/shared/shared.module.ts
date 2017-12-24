@@ -11,12 +11,14 @@ import * as moment from 'moment';
 import 'moment/min/locales';
 
 import { TitlePipe } from '../utlities/title.pipe';
+import { NormalizeTitlePipe } from '../utlities/normalize-title.pipe';
 
 moment.locale('zh-cn'); // Chinese
 
 @NgModule({
     declarations: [
-        TitlePipe
+        TitlePipe,
+        NormalizeTitlePipe
     ],
     imports: [
         HttpModule,
@@ -39,7 +41,8 @@ moment.locale('zh-cn'); // Chinese
         AvatarModule,
         ApolloModule,
         MomentModule,
-        TitlePipe
+        TitlePipe,
+        NormalizeTitlePipe
     ]
 })
 
