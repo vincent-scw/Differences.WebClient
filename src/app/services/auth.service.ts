@@ -37,7 +37,7 @@ export class AuthService {
 
   authority: string = 'https://login.microsoftonline.com/tfp/'
   + this.authSettings.tenantName + '/'
-  + this.authSettings.policyName;
+  + this.authSettings.signPolicy;
 
   /*
     * B2C SignIn SignUp Policy Configuration
