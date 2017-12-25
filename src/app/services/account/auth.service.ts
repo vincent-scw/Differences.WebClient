@@ -7,10 +7,10 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
 
-import { Config } from '../config';
-import { User } from '../models/user.model';
-import { UserService } from './user.service';
-import { IntermediaryService } from './intermediary.service';
+import { Config } from '../../config';
+import { User } from '../../models/user.model';
+import { UserService } from '../user.service';
+import { IntermediaryService } from '../intermediary.service';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const USER_INFO_KEY = 'user_info';

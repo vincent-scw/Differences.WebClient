@@ -2,7 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { Apollo, QueryRef } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/account/auth.service';
 import { Question } from '../models/question.model';
 import { Category } from '../models/category.model';
 import { Answer, AnswerListResponse } from '../models/answer.model';

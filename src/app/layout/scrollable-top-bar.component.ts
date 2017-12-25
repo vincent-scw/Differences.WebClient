@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 
 import { IntermediaryService } from '../services/intermediary.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/account/auth.service';
 
 import { AskQuestionComponent } from '../questions/ask-question.component';
 

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/account/auth.service';
 import { User } from '../models/user.model';
 
 @Component({

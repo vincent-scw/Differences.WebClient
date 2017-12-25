@@ -10,7 +10,7 @@ import { QueryRef } from 'apollo-angular';
 import { QuestionService } from '../services/question.service';
 import { QuestionAnswerService } from '../services/question-answer.service';
 import { IntermediaryService } from '../services/intermediary.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/account/auth.service';
 import { CategoryService } from '../services/category.service';
 
 import { Mode } from '../componentbase/mode-toggleable-base';

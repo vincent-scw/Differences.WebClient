@@ -22,7 +22,7 @@ import { ControlsModule } from './controls/controls.module';
 import { QuestionsModule } from './questions/questions.module';
 import { UsersModule } from './users/users.module';
 
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/account/auth.service';
 import { IntermediaryService } from './services/intermediary.service';
 import { CategoryService } from './services/category.service';
 

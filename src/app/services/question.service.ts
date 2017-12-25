@@ -3,7 +3,7 @@ import { Apollo, QueryRef } from 'apollo-angular';
 import { DataProxy } from 'apollo-cache';
 import gql from 'graphql-tag';
 
-import { AuthService } from './auth.service';
+import { AuthService } from './account/auth.service';
 import {
   Question,
   QuestionResponse,
