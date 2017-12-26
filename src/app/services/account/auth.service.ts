@@ -13,47 +13,30 @@ import { UserService } from '../user.service';
 import { IntermediaryService } from '../intermediary.service';
 import { AccountBase, Policy } from './account-base.service';
 
-const ACCESS_TOKEN_KEY = 'access_token';
-const USER_INFO_KEY = 'user_info';
-const USER_ID_KEY = 'user_id';
-const MSAL_ID_TOKEN_KEY = 'msal.idtoken';
-
 @Injectable()
 export class AuthService extends AccountBase {
   user = new BehaviorSubject<User>(this.getUser());
   refreshingToken = new BehaviorSubject<boolean>(false);
-  /**
-   * Token info.
-   */
-  private expiresIn: number;
-  private authTime: number;
-  private interval: number;
 
   /**
    * Scheduling of the refresh token.
    */
   private refreshSubscription: any;
-
-  /*
-    * B2C SignIn SignUp Policy Configuration
-    */
-  clientApplication = new UserAgentApplication(
-    this.authSettings.clientId, this.authority,
-    (errorDesc: string, token: string, error: string, tokenType: string) => {
-      console.warn(tokenType);
-      // Called after loginRedirect or acquireTokenPopup
-      if (error != null && error !== '') {
-        this.intermediaryService.onError(error);
-      }
-    },
-    { redirectUri: Config.DEFAULT_REDIRECT_URL }
-  );
+  private clientApplication: UserAgentApplication;
 
   constructor(
-    private jwtHelper: JwtHelper,
-    private userService: UserService,
-    private intermediaryService: IntermediaryService) {
-    super(Policy.sign, intermediaryService);
+    protected jwtHelper: JwtHelper,
+    protected userService: UserService,
+    protected intermediaryService: IntermediaryService) {
+    super(Policy.sign, jwtHelper, userService);
+
+    this.clientApplication = new UserAgentApplication(
+      this.authSettings.clientId, this.authority,
+      (errorDesc: string, token: string, error: string, tokenType: string) => {
+        console.warn(tokenType);
+      },
+      { redirectUri: Config.DEFAULT_REDIRECT_URL }
+    );
   }
 
   public login(): void {
@@ -78,9 +61,9 @@ export class AuthService extends AccountBase {
 
   public logout() {
     this.clientApplication.logout();
-    localStorage.removeItem(USER_ID_KEY);
-    localStorage.removeItem(USER_INFO_KEY);
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(this.USER_ID_KEY);
+    localStorage.removeItem(this.USER_INFO_KEY);
+    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
     this.user.next(null);
   }
 
@@ -114,11 +97,11 @@ export class AuthService extends AccountBase {
       .then(
       (token: string) => {
         this.checkUserInDb();
-        localStorage.setItem(ACCESS_TOKEN_KEY, token);
+        localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
       }, (error: any) => {
-        localStorage.removeItem(USER_ID_KEY);
-        localStorage.removeItem(USER_INFO_KEY);
-        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        localStorage.removeItem(this.USER_ID_KEY);
+        localStorage.removeItem(this.USER_INFO_KEY);
+        localStorage.removeItem(this.ACCESS_TOKEN_KEY);
         this.user.next(null);
         this.intermediaryService.onWarning('会话过期，请重新登录。');
       });
@@ -143,50 +126,5 @@ export class AuthService extends AccountBase {
         funcAfterAuth();
       }
     });
-  }
-
-  public getUser(): User {
-    const userInfo = localStorage.getItem(USER_INFO_KEY);
-    return userInfo == null ? null : JSON.parse(userInfo);
-  }
-
-  private storeUser(user: User): void {
-    localStorage.setItem(USER_INFO_KEY, JSON.stringify(user));
-  }
-
-  /**
-   * Checks for presence of token and that token hasn't expired.
-   */
-  private accessTokenNotExpired(): boolean {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY); // window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
-    return tokenNotExpired(null, token);
-  }
-
-  private idTokenNotExpired(): boolean {
-    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
-    return tokenNotExpired(null, token);
-  }
-
-  private getExpiryDate(): Date {
-    // check id token is enougth,
-    // because it will try to refresh accesstoken after
-    const token = window.sessionStorage.getItem(MSAL_ID_TOKEN_KEY);
-    if (token == null) { return null; }
-    return this.jwtHelper.getTokenExpirationDate(token);
-  }
-
-  private checkUserInDb() {
-    const userInDb = localStorage.getItem(USER_ID_KEY);
-    const currentUser = this.getUser();
-    if (userInDb != null && userInDb === currentUser.id) { return; }
-
-    // Check user is stored in DB
-    this.userService.checkUserInDb()
-      .subscribe((data: any) => {
-        localStorage.setItem(USER_ID_KEY, data.checkUserInDb.id);
-      },
-      (error) => {
-        console.error(error);
-      });
   }
 }

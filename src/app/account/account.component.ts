@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../services/account/auth.service';
 import { User } from '../models/user.model';
+import { EditProfileService } from '../services/account/edit-profile.service';
 
 @Component({
   selector: 'app-account',
@@ -17,6 +18,12 @@ export class AccountComponent implements OnInit, OnDestroy {
   isAdmin: boolean;
 
   private authSubscription: Subscription;
+
+  constructor(
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private editProfileService: EditProfileService
+  ) { }
 
   ngOnInit() {
     this.authSubscription = this.authService.user.subscribe(
@@ -38,10 +45,6 @@ export class AccountComponent implements OnInit, OnDestroy {
     if (!!this.authSubscription) { this.authSubscription.unsubscribe(); }
   }
 
-  constructor(
-    private snackBar: MatSnackBar,
-    private authService: AuthService) { }
-
   onSignClicked(): void {
     this.authService.login();
   }
@@ -54,6 +57,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   onAccountClicked() {
-
+    this.editProfileService.edit();
   }
 }
