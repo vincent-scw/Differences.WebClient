@@ -11,6 +11,7 @@ import { Config } from '../../config';
 import { User } from '../../models/user.model';
 import { UserService } from '../user.service';
 import { IntermediaryService } from '../intermediary.service';
+import { AccountBase, Policy } from './account-base.service';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 const USER_INFO_KEY = 'user_info';
@@ -18,7 +19,7 @@ const USER_ID_KEY = 'user_id';
 const MSAL_ID_TOKEN_KEY = 'msal.idtoken';
 
 @Injectable()
-export class AuthService {
+export class AuthService extends AccountBase {
   user = new BehaviorSubject<User>(this.getUser());
   refreshingToken = new BehaviorSubject<boolean>(false);
   /**
@@ -32,12 +33,6 @@ export class AuthService {
    * Scheduling of the refresh token.
    */
   private refreshSubscription: any;
-
-  authSettings = Config.AUTH_SETTINGS;
-
-  authority: string = 'https://login.microsoftonline.com/tfp/'
-  + this.authSettings.tenantName + '/'
-  + this.authSettings.signPolicy;
 
   /*
     * B2C SignIn SignUp Policy Configuration
@@ -58,7 +53,7 @@ export class AuthService {
     private jwtHelper: JwtHelper,
     private userService: UserService,
     private intermediaryService: IntermediaryService) {
-
+    super(Policy.sign, intermediaryService);
   }
 
   public login(): void {
