@@ -13,8 +13,8 @@ const QueryUser = gql`
   }
 `;
 
-const QueryCheckUser = gql`
-  query user {
+const MutationCheckUser = gql`
+  mutation user {
     checkUserInDb {
       id
     }
@@ -31,6 +31,6 @@ export class UserService {
   }
 
   checkUserInDb() {
-    return this.apollo.watchQuery({ query: QueryCheckUser });
+    return this.apollo.mutate({ mutation: MutationCheckUser });
   }
 }

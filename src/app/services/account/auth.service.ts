@@ -187,9 +187,8 @@ export class AuthService {
 
     // Check user is stored in DB
     this.userService.checkUserInDb()
-      .valueChanges
       .subscribe((data: any) => {
-        localStorage.setItem(USER_ID_KEY, data.id);
+        localStorage.setItem(USER_ID_KEY, data.checkUserInDb.id);
       },
       (error) => {
         console.error(error);
