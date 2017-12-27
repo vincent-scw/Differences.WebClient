@@ -19,7 +19,6 @@ export abstract class AccountBase {
   MSAL_ID_TOKEN_KEY = 'msal.idtoken';
 
   protected authSettings = Config.AUTH_SETTINGS;
-  authority: string;
 
   /**
    * Token info.
@@ -28,8 +27,11 @@ export abstract class AccountBase {
   private authTime: number;
   private interval: number;
 
-  constructor(protected policy: Policy, protected jwtHelper: JwtHelper,
+  constructor(protected jwtHelper: JwtHelper,
     protected userService: UserService) {
+  }
+
+  protected getAuthority(policy: Policy): string {
     let policyName: string;
     switch (policy) {
       case Policy.sign:
@@ -42,7 +44,7 @@ export abstract class AccountBase {
         policyName = this.authSettings.passwordRestPolicy;
         break;
     }
-    this.authority = `https://login.microsoftonline.com/tfp/${this.authSettings.tenantName}/${policyName}`;
+    return `https://login.microsoftonline.com/tfp/${this.authSettings.tenantName}/${policyName}`;
   }
 
   public getUser(): User {
@@ -73,6 +75,12 @@ export abstract class AccountBase {
     const token = window.sessionStorage.getItem(this.MSAL_ID_TOKEN_KEY);
     if (token == null) { return null; }
     return this.jwtHelper.getTokenExpirationDate(token);
+  }
+
+  protected cleanCache() {
+    localStorage.removeItem(this.USER_ID_KEY);
+    localStorage.removeItem(this.USER_INFO_KEY);
+    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
   }
 
   protected checkUserInDb() {

@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../services/account/auth.service';
 import { User } from '../models/user.model';
-import { EditProfileService } from '../services/account/edit-profile.service';
 
 @Component({
   selector: 'app-account',
@@ -21,8 +20,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   constructor(
     private snackBar: MatSnackBar,
-    private authService: AuthService,
-    private editProfileService: EditProfileService
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -57,6 +55,5 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   onAccountClicked() {
-    this.editProfileService.edit();
   }
 }

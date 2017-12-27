@@ -23,7 +23,6 @@ import { QuestionsModule } from './questions/questions.module';
 import { UsersModule } from './users/users.module';
 
 import { AuthService } from './services/account/auth.service';
-import { EditProfileService } from './services/account/edit-profile.service';
 import { IntermediaryService } from './services/intermediary.service';
 import { CategoryService } from './services/category.service';
 
@@ -54,7 +53,6 @@ import { toIdValue } from 'apollo-utilities';
     Title,
     JwtHelper,
     AuthService,
-    EditProfileService,
     IntermediaryService,
     CategoryService
   ],

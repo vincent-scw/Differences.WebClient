@@ -28,12 +28,14 @@ export class AuthService extends AccountBase {
     protected jwtHelper: JwtHelper,
     protected userService: UserService,
     protected intermediaryService: IntermediaryService) {
-    super(Policy.sign, jwtHelper, userService);
+    super(jwtHelper, userService);
 
     this.clientApplication = new UserAgentApplication(
-      this.authSettings.clientId, this.authority,
+      this.authSettings.clientId, this.getAuthority(Policy.sign),
       (errorDesc: string, token: string, error: string, tokenType: string) => {
         console.warn(tokenType);
+
+        this.intermediaryService.onError(error);
       },
       { redirectUri: Config.DEFAULT_REDIRECT_URL }
     );
@@ -42,6 +44,8 @@ export class AuthService extends AccountBase {
   public login(): void {
     this.clientApplication.loginPopup(this.authSettings.scopes)
       .then((idToken: any) => {
+        this.cleanCache();
+
         const fromToken = this.jwtHelper.decodeToken(idToken);
         const user: User = {
           id: fromToken.oid,
@@ -51,6 +55,7 @@ export class AuthService extends AccountBase {
         };
         this.storeUser(user);
         this.user.next(user);
+
         // acquire access token right after signin
         this.tryGetTokens().then();
       }, (error: any) => {
@@ -61,9 +66,7 @@ export class AuthService extends AccountBase {
 
   public logout() {
     this.clientApplication.logout();
-    localStorage.removeItem(this.USER_ID_KEY);
-    localStorage.removeItem(this.USER_INFO_KEY);
-    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+    this.cleanCache();
     this.user.next(null);
   }
 
@@ -99,9 +102,7 @@ export class AuthService extends AccountBase {
         this.checkUserInDb();
         localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
       }, (error: any) => {
-        localStorage.removeItem(this.USER_ID_KEY);
-        localStorage.removeItem(this.USER_INFO_KEY);
-        localStorage.removeItem(this.ACCESS_TOKEN_KEY);
+        this.cleanCache();
         this.user.next(null);
         this.intermediaryService.onWarning('会话过期，请重新登录。');
       });
