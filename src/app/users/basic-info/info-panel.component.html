@@ -1,0 +1,6 @@
+<div *ngIf="isReadonly">
+  <app-user-basic-view [user]="user"></app-user-basic-view>
+</div>
+<div *ngIf="!isReadonly">
+  <app-user-basic-editor [user]="user"></app-user-basic-editor>
+</div>

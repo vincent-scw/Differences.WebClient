@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -20,7 +21,8 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   constructor(
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -55,5 +57,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   onAccountClicked() {
+    this.router.navigateByUrl('/users/me');
   }
 }

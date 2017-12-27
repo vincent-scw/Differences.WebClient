@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
@@ -17,9 +18,6 @@ import { Mode } from '../componentbase/mode-toggleable-base';
 
 import { Answer } from '../models/answer.model';
 import { Question } from '../models/question.model';
-import { from } from 'apollo-link';
-import { ParamMap } from '@angular/router/src/shared';
-import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../controls/confirm-dialog.component';
 
 @Component({
