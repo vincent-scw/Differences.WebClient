@@ -1,0 +1,19 @@
+<form name="form" #form="ngForm">
+  <div class="field">
+    <div class="control">
+      <mat-form-field class="form-control">
+        <input matInput #inputEmail name="email" [(ngModel)]="email" placeholder="Email" disabled>
+        <mat-hint>暂不支持修改Email</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <mat-form-field class="form-control">
+        <input matInput #inputDisplayName name="displayName" [(ngModel)]="displayName" placeholder="显示名字" required>
+        <mat-error *ngIf="(inputDisplayName.value?.length || 0) < 3"></mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <button-group (submit)="onSubmit(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+</form>

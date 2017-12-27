@@ -9,4 +9,8 @@ import { User } from '../../models/user.model';
 
 export class UserBasicInfoPanelComponent extends ModeToggleableBase {
   @Input() user: User;
+
+  updateUser(value: User) {
+
+  }
 }

@@ -1,6 +1,6 @@
 <div *ngIf="isReadonly">
-  <app-user-basic-view [user]="user"></app-user-basic-view>
+  <app-user-basic-view [user]="user" (edit)="isReadonly = false"></app-user-basic-view>
 </div>
 <div *ngIf="!isReadonly">
-  <app-user-basic-editor [user]="user"></app-user-basic-editor>
+  <app-user-basic-editor [user]="user" (submit)="updateUser($event)" (cancel)="isReadonly = true"></app-user-basic-editor>
 </div>

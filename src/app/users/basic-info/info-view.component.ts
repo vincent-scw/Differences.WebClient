@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'msal/lib-commonjs/User';
 
 @Component({
@@ -7,5 +7,10 @@ import { User } from 'msal/lib-commonjs/User';
 })
 
 export class UserBasicInfoViewComponent {
- @Input() user: User;
+  @Input() user: User;
+  @Output() edit = new EventEmitter<void>();
+
+  onEdit() {
+    this.edit.emit();
+  }
 }
