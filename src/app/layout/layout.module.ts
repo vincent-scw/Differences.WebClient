@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 import { ControlsModule } from '../controls/controls.module';
-import { AccountModule } from '../account/account.module';
 
+import { AccountComponent } from './account.component';
 import { TopBarComponent } from './top-bar.component';
 import { ScrollableTopBarComponent } from './scrollable-top-bar.component';
 import { FooterComponent } from './footer.component';
@@ -17,18 +17,19 @@ import { LocationService } from '../services/location.service';
       CommonModule,
       SharedModule,
       ControlsModule,
-      AccountModule,
       RouterModule
     ],
     declarations: [
       TopBarComponent,
       ScrollableTopBarComponent,
-      FooterComponent
+      FooterComponent,
+      AccountComponent
     ],
     exports: [
       TopBarComponent,
       ScrollableTopBarComponent,
-      FooterComponent
+      FooterComponent,
+      AccountComponent
     ],
     providers: [
       LocationService,
