@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
+
 import { ModeToggleableBase } from '../../componentbase/mode-toggleable-base';
+import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 
 @Component({
@@ -10,7 +12,11 @@ import { User } from '../../models/user.model';
 export class UserBasicInfoPanelComponent extends ModeToggleableBase {
   @Input() user: User;
 
-  updateUser(value: User) {
+  constructor(private userService: UserService) {
+    super();
+  }
 
+  updateUser(value: User) {
+    this.userService.updateUser(value).subscribe();
   }
 }

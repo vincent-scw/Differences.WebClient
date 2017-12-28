@@ -1,12 +1,12 @@
 <div class="field is-grouped">
   <p class="control">
-    <a mat-icon-button matTooltip="确定" (click)="onSubmit()" [disabled]="!isValid">
-      <mat-icon [class.icon-highlight]="isValid" [class.icon-normal]="!isValid">check</mat-icon>
+    <a class="button is-link" mat-button (click)="onSubmit()" [disabled]="!isValid">
+      提交
     </a>
   </p>
   <p class="control">
-    <a mat-icon-button matTooltip="取消" (click)="onCancel()">
-      <mat-icon class="icon-normal">close</mat-icon>
+    <a class="button is-light" mat-button (click)="onCancel()">
+      取消
     </a>
   </p>
 </div>

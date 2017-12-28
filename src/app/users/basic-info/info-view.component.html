@@ -1,14 +1,18 @@
-<div class="field">
-  <label class="label">Email</label>
-  <div>{{user.emails[0]}}</div>
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Email</label>
+  </div>
+  <div class="field-body">{{user.emails[0]}}</div>
 </div>
-<div class="field">
-  <label class="label">显示名字</label>
-  <div>{{user.displayName}}</div>
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">显示名字</label>
+  </div>
+  <div class="field-body">{{user.displayName}}</div>
 </div>
 <div class="field is-grouped">
   <p class="control">
-    <a class="button is-link width-100" (click)="onEdit()">
+    <a class="button is-warning" mat-button (click)="onEdit()">
       修改
     </a>
   </p>

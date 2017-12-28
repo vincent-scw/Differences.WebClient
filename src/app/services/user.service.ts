@@ -3,6 +3,7 @@ import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { User } from '../models/user.model';
+import { fragments } from './fragments';
 
 const QueryUser = gql`
   query user {
@@ -21,6 +22,15 @@ const MutationCheckUser = gql`
   }
 `;
 
+const MutationUpdateUser = gql`
+  mutation update_user($user: UserInput!) {
+    updateUserInfo(user: $user) {
+      ...UserInfo
+    }
+  }
+  ${fragments.user}
+`;
+
 @Injectable()
 export class UserService {
   constructor(private apollo: Apollo) {
@@ -32,5 +42,14 @@ export class UserService {
 
   checkUserInDb() {
     return this.apollo.mutate({ mutation: MutationCheckUser });
+  }
+
+  updateUser(user: User) {
+    return this.apollo.mutate({
+      mutation: MutationUpdateUser,
+      variables: {
+        user: user
+      }
+    });
   }
 }
