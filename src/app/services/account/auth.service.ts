@@ -51,10 +51,9 @@ export class AuthService extends AccountBase {
           id: fromToken.oid,
           displayName: fromToken.name,
           // jobTitle = fromToken.jobTitle;
-          emails: fromToken.emails
+          email: fromToken.emails[0]
         };
         this.storeUser(user);
-        this.user.next(user);
 
         // acquire access token right after signin
         this.tryGetTokens().then();
@@ -127,5 +126,31 @@ export class AuthService extends AccountBase {
         funcAfterAuth();
       }
     });
+  }
+
+  public getUser(): User {
+    const userInfo = localStorage.getItem(this.USER_INFO_KEY);
+    return userInfo == null ? null : JSON.parse(userInfo);
+  }
+
+  // After updating user info, allow store user, so make it public
+  public storeUser(user: User): void {
+    localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(user));
+    this.user.next(user);
+  }
+
+  private checkUserInDb() {
+    const userInDb = localStorage.getItem(this.USER_ID_KEY);
+    const currentUser = this.getUser();
+    if (userInDb != null && userInDb === currentUser.id) { return; }
+
+    // Check user is stored in DB
+    this.userService.checkUserInDb()
+      .subscribe((data: any) => {
+        localStorage.setItem(this.USER_ID_KEY, data.checkUserInDb.id);
+      },
+      (error) => {
+        console.error(error);
+      });
   }
 }

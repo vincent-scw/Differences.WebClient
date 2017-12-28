@@ -17,6 +17,7 @@ import { User } from '../models/user.model';
 export class UserDetailComponent implements OnInit, OnDestroy {
   user: User;
   private paramMapSubscription: Observable<ParamMap>;
+  private authSubscription: Subscription;
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -26,7 +27,10 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.router.url === '/users/me') {
       // handle for myself
-      this.user = this.authService.getUser();
+      this.authSubscription = this.authService.user.subscribe(
+        (user: User) => {
+          this.user = user;
+        });
     } else {
       let id: string;
       this.paramMapSubscription = this.activatedRoute.paramMap
@@ -36,6 +40,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (!!this.authSubscription) { this.authSubscription.unsubscribe(); }
   }
 
   getUser(id: string) {

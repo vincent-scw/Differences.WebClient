@@ -47,15 +47,6 @@ export abstract class AccountBase {
     return `https://login.microsoftonline.com/tfp/${this.authSettings.tenantName}/${policyName}`;
   }
 
-  public getUser(): User {
-    const userInfo = localStorage.getItem(this.USER_INFO_KEY);
-    return userInfo == null ? null : JSON.parse(userInfo);
-  }
-
-  protected storeUser(user: User): void {
-    localStorage.setItem(this.USER_INFO_KEY, JSON.stringify(user));
-  }
-
   /**
    * Checks for presence of token and that token hasn't expired.
    */
@@ -81,20 +72,5 @@ export abstract class AccountBase {
     localStorage.removeItem(this.USER_ID_KEY);
     localStorage.removeItem(this.USER_INFO_KEY);
     localStorage.removeItem(this.ACCESS_TOKEN_KEY);
-  }
-
-  protected checkUserInDb() {
-    const userInDb = localStorage.getItem(this.USER_ID_KEY);
-    const currentUser = this.getUser();
-    if (userInDb != null && userInDb === currentUser.id) { return; }
-
-    // Check user is stored in DB
-    this.userService.checkUserInDb()
-      .subscribe((data: any) => {
-        localStorage.setItem(this.USER_ID_KEY, data.checkUserInDb.id);
-      },
-      (error) => {
-        console.error(error);
-      });
   }
 }

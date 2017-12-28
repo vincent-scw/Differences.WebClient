@@ -15,7 +15,7 @@ export class UserBasicInfoEditorComponent implements OnInit {
   displayName: string;
 
   ngOnInit() {
-    this.email = this.user.emails[0];
+    this.email = this.user.email;
     this.displayName = this.user.displayName;
   }
 
