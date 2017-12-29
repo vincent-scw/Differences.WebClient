@@ -13,12 +13,7 @@
       <ez-quill-editor [(ngModel)]="newContent" *ngIf="isReadonly === false">
       </ez-quill-editor>
       <div class="action-bar" *ngIf="isReadonly === false">
-        <button mat-icon-button (click)="onSubmit()">
-          <mat-icon class="icon-highlight">check</mat-icon>
-        </button>
-        <button mat-icon-button (click)="onCancel()">
-          <mat-icon class="icon-normal">close</mat-icon>
-        </button>
+        <button-group (submit)="onSubmit()" (cancel)="onCancel()" isValid="true"></button-group>
       </div>
 
       <nav class="level is-mobile" *ngIf="isReadonly === true">
