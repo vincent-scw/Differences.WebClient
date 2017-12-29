@@ -13,9 +13,9 @@
       <div class="control">
         <mat-form-field class="form-control full-width">
           <input matInput #inputDisplayName name="displayName" [(ngModel)]="displayName" 
-            placeholder="显示名字" required [disabled]="isReadonly" maxlength="10" minlength="3">
-          <mat-error *ngIf="(inputDisplayName.value?.length || 0) < 3">请输入3-10个字符</mat-error>
-          <mat-hint align="end">{{inputDisplayName.value?.length || 0}} / 10</mat-hint>
+            placeholder="显示名字" required [disabled]="isReadonly" maxlength="20" minlength="3">
+          <mat-error *ngIf="(inputDisplayName.value?.length || 0) < 3">请输入3-20个字符</mat-error>
+          <mat-hint align="end">{{inputDisplayName.value?.length || 0}} / 20</mat-hint>
         </mat-form-field>
       </div>
     </div>
