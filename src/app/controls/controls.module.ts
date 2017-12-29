@@ -7,13 +7,14 @@ import { SharedModule } from '../shared/shared.module';
 import { EasyQuillEditorComponent } from './editor/ez-quill-editor.component';
 
 import { PaginationComponent } from './pagination.component';
-import { CategoryPanelComponent } from './category/category-panel.component';
 import { CategoryGroupItemComponent } from './category/category-group-item.component';
 import { CategoryDropdownComponent } from './category/category-dropdown.component';
 import { SearchBoxComponent } from './search-box.component';
 import { NoContentComponent } from './no-content.component';
 import { ButtonGroupComponent } from './button-group.component';
 import { ConfirmDialogComponent } from './confirm-dialog.component';
+import { CategorySidebarComponent } from './sidebar/category-sidebar.component';
+import { UserSidebarComponent } from './sidebar/user-sidebar.component';
 
 @NgModule({
   imports: [
@@ -24,24 +25,26 @@ import { ConfirmDialogComponent } from './confirm-dialog.component';
   declarations: [
     EasyQuillEditorComponent,
     PaginationComponent,
-    CategoryPanelComponent,
+    CategorySidebarComponent,
     CategoryGroupItemComponent,
     CategoryDropdownComponent,
     SearchBoxComponent,
     NoContentComponent,
     ButtonGroupComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UserSidebarComponent
   ],
   exports: [
     EasyQuillEditorComponent,
     PaginationComponent,
-    CategoryPanelComponent,
+    CategorySidebarComponent,
     CategoryGroupItemComponent,
     CategoryDropdownComponent,
     SearchBoxComponent,
     NoContentComponent,
     ButtonGroupComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UserSidebarComponent
   ],
   entryComponents: [
     ConfirmDialogComponent

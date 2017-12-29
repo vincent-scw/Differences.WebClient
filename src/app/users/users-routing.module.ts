@@ -3,11 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserListComponent } from './user-list.component';
 import { UserDetailComponent } from './user-detail.component';
+import { UserSidebarComponent } from '../controls/sidebar/user-sidebar.component';
 
 const userRoutes: Routes = [
-  { path: 'users', component: UserListComponent },
-  { path: 'users/:id', component: UserDetailComponent },
-  { path: 'users/me', component: UserDetailComponent }
+  {
+    path: 'users', children: [
+      { path: '', component: UserListComponent },
+      { path: ':id', component: UserDetailComponent },
+      { path: 'me', component: UserDetailComponent },
+      { path: '', component: UserSidebarComponent, outlet: 'sidebar' }
+    ]
+  }
 ];
 
 @NgModule({

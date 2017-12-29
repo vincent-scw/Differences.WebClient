@@ -6,7 +6,7 @@ import { Category, CategoryGroup } from '../../models/category.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'category-panel',
+  selector: 'category-sidebar',
   template: `
   <aside class="menu">
     <ul *ngFor="let categoryGroup of categoryGroups"
@@ -19,7 +19,7 @@ import { Category, CategoryGroup } from '../../models/category.model';
   `
 })
 
-export class CategoryPanelComponent implements OnInit {
+export class CategorySidebarComponent implements OnInit {
   categoryGroups: CategoryGroup[];
 
   constructor(private categoryService: CategoryService) {

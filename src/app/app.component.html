@@ -7,7 +7,7 @@
 <div class="container main full-height">
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" opened="opened" class="sidenav-container">
-      <category-panel></category-panel>
+        <router-outlet name="sidebar"></router-outlet>
     </mat-sidenav>
     <mat-sidenav-content>
       <router-outlet></router-outlet>
