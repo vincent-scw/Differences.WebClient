@@ -9,8 +9,6 @@ import { UserService } from '../services/user.service';
 import { UserListComponent } from './user-list.component';
 import { UserDetailComponent } from './user-detail.component';
 import { UserBasicInfoPanelComponent } from './basic-info/info-panel.component';
-import { UserBasicInfoEditorComponent } from './basic-info/info-editor.component';
-import { UserBasicInfoViewComponent } from './basic-info/info-view.component';
 
 @NgModule({
   imports: [
@@ -21,9 +19,7 @@ import { UserBasicInfoViewComponent } from './basic-info/info-view.component';
   declarations: [
     UserListComponent,
     UserDetailComponent,
-    UserBasicInfoPanelComponent,
-    UserBasicInfoEditorComponent,
-    UserBasicInfoViewComponent
+    UserBasicInfoPanelComponent
   ],
   providers: [
     UserService

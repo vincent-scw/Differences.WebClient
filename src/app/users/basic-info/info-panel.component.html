@@ -1,6 +1,31 @@
-<div *ngIf="isReadonly">
-  <app-user-basic-view [user]="user" (edit)="isReadonly = false"></app-user-basic-view>
-</div>
-<div *ngIf="!isReadonly">
-  <app-user-basic-editor [user]="user" (submit)="updateUser($event)" (cancel)="isReadonly = true"></app-user-basic-editor>
-</div>
+<section class="section">
+  <form name="form" #form="ngForm">
+    <div class="field">
+      <div class="control">
+        <mat-form-field class="form-control full-width">
+          <input matInput #inputEmail name="email" [(ngModel)]="email" placeholder="Email" required disabled>
+          <mat-hint>暂不支持修改Email</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+    <br />
+    <div class="field">
+      <div class="control">
+        <mat-form-field class="form-control full-width">
+          <input matInput #inputDisplayName name="displayName" [(ngModel)]="displayName" 
+            placeholder="显示名字" required [disabled]="isReadonly" maxlength="10" minlength="3">
+          <mat-error *ngIf="(inputDisplayName.value?.length || 0) < 3">请输入3-10个字符</mat-error>
+          <mat-hint align="end">{{inputDisplayName.value?.length || 0}} / 10</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field" *ngIf="isReadonly">
+      <p class="control">
+        <a class="button is-warning" (click)="onEdit()">
+          修改
+        </a>
+      </p>
+    </div>
+    <button-group *ngIf="!isReadonly" (submit)="updateUser(form.value)" (cancel)="onCancel()" [isValid]="form.valid"></button-group>
+  </form>
+</section>
