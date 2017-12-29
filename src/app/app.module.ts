@@ -27,13 +27,15 @@ import { IntermediaryService } from './services/intermediary.service';
 import { CategoryService } from './services/category.service';
 
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 import { Config } from './config';
 import { from } from 'apollo-link';
 import { toIdValue } from 'apollo-utilities';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent
   ],
   imports: [
     AppRoutingModule,

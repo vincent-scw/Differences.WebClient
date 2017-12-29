@@ -10,6 +10,8 @@ import { UserListComponent } from './user-list.component';
 import { UserDetailComponent } from './user-detail.component';
 import { UserBasicInfoPanelComponent } from './basic-info/info-panel.component';
 
+import { CanActiveMe } from './can-active-me';
+
 @NgModule({
   imports: [
     SharedModule,
@@ -22,7 +24,8 @@ import { UserBasicInfoPanelComponent } from './basic-info/info-panel.component';
     UserBasicInfoPanelComponent
   ],
   providers: [
-    UserService
+    UserService,
+    CanActiveMe
   ]
 })
 export class UsersModule {}
