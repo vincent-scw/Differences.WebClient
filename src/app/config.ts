@@ -6,7 +6,7 @@ export interface AuthPolicyConfig {
     scopes: string[];
     signPolicy: string;
     editProfilePolicy: string;
-    passwordRestPolicy: string;
+    forgotPasswordPolicy: string;
 }
 /**
  * Configuration data for the app, as in Config.cs.

@@ -14,6 +14,6 @@ export const environment = {
     scopes: ['https://DifferencesB2CTenant.onmicrosoft.com/api/read openid offline_access'],
     signPolicy: 'B2C_1_Sign',
     editProfilePolicy: 'B2C_1_differences_edit_profile',
-    passwordRestPolicy: 'B2C_1_PasswordReset'
+    forgotPasswordPolicy: 'B2C_1_PasswordReset'
   }
 };

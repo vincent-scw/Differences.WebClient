@@ -42,6 +42,7 @@ export class AuthService extends AccountBase {
   }
 
   public login(): void {
+    this.clientApplication.authority = this.getAuthority(Policy.sign);
     this.clientApplication.loginPopup(this.authSettings.scopes)
       .then((idToken: any) => {
         this.cleanCache();
@@ -54,11 +55,26 @@ export class AuthService extends AccountBase {
           email: fromToken.emails[0]
         };
         this.storeUser(user);
-
         // acquire access token right after signin
         this.tryGetTokens().then();
       }, (error: any) => {
-        this.intermediaryService.onError('未能成功登录');
+        if (error && error.indexOf('AADB2C90118') > -1) {
+          this.handleForgotPassword();
+        } else {
+          this.intermediaryService.onError('未能成功登录');
+          console.error(error);
+        }
+      });
+  }
+
+  private handleForgotPassword(): void {
+    this.clientApplication.authority = this.getAuthority(Policy.forgotPassword);
+    this.clientApplication.loginPopup(this.authSettings.scopes)
+      .then((idToken: any) => {
+        // there are some issues in MSAL, so ask for login again.
+        this.intermediaryService.onWarning('修改密码成功，请登录！');
+      }, (error: any) => {
+        this.intermediaryService.onError('修改密码失败');
         console.error(error);
       });
   }
@@ -101,6 +117,7 @@ export class AuthService extends AccountBase {
         this.checkUserInDb();
         localStorage.setItem(this.ACCESS_TOKEN_KEY, token);
       }, (error: any) => {
+        console.error(error);
         this.cleanCache();
         this.user.next(null);
         this.intermediaryService.onWarning('会话过期，请重新登录。');

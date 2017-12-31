@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
 export enum Policy {
   sign,
   editProfile,
-  passwordReset
+  forgotPassword
 }
 
 export abstract class AccountBase {
@@ -40,8 +40,8 @@ export abstract class AccountBase {
       case Policy.editProfile:
         policyName = this.authSettings.editProfilePolicy;
         break;
-      case Policy.passwordReset:
-        policyName = this.authSettings.passwordRestPolicy;
+      case Policy.forgotPassword:
+        policyName = this.authSettings.forgotPasswordPolicy;
         break;
     }
     return `https://login.microsoftonline.com/tfp/${this.authSettings.tenantName}/${policyName}`;
