@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material';
 
 import { QuestionService } from '../services/question.service';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'app-ask-question',
@@ -12,6 +13,7 @@ import { QuestionService } from '../services/question.service';
 
 export class AskQuestionComponent implements OnInit {
   constructor(private questionService: QuestionService,
+    private categoryService: CategoryService,
     private router: Router,
     private dialogRef: MatDialogRef<AskQuestionComponent>) { }
 
@@ -25,6 +27,7 @@ export class AskQuestionComponent implements OnInit {
       { id: values.categoryId, name: '' }
     ).subscribe();
 
+    this.categoryService.setSelectedCategory(values.categoryId);
     this.router.navigateByUrl('/questions');
     this.dialogRef.close();
   }

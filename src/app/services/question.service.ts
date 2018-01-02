@@ -83,6 +83,7 @@ export class QuestionService extends ApolloServiceBase {
           id: -1,
           title: title,
           content: content,
+          categoryId: category.id,
           category: category.name,
           createTime: +new Date,
           user: {
