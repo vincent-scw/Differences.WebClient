@@ -44,6 +44,8 @@ export class DetailEditorComponent implements OnInit, OnChanges {
       this.title = this.data.title;
       this.categoryId = this.data.categoryId;
       this.content = this.data.content;
+    } else {
+      this.content = '如题所示！';
     }
   }
 

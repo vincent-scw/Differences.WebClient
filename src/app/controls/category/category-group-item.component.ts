@@ -44,9 +44,7 @@ export class CategoryGroupItemComponent implements OnInit,
       this.selectedCategoryId = x == null ? null : x.id;
 
       const found = this.categoryGroup.categories.find(c => c.id === this.selectedCategoryId);
-      if (found != null) {
-        this.isExpanded = true;
-      }
+      this.isExpanded = found != null;
     });
   }
 
