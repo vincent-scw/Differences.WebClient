@@ -174,14 +174,17 @@ export class QuestionService extends ApolloServiceBase {
         limit: limit
       }
     };
-    this.setQueryVariables(this.questions_key, categoryId, variables);
+
     this.intermediaryService.onLoading();
     const retval = this.apollo.watchQuery<QuestionListResponse>({
       query: QueryQuestions,
       variables: variables
     });
 
-    retval.valueChanges.subscribe((_) => this.intermediaryService.onLoaded());
+    retval.valueChanges.subscribe((_) => {
+      this.intermediaryService.onLoaded();
+      this.setQueryVariables(this.questions_key, categoryId, variables);
+    });
     return retval;
   }
 
