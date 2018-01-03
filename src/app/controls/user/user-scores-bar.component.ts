@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { User } from '../../models/user.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -7,6 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 
 export class UserScoresBarComponent {
-  @Input() contribution: number;
-  @Input() reputation: number;
+  @Input() user: User;
 }

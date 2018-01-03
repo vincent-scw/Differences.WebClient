@@ -12,8 +12,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../../services/account/auth.service';
 import { User } from '../../models/user.model';
-import { Question } from '../../models/question.model';
 import { Mode, ModeToggleableBase } from '../../componentbase/mode-toggleable-base';
+import { Answer, AnswerLiked } from '../../models/answer.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -23,11 +23,13 @@ import { Mode, ModeToggleableBase } from '../../componentbase/mode-toggleable-ba
 
 export class ContentPanelComponent extends ModeToggleableBase
   implements OnInit, OnChanges {
-  @Input() data: Question;
+  @Input() data: Answer;
+  @Input() liked: AnswerLiked;
   @Input() replyEnabled = true;
   @Input() alwaysShowActionbar = true;
   @Output() update = new EventEmitter<any>();
   @Output() reply = new EventEmitter<any>();
+  @Output() like = new EventEmitter<number>();
 
   showStatusBar: boolean;
   showEditPanel: boolean;
@@ -72,6 +74,10 @@ export class ContentPanelComponent extends ModeToggleableBase
       content: this.myReplyContent
     });
     this.toggleEditPanel();
+  }
+
+  onLike() {
+    this.like.emit(this.data.id);
   }
 
   toggleEditPanel() {

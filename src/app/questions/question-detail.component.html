@@ -36,8 +36,10 @@
 <mat-list>
   <div class="item-wrapper" *ngFor="let answer of answers">
     <content-panel [data]="answer" 
+      [liked]="getAnswerLiked(answer.id)"
       (update)="onUpdateAnswer($event)" 
       (reply)="onReply($event)"
+      (like)="onLike($event)"
       (modeToggled)="modeToggled($event)"></content-panel>
   </div>
 </mat-list>

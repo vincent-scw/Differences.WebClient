@@ -7,7 +7,7 @@
       <div class="level is-mobile">
         <div class="level-left">
           <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
-          <user-scores-bar [contribution]="data.user.contributeValue"></user-scores-bar>
+          <user-scores-bar [user]="data.user"></user-scores-bar>
         </div>
         <div class="level-right">
           <small>发表于{{data.createTime | amTimeAgo}}</small>
@@ -34,11 +34,12 @@
               <i class="fa fa-reply"></i>
             </span>
           </a>
-          <!-- <a class="level-item">
+          <a matTooltip="点赞" class="level-item" (click)="onLike()">
             <span class="icon is-small">
-              <i class="fa fa-heart"></i>
+              <i class="far fa-heart"></i>
             </span>
-          </a> -->
+            <small class="padding-left-5">{{liked == null ? 0: liked.likeCount}}</small>
+          </a>
         </div>
       </nav>
     </div>

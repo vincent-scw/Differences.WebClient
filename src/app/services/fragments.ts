@@ -7,6 +7,7 @@ export const fragments = {
       displayName
       email
       contributeValue
+      reputationValue
     }
   `,
 

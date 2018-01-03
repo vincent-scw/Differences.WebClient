@@ -10,6 +10,13 @@ export interface Answer {
   subReplies?: Answer[];
 }
 
+export interface AnswerLiked {
+  answerId: number;
+  likeCount: number;
+  liked: boolean;
+}
+
 export interface AnswerListResponse extends ResponseBase {
   question_answers: Answer[];
+  answer_liked: AnswerLiked[];
 }

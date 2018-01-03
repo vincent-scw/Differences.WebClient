@@ -5,4 +5,5 @@ export interface User {
   roles?: string[];
   avatarUrl?: string;
   contributeValue?: number;
+  reputationValue?: number;
 }

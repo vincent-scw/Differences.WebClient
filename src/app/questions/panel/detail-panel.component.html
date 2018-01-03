@@ -7,7 +7,7 @@
       <div class="level is-mobile">
         <div class="level-left">
           <a [routerLink]="['/users', data.user.id]">{{data.user.displayName}}</a>
-          <user-scores-bar [contribution]="data.user.contributeValue"></user-scores-bar>
+          <user-scores-bar [user]="data.user"></user-scores-bar>
         </div>
         <div class="level-right">
           <small>发表于{{data.createTime | amTimeAgo}}</small>

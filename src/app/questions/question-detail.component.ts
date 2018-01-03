@@ -16,7 +16,7 @@ import { CategoryService } from '../services/category.service';
 
 import { Mode } from '../componentbase/mode-toggleable-base';
 
-import { Answer } from '../models/answer.model';
+import { Answer, AnswerLiked } from '../models/answer.model';
 import { Question } from '../models/question.model';
 import { ConfirmDialogComponent } from '../controls/confirm-dialog.component';
 
@@ -32,6 +32,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   isAnswersLoading = true;
   isEmpty: boolean;
   answers: Answer[];
+  answerLiked: AnswerLiked[];
   myAnswerContent: string;
 
   private isInitiating = true;
@@ -101,9 +102,15 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         const answersResponse = ret.data;
         this.isAnswersLoading = answersResponse.loading;
         this.answers = answersResponse.question_answers;
+        this.answerLiked = answersResponse.answer_liked;
         this.isEmpty = this.answers == null
           || this.answers.length === 0;
       });
+  }
+
+  getAnswerLiked(answerId: number): AnswerLiked {
+    const b = this.answerLiked.find(a => a.answerId === answerId);
+    return b;
   }
 
   submitAnswer(): void {
@@ -130,6 +137,12 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   onReply(data: any): void {
     this.authService.forceAuthenticated(() =>
       this.questionAnswerService.addAnswer(this.id, data.parentId, data.content)
+        .toPromise());
+  }
+
+  onLike(answerId: number): void {
+    this.authService.forceAuthenticated(() =>
+      this.questionAnswerService.likeAnswer(this.id, answerId)
         .toPromise());
   }
 

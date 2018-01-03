@@ -1,18 +1,18 @@
 <div class="has-text-info user-scores">
-  <p matTooltip="贡献值">
+  <span matTooltip="贡献值">
     <small>
       <span class="icon is-small">
         <i class="fas fa-heartbeat"></i>
       </span>
-      <span>{{contribution}}</span>
+      <span>{{user.contributeValue}}</span>
     </small>
-  </p>
-  <!-- <p matTooltip="威望">
+  </span>
+  <span matTooltip="威望" class="padding-left-5">
     <small>
       <span class="icon is-small">
         <i class="far fa-star"></i>
       </span>
-      <span>0</span>
+      <span>{{user.reputationValue}}</span>
     </small>
-  </p> -->
+  </span>
 </div>

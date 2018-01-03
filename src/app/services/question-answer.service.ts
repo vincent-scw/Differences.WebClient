@@ -41,9 +41,23 @@ query question_answers($questionId: Int!) {
       }
     }
   }
+  answer_liked(questionId: $questionId) {
+    answerId
+    likeCount
+    liked
+  }
 }
 ${fragments.user}
 ${fragments.answer}
+`;
+
+const MutationLikeAnswer = gql`
+mutation differencesMutation($likeRecord: LikeInput!) {
+  likeAnswer(likeRecord: $likeRecord) {
+    ...UserInfo
+  }
+}
+${fragments.user}
 `;
 
 @Injectable()
@@ -144,6 +158,18 @@ export class QuestionAnswerService {
       query: QueryQuestionAnswers,
       variables: {
         questionId: questionId
+      }
+    });
+  }
+
+  likeAnswer(questionId: number, answerId: number) {
+    return this.apollo.mutate({
+      mutation: MutationLikeAnswer,
+      variables: {
+        likeRecord: {
+          questionId: questionId,
+          answerId: answerId
+        }
       }
     });
   }
