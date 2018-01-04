@@ -19,6 +19,7 @@ export abstract class ListComponentBase implements OnInit, OnDestroy {
 
   private selectedCategorySubscription: Subscription;
   private intermediarySubscription: Subscription;
+  private valueChangeSubscription: Subscription;
 
   @ViewChild(PaginationComponent) pagination: PaginationComponent;
 
@@ -42,6 +43,7 @@ export abstract class ListComponentBase implements OnInit, OnDestroy {
     if (!!this.selectedCategorySubscription) {
       this.selectedCategorySubscription.unsubscribe();
     }
+    if (!!this.valueChangeSubscription) { this.valueChangeSubscription.unsubscribe(); }
   }
 
   refresh() {
@@ -51,7 +53,7 @@ export abstract class ListComponentBase implements OnInit, OnDestroy {
 
   fetch() {
     this.query = this.fetchData();
-    this.query.valueChanges.subscribe(({data}) => {
+    this.valueChangeSubscription = this.query.valueChanges.subscribe(({data}) => {
       this.queryData = this.getValues(data);
 
       this.data = this.queryData.slice(this.pagination.offset,

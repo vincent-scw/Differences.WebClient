@@ -4,6 +4,7 @@ import {
   Input,
   Output,
   OnChanges,
+  OnDestroy,
   EventEmitter,
   SimpleChanges,
   ViewChild,
@@ -11,6 +12,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../../services/account/auth.service';
 import { User } from '../../models/user.model';
@@ -25,7 +27,7 @@ import { QuestionAnswerService } from '../../services/question-answer.service';
 })
 
 export class ContentPanelComponent extends ModeToggleableBase
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges, OnDestroy {
   @Input() data: Answer;
   @Input() replyEnabled = true;
   @Input() alwaysShowActionbar = true;
@@ -44,6 +46,8 @@ export class ContentPanelComponent extends ModeToggleableBase
   isLiked: boolean;
   answerLiked: AnswerLiked;
 
+  private valueChangeSubcription: Subscription;
+
   constructor(private authService: AuthService,
     private questionAnswerService: QuestionAnswerService) {
     super();
@@ -52,7 +56,7 @@ export class ContentPanelComponent extends ModeToggleableBase
 
   ngOnInit() {
     this.newContent = this.data.content;
-    this.questionAnswerService.getAnswerLike(this.data.id)
+    this.valueChangeSubcription = this.questionAnswerService.getAnswerLike(this.data.id)
       .valueChanges.subscribe(({ data }) => {
         this.answerLiked = data.answerLikedByAnswer;
         if (this.currentUser != null && this.currentUser.id === this.data.user.id) {
@@ -65,6 +69,10 @@ export class ContentPanelComponent extends ModeToggleableBase
 
   ngOnChanges(changes: SimpleChanges) {
 
+  }
+
+  ngOnDestroy() {
+    if (!!this.valueChangeSubcription) { this.valueChangeSubcription.unsubscribe(); }
   }
 
   onEdit() {

@@ -43,6 +43,8 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   private intermidiarySubscription: Subscription;
   private categorySubscription: Subscription;
   private dialogSubscription: Subscription;
+  private questionValueChangeSubscription: Subscription;
+  private answerValueChangeSubscription: Subscription;
 
   private childrenInEditMode = 0;
 
@@ -86,17 +88,23 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     if (!!this.intermidiarySubscription) { this.intermidiarySubscription.unsubscribe(); }
     if (!!this.categorySubscription) { this.categorySubscription.unsubscribe(); }
     if (!!this.dialogSubscription) { this.dialogSubscription.unsubscribe(); }
+    if (!!this.questionValueChangeSubscription) {
+      this.questionValueChangeSubscription.unsubscribe();
+    }
+    if (!!this.answerValueChangeSubscription) {
+      this.answerValueChangeSubscription.unsubscribe();
+    }
   }
 
   private fetch(): void {
     this.questionQuery = this.questionService.getQuestion(this.id);
-    this.questionQuery.valueChanges
+    this.questionValueChangeSubscription = this.questionQuery.valueChanges
       .subscribe(({ data }) => {
         this.question = data.question;
       });
 
     this.answerQuery = this.questionAnswerService.getQuestionAnswers(this.id);
-    this.answerQuery.valueChanges
+    this.answerValueChangeSubscription = this.answerQuery.valueChanges
       .subscribe((ret) => {
         const answersResponse = ret.data;
         this.isAnswersLoading = answersResponse.loading;
