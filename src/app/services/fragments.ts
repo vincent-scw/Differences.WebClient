@@ -29,5 +29,13 @@ export const fragments = {
       content
       createTime
     }
+  `,
+
+  answerLike: gql`
+    fragment AnswerLikeInfo on AnswerLikeType {
+      answerId
+      likeCount
+      liked
+    }
   `
 };

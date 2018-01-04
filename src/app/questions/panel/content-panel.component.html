@@ -36,9 +36,9 @@
           </a>
           <a matTooltip="点赞" class="level-item" (click)="onLike()">
             <span class="icon is-small">
-              <i class="far fa-heart"></i>
+              <i [class]="isLiked ? 'fa fa-heart': 'far fa-heart'"></i>
             </span>
-            <small class="padding-left-5">{{liked == null ? 0: liked.likeCount}}</small>
+            <small class="padding-left-5">{{answerLiked == null ? 0: answerLiked.likeCount}}</small>
           </a>
         </div>
       </nav>

@@ -67,7 +67,7 @@ export class AppModule {
     httpLink: HttpLink,
     intermediaryService: IntermediaryService
   ) {
-    const http = httpLink.create({uri: Config.GRAPHQL_API_ENDPOINT});
+    const http = httpLink.create({ uri: Config.GRAPHQL_API_ENDPOINT });
 
     const auth = setContext((_, { headers }) => {
       // get the authentication token from local storage if it exists
@@ -101,11 +101,18 @@ export class AppModule {
         const o = object as any;
         if (o.__typename != null && o.id != null) {
           return `${o.__typename}_${o.id}`;
+        } else {
+          if (o.__typename === 'AnswerLikeType') {
+            // AnswerLikeType has different key
+            return `${o.__typename}_${o.answerId}`;
+          }
         }
       },
       cacheResolvers: {
         Query: {
-          question: (_, args) => toIdValue(cache.config.dataIdFromObject({__typename: 'QuestionType', id: args.id})),
+          question: (_, args) => toIdValue(cache.config.dataIdFromObject({ __typename: 'QuestionType', id: args.id })),
+          answer_liked_byanswer: (_, args) =>
+            toIdValue(cache.config.dataIdFromObject({ __typename: 'AnswerLikeType', id: args.answerId }))
         }
       }
     });

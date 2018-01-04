@@ -32,7 +32,6 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   isAnswersLoading = true;
   isEmpty: boolean;
   answers: Answer[];
-  answerLiked: AnswerLiked[];
   myAnswerContent: string;
 
   private isInitiating = true;
@@ -102,15 +101,9 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         const answersResponse = ret.data;
         this.isAnswersLoading = answersResponse.loading;
         this.answers = answersResponse.question_answers;
-        this.answerLiked = answersResponse.answer_liked;
         this.isEmpty = this.answers == null
           || this.answers.length === 0;
       });
-  }
-
-  getAnswerLiked(answerId: number): AnswerLiked {
-    const b = this.answerLiked.find(a => a.answerId === answerId);
-    return b;
   }
 
   submitAnswer(): void {

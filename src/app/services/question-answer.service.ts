@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { AuthService } from '../services/account/auth.service';
 import { Question } from '../models/question.model';
 import { Category } from '../models/category.model';
-import { Answer, AnswerListResponse } from '../models/answer.model';
+import { Answer, AnswerListResponse, AnswerLiked, AnswerLikedResponse } from '../models/answer.model';
 import { fragments } from './fragments';
 
 const MutationSubmitAnswer = gql`
@@ -41,14 +41,22 @@ query question_answers($questionId: Int!) {
       }
     }
   }
-  answer_liked(questionId: $questionId) {
-    answerId
-    likeCount
-    liked
+  answer_liked_byquestion(questionId: $questionId) {
+    ...AnswerLikeInfo
   }
 }
 ${fragments.user}
 ${fragments.answer}
+${fragments.answerLike}
+`;
+
+const QueryAnswerLiked = gql`
+query answer_liked($answerId: Int!) {
+  answer_liked_byanswer(answerId: $answerId) {
+    ...AnswerLikeInfo
+  }
+}
+${fragments.answerLike}
 `;
 
 const MutationLikeAnswer = gql`
@@ -162,6 +170,15 @@ export class QuestionAnswerService {
     });
   }
 
+  getAnswerLike(answerId: number) {
+    return this.apollo.watchQuery<AnswerLikedResponse>({
+      query: QueryAnswerLiked,
+      variables: {
+        answerId: answerId
+      }
+    });
+  }
+
   likeAnswer(questionId: number, answerId: number) {
     return this.apollo.mutate({
       mutation: MutationLikeAnswer,
@@ -169,6 +186,27 @@ export class QuestionAnswerService {
         likeRecord: {
           questionId: questionId,
           answerId: answerId
+        }
+      },
+      update: (proxy, { data: { _ } }) => {
+        const key = 'AnswerLikeType_' + answerId.toString();
+        const fm = gql
+        `fragment AnswerLikeInfo on AnswerLikeType {
+          answerId
+          likeCount
+          liked
+        }`;
+
+        const found = proxy.readFragment<any>({ id: key, fragment: fm });
+        if (found != null) {
+          proxy.writeFragment({
+            id: key, fragment: fm, data: {
+              __typename: 'AnswerLikeType',
+              answerId: answerId,
+              likeCount: found.likeCount + 1,
+              liked: true
+            }
+          });
         }
       }
     });

@@ -18,5 +18,9 @@ export interface AnswerLiked {
 
 export interface AnswerListResponse extends ResponseBase {
   question_answers: Answer[];
-  answer_liked: AnswerLiked[];
+  answer_liked_byquestion: AnswerLiked[];
+}
+
+export interface AnswerLikedResponse extends ResponseBase {
+  answer_liked_byanswer: AnswerLiked;
 }
