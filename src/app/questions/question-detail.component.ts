@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -19,6 +20,7 @@ import { Mode } from '../componentbase/mode-toggleable-base';
 import { Answer, AnswerLiked } from '../models/answer.model';
 import { Question } from '../models/question.model';
 import { ConfirmDialogComponent } from '../controls/confirm-dialog.component';
+import { NormalizeTitlePipe } from '../utlities/normalize-title.pipe';
 
 @Component({
   selector: 'app-question-detail',
@@ -54,9 +56,11 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     private intermediaryService: IntermediaryService,
     private authService: AuthService,
     private categoryService: CategoryService,
+    private titleService: Title,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private titlePipe: NormalizeTitlePipe
   ) { }
 
   ngOnInit(): void {
@@ -101,6 +105,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     this.questionValueChangeSubscription = this.questionQuery.valueChanges
       .subscribe(({ data }) => {
         this.question = data.question;
+        this.titleService.setTitle(`${this.titlePipe.transform(this.question.title)} - 有什么不同`);
       });
 
     this.answerQuery = this.questionAnswerService.getQuestionAnswers(this.id);

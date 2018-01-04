@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { Title } from '@angular/platform-browser';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 import { NavigationNode } from './models/navigation.model';
 import { Router,
@@ -23,10 +27,16 @@ export class AppComponent implements OnInit {
   constructor(
     private intermediaryService: IntermediaryService,
     private router: Router,
+    private titleService: Title,
     private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
+    this.router.events.filter((event) => event instanceof NavigationEnd)
+      .subscribe((event) => {
+        this.titleService.setTitle('有什么不同');
+      });
+
     this.intermediaryService.loadingState.subscribe(
       (loadingObj: any) => {
         this.isFetching = loadingObj.isLoading;

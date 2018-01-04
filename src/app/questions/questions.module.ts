@@ -18,6 +18,7 @@ import { QuestionListComponent } from './question-list.component';
 import { AskQuestionComponent } from './ask-question.component';
 import { QuestionDetailComponent } from './question-detail.component';
 import { QuestionItemComponent } from './question-item.component';
+import { NormalizeTitlePipe } from '../utlities/normalize-title.pipe';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { QuestionItemComponent } from './question-item.component';
   ],
   providers: [
     QuestionService,
-    QuestionAnswerService
+    QuestionAnswerService,
+    NormalizeTitlePipe
   ],
   entryComponents: [
     AskQuestionComponent
