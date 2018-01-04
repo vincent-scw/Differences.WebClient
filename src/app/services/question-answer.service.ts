@@ -28,8 +28,8 @@ ${fragments.answer}
 `;
 
 const QueryQuestionAnswers = gql`
-query question_answers($questionId: Int!) {
-  question_answers(questionId: $questionId) {
+query questionAnswers($questionId: Int!) {
+  questionAnswers(questionId: $questionId) {
     ...AnswerInfo
     user {
       ...UserInfo
@@ -41,7 +41,7 @@ query question_answers($questionId: Int!) {
       }
     }
   }
-  answer_liked_byquestion(questionId: $questionId) {
+  answerLikedByQuestion(questionId: $questionId) {
     ...AnswerLikeInfo
   }
 }
@@ -51,8 +51,8 @@ ${fragments.answerLike}
 `;
 
 const QueryAnswerLiked = gql`
-query answer_liked($answerId: Int!) {
-  answer_liked_byanswer(answerId: $answerId) {
+query answerLiked($answerId: Int!) {
+  answerLikedByAnswer(answerId: $answerId) {
     ...AnswerLikeInfo
   }
 }
@@ -125,7 +125,7 @@ export class QuestionAnswerService {
         } else {
           const variables = { questionId: questionId };
           const data = proxy.readQuery<AnswerListResponse>({ query: QueryQuestionAnswers, variables: variables });
-          data.question_answers.splice(0, 0, submitAnswer);
+          data.questionAnswers.splice(0, 0, submitAnswer);
           proxy.writeQuery({ query: QueryQuestionAnswers, variables: variables, data });
         }
       }

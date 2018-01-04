@@ -111,7 +111,7 @@ export class AppModule {
       cacheResolvers: {
         Query: {
           question: (_, args) => toIdValue(cache.config.dataIdFromObject({ __typename: 'QuestionType', id: args.id })),
-          answer_liked_byanswer: (_, args) =>
+          answerLikedByAnswer: (_, args) =>
             toIdValue(cache.config.dataIdFromObject({ __typename: 'AnswerLikeType', id: args.answerId }))
         }
       }

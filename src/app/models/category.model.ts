@@ -10,5 +10,5 @@ export interface CategoryGroup extends IdName {
 }
 
 export interface CategoryGroupResponse extends ResponseBase {
-  category_definition: CategoryGroup[];
+  categoryDefinition: CategoryGroup[];
 }

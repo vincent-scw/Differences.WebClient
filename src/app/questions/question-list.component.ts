@@ -19,7 +19,7 @@ export class QuestionListComponent extends ListComponentBase {
   }
 
   getCount(data: any) {
-    return data.question_count;
+    return data.questionCount;
   }
 
   getValues(data: any) {

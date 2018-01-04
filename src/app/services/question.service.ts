@@ -48,7 +48,7 @@ const QueryQuestions = gql`
         ...UserInfo
       }
     }
-    question_count(criteria: $criteria)
+    questionCount(criteria: $criteria)
   }
   ${fragments.user}
   ${fragments.question}
@@ -146,7 +146,7 @@ export class QuestionService extends ApolloServiceBase {
     proxy.writeQuery({
       query: QueryQuestions, variables: queryVariable, data: {
         questions: values,
-        question_count: q.question_count + 1
+        questionCount: q.questionCount + 1
       }
     });
   }

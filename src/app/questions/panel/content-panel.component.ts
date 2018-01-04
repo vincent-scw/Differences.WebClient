@@ -54,7 +54,7 @@ export class ContentPanelComponent extends ModeToggleableBase
     this.newContent = this.data.content;
     this.questionAnswerService.getAnswerLike(this.data.id)
       .valueChanges.subscribe(({ data }) => {
-        this.answerLiked = data.answer_liked_byanswer;
+        this.answerLiked = data.answerLikedByAnswer;
         if (this.currentUser != null && this.currentUser.id === this.data.user.id) {
           this.isLiked = true;
         } else {

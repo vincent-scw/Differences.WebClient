@@ -18,5 +18,5 @@ export interface QuestionResponse extends ResponseBase {
 
 export interface QuestionListResponse extends ResponseBase {
   questions: Question[];
-  question_count: number;
+  questionCount: number;
 }

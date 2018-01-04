@@ -100,7 +100,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
       .subscribe((ret) => {
         const answersResponse = ret.data;
         this.isAnswersLoading = answersResponse.loading;
-        this.answers = answersResponse.question_answers;
+        this.answers = answersResponse.questionAnswers;
         this.isEmpty = this.answers == null
           || this.answers.length === 0;
       });

@@ -12,8 +12,8 @@ const SELECTED_CATEGORY_KEY = 'selected_category';
 @Injectable()
 export class CategoryService {
   QueryCategoryDefinition = gql`
-    query category_definition {
-      category_definition {
+    query categoryDefinition {
+      categoryDefinition {
         id
         name
         description
@@ -35,7 +35,7 @@ export class CategoryService {
   constructor(
     private apollo: Apollo) {
       this.getCategoryDefinition().subscribe(({data}) => {
-        this.cgList = data.category_definition;
+        this.cgList = data.categoryDefinition;
         this.cgList.forEach(element => {
           this.categories.push(element);
           element.categories.forEach(c => {
@@ -43,7 +43,7 @@ export class CategoryService {
           });
         });
 
-        this.categoryGroups.next(data.category_definition);
+        this.categoryGroups.next(data.categoryDefinition);
       });
   }
 

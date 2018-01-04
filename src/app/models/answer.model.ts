@@ -17,10 +17,10 @@ export interface AnswerLiked {
 }
 
 export interface AnswerListResponse extends ResponseBase {
-  question_answers: Answer[];
-  answer_liked_byquestion: AnswerLiked[];
+  questionAnswers: Answer[];
+  answerLikedByQuestion: AnswerLiked[];
 }
 
 export interface AnswerLikedResponse extends ResponseBase {
-  answer_liked_byanswer: AnswerLiked;
+  answerLikedByAnswer: AnswerLiked;
 }
