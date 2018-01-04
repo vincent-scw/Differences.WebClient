@@ -22,6 +22,7 @@ import { IntermediaryService } from './services/intermediary.service';
 
 export class AppComponent implements OnInit {
   isOpened = true;
+  showLeftDock = true;
   isFetching: boolean;
 
   constructor(

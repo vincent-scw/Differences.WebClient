@@ -4,7 +4,7 @@
 
 <app-top-bar></app-top-bar>
 <app-scrollable-top-bar (toggleSidenav)="sidenav.toggle()"></app-scrollable-top-bar>
-<left-dock-panel class="left-dockbg"></left-dock-panel>
+<left-dock-panel *ngIf="showLeftDock" class="left-dockbg" (close)="showLeftDock = false"></left-dock-panel>
 <div class="container main full-height">
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" opened="opened" class="sidenav-container">
