@@ -16,6 +16,7 @@ import { ConfirmDialogComponent } from './confirm-dialog.component';
 import { CategorySidebarComponent } from './sidebar/category-sidebar.component';
 import { UserSidebarComponent } from './sidebar/user-sidebar.component';
 import { UserScoresBarComponent } from './user/user-scores-bar.component';
+import { LeftDockPanelComponent } from './left-dock-panel.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { UserScoresBarComponent } from './user/user-scores-bar.component';
     ButtonGroupComponent,
     ConfirmDialogComponent,
     UserSidebarComponent,
-    UserScoresBarComponent
+    UserScoresBarComponent,
+    LeftDockPanelComponent
   ],
   exports: [
     EasyQuillEditorComponent,
@@ -47,7 +49,8 @@ import { UserScoresBarComponent } from './user/user-scores-bar.component';
     ButtonGroupComponent,
     ConfirmDialogComponent,
     UserSidebarComponent,
-    UserScoresBarComponent
+    UserScoresBarComponent,
+    LeftDockPanelComponent
   ],
   entryComponents: [
     ConfirmDialogComponent

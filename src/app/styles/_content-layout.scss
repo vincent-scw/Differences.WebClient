@@ -1,6 +1,6 @@
 .main {
   padding-top: 10px;
-  min-height: calc(100vh - 57px - 52px - 168px + 5px);
+  min-height: calc(100vh - 52px - 52px - 168px);
 }
 
 .sidenav-container {
@@ -43,4 +43,5 @@ content-panel {
 // ******** footer ****
 footer {
   height: 168px;
+  padding: 2rem 1rem !important;
 }
