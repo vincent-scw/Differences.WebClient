@@ -17,6 +17,7 @@ import { CategorySidebarComponent } from './sidebar/category-sidebar.component';
 import { UserSidebarComponent } from './sidebar/user-sidebar.component';
 import { UserScoresBarComponent } from './user/user-scores-bar.component';
 import { LeftDockPanelComponent } from './left-dock-panel.component';
+import { LoginComponent } from './login.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { LeftDockPanelComponent } from './left-dock-panel.component';
     ConfirmDialogComponent,
     UserSidebarComponent,
     UserScoresBarComponent,
-    LeftDockPanelComponent
+    LeftDockPanelComponent,
+    LoginComponent
   ],
   exports: [
     EasyQuillEditorComponent,
@@ -50,10 +52,12 @@ import { LeftDockPanelComponent } from './left-dock-panel.component';
     ConfirmDialogComponent,
     UserSidebarComponent,
     UserScoresBarComponent,
-    LeftDockPanelComponent
+    LeftDockPanelComponent,
+    LoginComponent
   ],
   entryComponents: [
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    LoginComponent
   ]
 })
 export class ControlsModule {}

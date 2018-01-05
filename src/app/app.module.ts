@@ -28,6 +28,7 @@ import { CategoryService } from './services/category.service';
 
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { AuthComponent } from './auth.component';
 import { Config } from './config';
 import { from } from 'apollo-link';
 import { toIdValue } from 'apollo-utilities';
@@ -35,7 +36,8 @@ import { toIdValue } from 'apollo-utilities';
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AuthComponent
   ],
   imports: [
     AppRoutingModule,

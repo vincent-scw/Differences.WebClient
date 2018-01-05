@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AuthService } from '../services/account/auth.service';
 import { User } from '../models/user.model';
+import { LoginComponent } from '../controls/login.component';
 
 @Component({
   selector: 'app-account',
@@ -22,7 +23,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   constructor(
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   onSignClicked(): void {
-    this.authService.login();
+    this.dialog.open(LoginComponent, {});
   }
 
   onSignoutClicked() {
