@@ -3,19 +3,18 @@
     <div class="field">
       <div class="control">
         <mat-form-field class="form-control full-width">
-          <input matInput #inputEmail name="email" [(ngModel)]="email" placeholder="Email" required disabled>
-          <mat-hint>暂不支持修改Email</mat-hint>
-        </mat-form-field>
-      </div>
-    </div>
-    <br />
-    <div class="field">
-      <div class="control">
-        <mat-form-field class="form-control full-width">
           <input matInput #inputDisplayName name="displayName" [(ngModel)]="displayName" 
             placeholder="显示名字" required [disabled]="isReadonly" maxlength="20" minlength="3">
           <mat-error *ngIf="(inputDisplayName.value?.length || 0) < 3">请输入3-20个字符</mat-error>
           <mat-hint align="end">{{inputDisplayName.value?.length || 0}} / 20</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <mat-form-field class="form-control full-width">
+          <input matInput #inputEmail name="email" [(ngModel)]="email" placeholder="Email"
+            type="email" [disabled]="isReadonly">
         </mat-form-field>
       </div>
     </div>
