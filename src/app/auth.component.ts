@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import { AccountType, AuthService } from './services/account/auth.service';
+import { AuthService } from './services/account/auth.service';
 import { AuthProviderBase } from './services/account/auth-provider-base';
 
 @Component({
@@ -27,9 +27,12 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.authProvider = this.getAuthProvider(params.get('type'))
     );
     this.routeSubscription = this.activatedRoute.queryParams.subscribe((params: Params) => {
-      if (this.authProvider.validateParams(params)) {
-        
+      const code = this.authProvider.validateParams(params);
+      if (code != null) {
+        this.authService.fetchUserInfo(this.authProvider.type, code);
       }
+
+      this.router.navigateByUrl('/questions');
     });
   }
 
@@ -39,10 +42,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   private getAuthProvider(type: string): AuthProviderBase {
-    if (type === 'linkedin') {
-      return AuthService.getProvider(AccountType.linkedIn, this.authService);
-    }
-
-    this.router.navigateByUrl('/notfound');
+    const provider = AuthService.getProvider(type, this.authService);
+    if (provider == null) { this.router.navigateByUrl('/notfound'); }
+    return provider;
   }
 }

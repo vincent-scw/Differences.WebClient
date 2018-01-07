@@ -14,19 +14,15 @@ import { AuthProviderBase } from './auth-provider-base';
 import { LinkedInAuthProvider } from './linkedin-auth.provider';
 
 const AccessToken_CacheKey = 'access_token';
-const AuthToken_CacheKey = 'auth_token';
-
-export enum AccountType {
-  linkedIn
-}
+const User_CacheKey = 'user_info';
 
 @Injectable()
 export class AuthService {
   user = new BehaviorSubject<User>(this.getUser());
 
-  public static getProvider(accountType: AccountType, authService: AuthService)
+  public static getProvider(accountType: string, authService: AuthService)
     : AuthProviderBase {
-    if (accountType === AccountType.linkedIn) {
+    if (accountType === 'linkedin') {
       return new LinkedInAuthProvider(authService);
     }
   }
@@ -36,7 +32,7 @@ export class AuthService {
     protected intermediaryService: IntermediaryService) {
   }
 
-  get acessToken(): string {
+  get accessToken(): string {
     return localStorage.getItem(AccessToken_CacheKey);
   }
 
@@ -44,47 +40,40 @@ export class AuthService {
     localStorage.setItem(AccessToken_CacheKey, token);
   }
 
-  get authToken(): string {
-    return localStorage.getItem(AuthToken_CacheKey);
-  }
-
-  set authToken(token: string) {
-    localStorage.setItem(AuthToken_CacheKey, token);
-  }
-
-  public login(): void {
-
+  public fetchUserInfo(type: string, code: string) {
+    this.userService.auth(type, code).valueChanges.subscribe(({data}) => {
+      this.accessToken = data.auth.accessToken;
+      this.storeUser(data.auth.user);
+    });
   }
 
   public logout() {
-
+    localStorage.removeItem(User_CacheKey);
+    localStorage.removeItem(AccessToken_CacheKey);
+    this.user.next(null);
   }
 
   public forceAuthenticated(funcAfterAuth: () => void, role?: string): void {
-    funcAfterAuth();
+    if (this.isAccessTokenValid()) {
+      funcAfterAuth();
+    } else {
+      this.intermediaryService.onWarning('会话过期，请重新登录！');
+    }
   }
 
   public getUser(): User {
-    return null;
+    const userInfo = localStorage.getItem(User_CacheKey);
+    return userInfo == null ? null : JSON.parse(userInfo);
   }
 
   // After updating user info, allow store user, so make it public
   public storeUser(user: User): void {
-
+    localStorage.setItem(User_CacheKey, JSON.stringify(user));
+    this.user.next(user);
   }
 
-  private checkUserInDb() {
-    // const userInDb = localStorage.getItem(this.USER_ID_KEY);
-    // const currentUser = this.getUser();
-    // if (userInDb != null && userInDb === currentUser.id) { return; }
-
-    // // Check user is stored in DB
-    // this.userService.checkUserInDb()
-    //   .subscribe((data: any) => {
-    //     localStorage.setItem(this.USER_ID_KEY, data.checkUserInDb.id);
-    //   },
-    //   (error) => {
-    //     console.error(error);
-    //   });
+  public isAccessTokenValid(): boolean {
+    const accessToken = this.accessToken;
+    return tokenNotExpired(null, accessToken);
   }
 }

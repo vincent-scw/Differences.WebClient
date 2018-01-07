@@ -1,7 +1,8 @@
 <div *ngIf="currentUser != null">
   <button mat-button [matMenuTriggerFor]="menu">
     <div class="account-button">
-      <ngx-avatar [name]="currentUser.displayName" size="30"></ngx-avatar>
+      <ngx-avatar [name]="currentUser.displayName" size="30"
+        [src]="currentUser.avatarUrl"></ngx-avatar>
       {{ currentUser.displayName }}
     </div>
   </button>

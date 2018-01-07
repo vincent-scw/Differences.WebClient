@@ -1,5 +1,5 @@
-import {Component, Injectable} from '@angular/core';
-import {Apollo} from 'apollo-angular';
+import { Component, Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 import { User } from '../models/user.model';
@@ -14,12 +14,16 @@ const QueryUser = gql`
   }
 `;
 
-const MutationCheckUser = gql`
-  mutation user {
-    checkUserInDb {
-      id
+const QueryAuth = gql`
+  query auth($type: String!, $code: String!) {
+    auth(type: $type, code: $code) {
+      accessToken
+      user {
+        ...UserInfo
+      }
     }
   }
+  ${fragments.user}
 `;
 
 const MutationUpdateUser = gql`
@@ -40,8 +44,14 @@ export class UserService {
     return this.apollo.watchQuery<User>({ query: QueryUser });
   }
 
-  checkUserInDb() {
-    return this.apollo.mutate({ mutation: MutationCheckUser });
+  auth(type: string, code: string) {
+    return this.apollo.watchQuery<any>({
+      query: QueryAuth,
+      variables: {
+        type: type,
+        code: code
+      }
+    });
   }
 
   updateUser(user: User) {

@@ -6,6 +6,7 @@ export const fragments = {
       id
       displayName
       email
+      avatarUrl
       contributeValue
       reputationValue
     }

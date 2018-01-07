@@ -4,18 +4,17 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
 import { AuthProviderBase } from './auth-provider-base';
 
-const AuthStateValue = 'BCEeFWf45A53sdfaef434';
-
 export class LinkedInAuthProvider extends AuthProviderBase {
+  public type = 'linkedin';
   constructor(private authService: AuthService) {
     super();
   }
 
   signIn() {
-    const clientId = '81rqdvz8syhf8o';
-    const redirect_uri = `${environment.selfUrl}/oauth2/linkedin`;
-    const scope = 'r_basicprofile';
-    const state = AuthStateValue;
+    const clientId = environment.linkedIn.clientId;
+    const redirect_uri = environment.linkedIn.redirectUrl;
+    const scope = environment.linkedIn.scope;
+    const state = environment.linkedIn.state;
     window.open('https://www.linkedin.com/uas/oauth2/authorization?'
       + 'response_type=code'
       + `&client_id=${clientId}`
@@ -23,16 +22,15 @@ export class LinkedInAuthProvider extends AuthProviderBase {
       + `&state=${state}&scope=${scope}`);
   }
 
-  validateParams(params: Params): boolean {
+  validateParams(params: Params): string {
     const state = params['state'];
-    if (state != null && AuthStateValue) {
+    if (state != null && environment.linkedIn.state) {
       const code = params['code'];
       if (code != null) {
-        this.authService.authToken = code;
-        return true;
+        return code;
       }
     }
 
-    return false;
+    return null;
   }
 }

@@ -67,13 +67,14 @@ export class AppModule {
   constructor(
     apollo: Apollo,
     httpLink: HttpLink,
-    intermediaryService: IntermediaryService
+    intermediaryService: IntermediaryService,
+    authService: AuthService
   ) {
     const http = httpLink.create({ uri: Config.GRAPHQL_API_ENDPOINT });
 
     const auth = setContext((_, { headers }) => {
       // get the authentication token from local storage if it exists
-      const token = localStorage.getItem('access_token');
+      const token = authService.accessToken;
       if (!token || !tokenNotExpired(null, token)) {
         return {};
       } else {

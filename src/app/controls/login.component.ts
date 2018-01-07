@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { AuthService, AccountType } from '../services/account/auth.service';
+import { AuthService } from '../services/account/auth.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,6 +15,6 @@ export class LoginComponent {
   }
 
   linkedInLogin() {
-    AuthService.getProvider(AccountType.linkedIn, this.authService).signIn();
+    AuthService.getProvider('linkedin', this.authService).signIn();
   }
 }

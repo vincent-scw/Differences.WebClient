@@ -15,5 +15,11 @@ export const environment = {
     signPolicy: 'B2C_1_Sign',
     editProfilePolicy: 'B2C_1_differences_edit_profile',
     forgotPasswordPolicy: 'B2C_1_PasswordReset'
+  },
+  linkedIn: {
+    clientId: '812axnss5vd45l',
+    redirectUrl: 'http://localhost:4200/oauth2/linkedin',
+    scope: 'r_basicprofile',
+    state: 'BCEeFWf45A53sdfaef434'
   }
 };
