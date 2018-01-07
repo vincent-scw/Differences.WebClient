@@ -17,4 +17,8 @@ export class LoginComponent {
   linkedInLogin() {
     AuthService.getProvider('linkedin', this.authService).signIn();
   }
+
+  microsoftLogin() {
+    AuthService.getProvider('microsoft', this.authService).signIn();
+  }
 }

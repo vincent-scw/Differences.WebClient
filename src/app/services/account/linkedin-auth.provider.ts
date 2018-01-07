@@ -14,23 +14,11 @@ export class LinkedInAuthProvider extends AuthProviderBase {
     const clientId = environment.linkedIn.clientId;
     const redirect_uri = environment.linkedIn.redirectUrl;
     const scope = environment.linkedIn.scope;
-    const state = environment.linkedIn.state;
-    window.open('https://www.linkedin.com/uas/oauth2/authorization?'
+    const state = environment.state;
+    window.location.href = 'https://www.linkedin.com/uas/oauth2/authorization?'
       + 'response_type=code'
       + `&client_id=${clientId}`
       + `&redirect_uri=${redirect_uri}`
-      + `&state=${state}&scope=${scope}`);
-  }
-
-  validateParams(params: Params): string {
-    const state = params['state'];
-    if (state != null && environment.linkedIn.state) {
-      const code = params['code'];
-      if (code != null) {
-        return code;
-      }
-    }
-
-    return null;
+      + `&state=${state}&scope=${scope}`;
   }
 }

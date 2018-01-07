@@ -16,10 +16,15 @@ export const environment = {
     editProfilePolicy: 'B2C_1_differences_edit_profile',
     forgotPasswordPolicy: 'B2C_1_PasswordReset'
   },
+  state: 'BCEeFWf45A53sdfaef434',
   linkedIn: {
     clientId: '812axnss5vd45l',
     redirectUrl: 'http://localhost:4200/oauth2/linkedin',
-    scope: 'r_basicprofile',
-    state: 'BCEeFWf45A53sdfaef434'
+    scope: 'r_basicprofile'
+  },
+  microsoft: {
+    clientId: '5e957a8e-fa2a-4482-a502-fdcc9fa3f418',
+    redirectUrl: 'http://localhost:4200/oauth2/microsoft',
+    scope: 'wl.basic'
   }
 };

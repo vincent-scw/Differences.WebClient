@@ -12,6 +12,7 @@ import { UserService } from '../user.service';
 import { IntermediaryService } from '../intermediary.service';
 import { AuthProviderBase } from './auth-provider-base';
 import { LinkedInAuthProvider } from './linkedin-auth.provider';
+import { MicrosoftAuthProvider } from './microsoft-auth.provider';
 
 const AccessToken_CacheKey = 'access_token';
 const User_CacheKey = 'user_info';
@@ -22,8 +23,11 @@ export class AuthService {
 
   public static getProvider(accountType: string, authService: AuthService)
     : AuthProviderBase {
-    if (accountType === 'linkedin') {
-      return new LinkedInAuthProvider(authService);
+    switch (accountType) {
+      case 'linkedin':
+        return new LinkedInAuthProvider(authService);
+      case 'microsoft':
+        return new MicrosoftAuthProvider(authService);
     }
   }
 
@@ -41,7 +45,7 @@ export class AuthService {
   }
 
   public fetchUserInfo(type: string, code: string) {
-    this.userService.auth(type, code).valueChanges.subscribe(({data}) => {
+    this.userService.auth(type, code).valueChanges.subscribe(({ data }) => {
       this.accessToken = data.auth.accessToken;
       this.storeUser(data.auth.user);
     });
