@@ -13,8 +13,6 @@ export interface AuthPolicyConfig {
  */
 export class Config {
 
-    public static readonly AUTH_SETTINGS: AuthPolicyConfig = environment.authSettings;
-
     public static readonly API_ENDPOINT: string = environment.apiServerUrl + '/api';
 
     public static readonly GRAPHQL_API_ENDPOINT: string = environment.apiServerUrl + '/api/graphql';
