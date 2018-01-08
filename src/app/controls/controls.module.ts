@@ -18,6 +18,7 @@ import { UserSidebarComponent } from './sidebar/user-sidebar.component';
 import { UserScoresBarComponent } from './user/user-scores-bar.component';
 import { LeftDockPanelComponent } from './left-dock-panel.component';
 import { LoginComponent } from './login.component';
+import { QRCodeComponent } from './qr-code.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { LoginComponent } from './login.component';
     UserSidebarComponent,
     UserScoresBarComponent,
     LeftDockPanelComponent,
-    LoginComponent
+    LoginComponent,
+    QRCodeComponent
   ],
   exports: [
     EasyQuillEditorComponent,
@@ -53,11 +55,13 @@ import { LoginComponent } from './login.component';
     UserSidebarComponent,
     UserScoresBarComponent,
     LeftDockPanelComponent,
-    LoginComponent
+    LoginComponent,
+    QRCodeComponent
   ],
   entryComponents: [
     ConfirmDialogComponent,
-    LoginComponent
+    LoginComponent,
+    QRCodeComponent
   ]
 })
 export class ControlsModule {}

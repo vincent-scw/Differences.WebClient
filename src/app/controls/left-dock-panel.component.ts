@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { QRCodeComponent } from './qr-code.component';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -8,6 +10,13 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 export class LeftDockPanelComponent {
   @Output() close = new EventEmitter<void>();
+
+  constructor(private dialog: MatDialog) {
+  }
+
+  onWechatClick() {
+    this.dialog.open(QRCodeComponent, {});
+  }
 
   onClose() {
     this.close.emit();
