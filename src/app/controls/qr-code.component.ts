@@ -19,7 +19,7 @@ export class QRCodeComponent {
 
   constructor(private dialogRef: MatDialogRef<QRCodeComponent>,
     private activatedRoute: ActivatedRoute) {
-      this.src = `http://qr.liantu.com/api.php?text=${activatedRoute.url}`;
+      this.src = `http://qr.liantu.com/api.php?text=${activatedRoute.snapshot.url}`;
   }
 }
 
