@@ -13,6 +13,7 @@ import { IntermediaryService } from '../intermediary.service';
 import { AuthProviderBase } from './auth-provider-base';
 import { LinkedInAuthProvider } from './linkedin-auth.provider';
 import { MicrosoftAuthProvider } from './microsoft-auth.provider';
+import { Subscription } from 'rxjs/Subscription';
 
 const AccessToken_CacheKey = 'access_token';
 const User_CacheKey = 'user_info';
@@ -20,6 +21,8 @@ const User_CacheKey = 'user_info';
 @Injectable()
 export class AuthService {
   user = new BehaviorSubject<User>(this.getUser());
+
+  private fetchSubscription: Subscription;
 
   public static getProvider(accountType: string, authService: AuthService)
     : AuthProviderBase {
@@ -45,9 +48,10 @@ export class AuthService {
   }
 
   public fetchUserInfo(type: string, code: string) {
-    this.userService.auth(type, code).valueChanges.subscribe(({ data }) => {
+    this.fetchSubscription = this.userService.auth(type, code).valueChanges.subscribe(({ data }) => {
       this.accessToken = data.auth.accessToken;
       this.storeUser(data.auth.user);
+      this.fetchSubscription.unsubscribe();
     });
   }
 
