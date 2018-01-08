@@ -13,8 +13,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 # GraphQL
 The [Apollo](https://www.apollographql.com/docs/angular/index.html) for angular is being used for interacting between backend and frontend.
 
-# Azure AD B2C
-Azure AD B2C is being used as the authrization/authentication server.
+# OpenId
+Use openId only for signin
 
 # Bulma
 [Bulma](https://bulma.io/#) is being used as a client side framework for UI presenting.
