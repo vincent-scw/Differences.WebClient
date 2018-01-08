@@ -18,7 +18,6 @@ export class QRCodeComponent {
 
   constructor(private dialogRef: MatDialogRef<QRCodeComponent>) {
       this.src = `http://qr.liantu.com/api.php?text=${window.location.href}`;
-      alert(this.src);
   }
 }
 
