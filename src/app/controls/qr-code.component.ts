@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,9 +16,9 @@ import { ActivatedRoute } from '@angular/router';
 export class QRCodeComponent {
   src: string;
 
-  constructor(private dialogRef: MatDialogRef<QRCodeComponent>,
-    private activatedRoute: ActivatedRoute) {
-      this.src = `http://qr.liantu.com/api.php?text=${activatedRoute.snapshot.url}`;
+  constructor(private dialogRef: MatDialogRef<QRCodeComponent>) {
+      this.src = `http://qr.liantu.com/api.php?text=${window.location.href}`;
+      alert(this.src);
   }
 }
 
