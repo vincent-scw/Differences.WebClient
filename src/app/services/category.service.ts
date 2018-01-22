@@ -30,21 +30,21 @@ export class CategoryService {
   categoryGroups = new BehaviorSubject<CategoryGroup[]>(this.getCategoryGroups());
   categories: IdName[] = [];
 
-  selectedCategory = new BehaviorSubject<IdName>(this.getSelectedCategory());
+  selectedCategory = new BehaviorSubject<number>(this.getSelectedCategoryId());
 
   constructor(
     private apollo: Apollo) {
-      this.getCategoryDefinition().subscribe(({data}) => {
-        this.cgList = data.categoryDefinition;
-        this.cgList.forEach(element => {
-          this.categories.push(element);
-          element.categories.forEach(c => {
-            this.categories.push(c);
-          });
+    this.getCategoryDefinition().subscribe(({ data }) => {
+      this.cgList = data.categoryDefinition;
+      this.cgList.forEach(element => {
+        this.categories.push(element);
+        element.categories.forEach(c => {
+          this.categories.push(c);
         });
-
-        this.categoryGroups.next(data.categoryDefinition);
       });
+
+      this.categoryGroups.next(data.categoryDefinition);
+    });
   }
 
   private getCategoryDefinition() {
@@ -57,21 +57,19 @@ export class CategoryService {
     return this.cgList;
   }
 
-  setSelectedCategory(categoryId: number) {
-    const found = this.categories.find(obj => obj.id === categoryId);
-    if (found === undefined) {
-      console.error('Category cannot be found');
-      return;
-    }
-
-    localStorage.setItem(SELECTED_CATEGORY_KEY, JSON.stringify(found));
-    this.selectedCategory.next(found);
+  setSelectedCategoryById(categoryId: number) {
+    localStorage.setItem(SELECTED_CATEGORY_KEY, categoryId.toString());
+    this.selectedCategory.next(categoryId);
   }
 
-  getSelectedCategory(): IdName {
+  getSelectedCategoryId(): number {
     const localCategory = localStorage.getItem(SELECTED_CATEGORY_KEY);
     return localCategory == null
-      ? this.categories.length === 0 ? {id: 1} : this.categories[0]
-      : JSON.parse(localCategory);
+      ? this.categories.length === 0 ? 1 : this.categories[0].id
+      : Number(localCategory);
+  }
+
+  getCategory(categoryId: number): IdName {
+    return this.categories.find(x => x.id === categoryId);
   }
 }

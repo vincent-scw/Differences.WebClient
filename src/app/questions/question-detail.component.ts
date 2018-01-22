@@ -72,16 +72,16 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
       this.questionQuery.refetch(); this.answerQuery.refetch();
     });
 
-    this.categorySubscription = this.categoryService.selectedCategory.subscribe(data => {
+    this.categorySubscription = this.categoryService.selectedCategory.subscribe(category => {
       if (!this.isInitiating && this.childrenInEditMode === 0) {
-        this.router.navigateByUrl('/questions');
+        this.router.navigateByUrl(`/questions?category=${category}`);
       } else if (this.childrenInEditMode > 0) {
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           data: { content: '您有未提交的修改，要放弃修改吗？', result: false }
         });
 
         this.dialogSubscription = dialogRef.componentInstance.ok.subscribe(() =>
-          this.router.navigateByUrl('/questions'));
+          this.router.navigateByUrl(`/questions?category=${category}`));
       }
     });
 

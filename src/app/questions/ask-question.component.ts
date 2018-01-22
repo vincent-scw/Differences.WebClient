@@ -27,7 +27,7 @@ export class AskQuestionComponent implements OnInit {
       { id: values.categoryId, name: '' }
     ).subscribe();
 
-    this.categoryService.setSelectedCategory(values.categoryId);
+    this.categoryService.setSelectedCategoryById(values.categoryId);
     this.router.navigateByUrl('/questions');
     this.dialogRef.close();
   }

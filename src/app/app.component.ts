@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 
 import { NavigationNode } from './models/navigation.model';
-import { Router,
+import {
+  Router,
   Event as RouterEvent,
   NavigationStart,
   NavigationEnd,
   NavigationCancel,
-  NavigationError } from '@angular/router';
+  NavigationError
+} from '@angular/router';
 import { IntermediaryService } from './services/intermediary.service';
+import { CategoryService } from './services/category.service';
+import { ConfirmDialogComponent } from './controls/confirm-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -25,10 +30,14 @@ export class AppComponent implements OnInit {
   showLeftDock = true;
   isFetching: boolean;
 
+  private dialogSubscription: Subscription;
+
   constructor(
     private intermediaryService: IntermediaryService,
     private router: Router,
     private titleService: Title,
+    private categoryService: CategoryService,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar) {
   }
 
@@ -41,7 +50,7 @@ export class AppComponent implements OnInit {
     this.intermediaryService.loadingState.subscribe(
       (loadingObj: any) => {
         this.isFetching = loadingObj.isLoading;
-    });
+      });
 
     this.intermediaryService.error.subscribe((errorMsg: string) => {
       this.snackBar.open(errorMsg, 'OK');

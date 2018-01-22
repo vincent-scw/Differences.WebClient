@@ -40,16 +40,15 @@ export class CategoryGroupItemComponent implements OnInit,
   }
 
   ngOnInit() {
-    this.categoryService.selectedCategory.subscribe(x => {
-      this.selectedCategoryId = x == null ? null : x.id;
+    this.categoryService.selectedCategory.subscribe(category => {
+      this.selectedCategoryId = category;
 
-      const found = this.categoryGroup.categories.find(c => c.id === this.selectedCategoryId);
-      this.isExpanded = found != null;
+      this.isExpanded = this.selectedCategoryId === this.categoryGroup.id
+        || this.categoryGroup.categories.find(c => c.id === this.selectedCategoryId) != null;
     });
   }
 
   writeValue(value: number) {
-    this.selectedCategoryId = value;
   }
 
   registerOnChange(fn: Function): void {
@@ -61,7 +60,7 @@ export class CategoryGroupItemComponent implements OnInit,
   }
 
   selectionChange(categoryId: number) {
-    this.categoryService.setSelectedCategory(categoryId);
+    this.categoryService.setSelectedCategoryById(categoryId);
     this.onModelChange(categoryId);
   }
 }
