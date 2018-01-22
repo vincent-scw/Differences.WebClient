@@ -17,6 +17,7 @@ export class UserBasicInfoPanelComponent extends ModeToggleableBase
   @Input() user: User;
   email: string;
   displayName: string;
+  hideAvatar: boolean;
 
   private userSubscription: Subscription;
   private updateSubscription: Subscription;
@@ -30,6 +31,7 @@ export class UserBasicInfoPanelComponent extends ModeToggleableBase
     this.userSubscription = this.authService.user.subscribe(u => {
       this.email = u.email;
       this.displayName = u.displayName;
+      this.hideAvatar = u.hideAvatar;
     });
 
   }
@@ -53,6 +55,7 @@ export class UserBasicInfoPanelComponent extends ModeToggleableBase
   onCancel() {
     this.email = this.user.email;
     this.displayName = this.user.displayName;
+    this.hideAvatar = this.user.hideAvatar;
     this.isReadonly = true;
   }
 }

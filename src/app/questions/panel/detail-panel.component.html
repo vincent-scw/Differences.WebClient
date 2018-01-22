@@ -1,6 +1,6 @@
 <article class="media">
   <figure class="media-left">
-    <ngx-avatar [name]="data.user.displayName" [src]="data.user.avatarUrl" size="40"></ngx-avatar>
+    <ngx-avatar [name]="data.user.displayName" [src]="data.user.hideAvatar ? '': data.user.avatarUrl" size="40"></ngx-avatar>
   </figure>
   <div class="media-content">
     <div class="content">
